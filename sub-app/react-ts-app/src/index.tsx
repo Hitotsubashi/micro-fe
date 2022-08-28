@@ -3,39 +3,66 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter} from 'react-router-dom'
+ 
 
-// const root = ReactDOM.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
+
+function render(props:any){
+  console.log('props',props);
+  
+  const { container } = props;
+  // @ts-ignore
+  const View =  <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react' : '/'}>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+</BrowserRouter>
+  if(container){
+    container.render(View)
+  }else{
+    const root = ReactDOM.createRoot(
+      document.getElementById('root') as HTMLElement
+    );
+    root.render(View);
+  }
+  // const { container } = props;
+  // // @ts-ignore
+  // ReactDOM.render(
+  //   // @ts-ignore
+  //   <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react' : '/'}>
+  //     <React.StrictMode>
+  //       <App />
+  //     </React.StrictMode>
+  //   </BrowserRouter>
+  //   , container ? container.querySelector('#root') : document.querySelector('#root'));
+}
+
+// @ts-ignore
+if (!window.__POWERED_BY_QIANKUN__) {
+  render({});
+}
+
+export async function bootstrap() {
+  console.log('[react16] react app bootstraped');
+}
 
 export async function mount(props:any) {
-  console.log('mount',props);
-  
-  // const root = ReactDOM.createRoot(
-  //   document.getElementById('root') as HTMLElement
-  // );
-  // root.render(<App />);
-  // @ts-ignore
-  ReactDOM.render(<App />, props.container ? props.container.querySelector('#root') : document.getElementById('root'));
+  console.log('[react16] props from main framework', props);
+  render(props);
 }
 
 export async function unmount(props:any) {
-  console.log('unmount',props);
-
-  // const root = ReactDOM.createRoot(
-  //   document.getElementById('root') as HTMLElement
-  // );
-  // root.unmount()
+  const { container } = props;
+  if(container){
+    container.unmount()
+  }else{
+    const root = ReactDOM.createRoot(
+      document.getElementById('root') as HTMLElement
+    );
+    root.unmount()
+  }
   // @ts-ignore
-
-  ReactDOM.unmountComponentAtNode(
-    props.container ? props.container.querySelector('#root') : document.getElementById('root'),
-  );
+  // ReactDOM.unmountComponentAtNode(container ? container.querySelector('#root') : document.querySelector('#root'));
 }
 
 // If you want to start measuring performance in your app, pass a function

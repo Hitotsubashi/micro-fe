@@ -69,13 +69,13 @@ export const constantRoutes = [
   },
 
   {
-    path: '/sub-app',
+    path: '/app-react',
     component: Layout,
     children: [
       {
-        path: 'react-ts',
-        name: 'react-ts',
-        component: () => import('@/views/react-ts-app/index'),
+        path: 'index',
+        name: 'app-react',
+        component: () => import('@/views/app-react'),
         meta: { title: 'ReactTS', icon: 'el-icon-coin' }
       }
     ]
@@ -86,7 +86,7 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

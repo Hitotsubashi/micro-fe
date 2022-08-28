@@ -3,16 +3,11 @@ import { registerMicroApps, start } from 'qiankun'
 registerMicroApps([
   {
     name: 'react app', // app name registered
-    entry: '//localhost:3000',
-    container: '#react-ts-app',
-    activeRule: '/#/sub-app/react-ts'
+    // entry: '//localhost:3000',
+    entry: { scripts: ['//localhost:3000/static/js/bundle.js'] },
+    container: '#micro-container',
+    activeRule: '/app-react/index'
   },
-  {
-    name: 'vue app',
-    entry: { scripts: ['//localhost:7100/main.js'] },
-    container: '#yourContainer2',
-    activeRule: '/yourActiveRule2'
-  }
 ])
 
 start()

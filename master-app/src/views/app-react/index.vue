@@ -1,5 +1,5 @@
 <template>
-  <div id="react-ts-app">
+  <div id="container">
     react-ts-app
   </div>
 </template>
