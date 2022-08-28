@@ -12,6 +12,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import '@/qiankun'
 import '@/icons' // icon
 import '@/permission' // permission control
 

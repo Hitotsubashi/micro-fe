@@ -68,6 +68,19 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/sub-app',
+    component: Layout,
+    children: [
+      {
+        path: 'react-ts',
+        name: 'react-ts',
+        component: () => import('@/views/react-ts-app/index'),
+        meta: { title: 'ReactTS', icon: 'el-icon-coin' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
