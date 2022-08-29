@@ -18,23 +18,16 @@ function render(props:any){
   </React.StrictMode>
 </BrowserRouter>
   if(container){
-    container.render(View)
+    const root = ReactDOM.createRoot(
+      container
+    )
+    root.render(View)
   }else{
     const root = ReactDOM.createRoot(
       document.getElementById('root') as HTMLElement
     );
     root.render(View);
   }
-  // const { container } = props;
-  // // @ts-ignore
-  // ReactDOM.render(
-  //   // @ts-ignore
-  //   <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react' : '/'}>
-  //     <React.StrictMode>
-  //       <App />
-  //     </React.StrictMode>
-  //   </BrowserRouter>
-  //   , container ? container.querySelector('#root') : document.querySelector('#root'));
 }
 
 // @ts-ignore
@@ -47,14 +40,16 @@ export async function bootstrap() {
 }
 
 export async function mount(props:any) {
-  console.log('[react16] props from main framework', props);
   render(props);
 }
 
 export async function unmount(props:any) {
   const { container } = props;
   if(container){
-    container.unmount()
+    const root = ReactDOM.createRoot(
+      container
+    )
+    root.unmount()
   }else{
     const root = ReactDOM.createRoot(
       document.getElementById('root') as HTMLElement
