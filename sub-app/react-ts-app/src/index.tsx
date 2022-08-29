@@ -1,29 +1,27 @@
+import './public-path';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
- 
-
+let root: ReactDOM.Root | undefined = undefined
 
 function render(props:any){
-  console.log('props',props);
-  
   const { container } = props;
   // @ts-ignore
   const View =  <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react' : '/'}>
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-</BrowserRouter>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </BrowserRouter>
   if(container){
-    const root = ReactDOM.createRoot(
+    root = ReactDOM.createRoot(
       container
     )
     root.render(View)
   }else{
-    const root = ReactDOM.createRoot(
+    root = ReactDOM.createRoot(
       document.getElementById('root') as HTMLElement
     );
     root.render(View);
@@ -46,15 +44,9 @@ export async function mount(props:any) {
 export async function unmount(props:any) {
   const { container } = props;
   if(container){
-    const root = ReactDOM.createRoot(
-      container
-    )
-    root.unmount()
+    root!.unmount()
   }else{
-    const root = ReactDOM.createRoot(
-      document.getElementById('root') as HTMLElement
-    );
-    root.unmount()
+    root!.unmount()
   }
   // @ts-ignore
   // ReactDOM.unmountComponentAtNode(container ? container.querySelector('#root') : document.querySelector('#root'));

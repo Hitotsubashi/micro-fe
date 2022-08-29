@@ -6,7 +6,6 @@ module.exports = {
     config.output.libraryTarget = 'umd';
     config.output.chunkLoadingGlobal = `webpackJsonp_${name}`;
     config.output.globalObject = 'window';
-
     return config;
   },
 
