@@ -6,10 +6,10 @@ registerMicroApps([
     entry: '//localhost:3001',
     container: '#micro-container',
     activeRule: '/app-react/index'
-  },
+  }
 ])
 
-start({sandbox:{
+start({ sandbox: {
   strictStyleIsolation: true, // 严格沙箱
   experimentalStyleIsolation: true // 实验性沙箱
 }})
