@@ -10,7 +10,7 @@ let root: ReactDOM.Root | undefined = undefined
 function render(props:any){
   const { container } = props;
   // @ts-ignore
-  const View =  <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react' : '/'}>
+  const View =  <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/micro-app/app-react' : '/'}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
@@ -42,14 +42,7 @@ export async function mount(props:any) {
 }
 
 export async function unmount(props:any) {
-  const { container } = props;
-  if(container){
-    root!.unmount()
-  }else{
-    root!.unmount()
-  }
-  // @ts-ignore
-  // ReactDOM.unmountComponentAtNode(container ? container.querySelector('#root') : document.querySelector('#root'));
+  root!.unmount()
 }
 
 // If you want to start measuring performance in your app, pass a function

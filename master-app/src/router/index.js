@@ -5,7 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
+import MicroAppLayout from '@/layout/MicroAppLayout'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -67,16 +67,15 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
-    path: '/app-react',
+    path: '/micro-app',
     component: Layout,
     children: [
       {
-        path: 'index',
+        path: 'app-react',
         name: 'app-react',
-        component: () => import('@/views/app-react'),
-        meta: { title: 'ReactTS', icon: 'el-icon-coin' }
+        component: MicroAppLayout,
+        meta: { title: 'ReactTS', icon: 'el-icon-coin', microApp: true }
       }
     ]
   },
