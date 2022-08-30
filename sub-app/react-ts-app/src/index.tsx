@@ -10,7 +10,7 @@ let root: ReactDOM.Root | undefined = undefined
 function render(props:any){
   const { container } = props;
   // @ts-ignore
-  const View =  <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/micro-app/app-react' : '/'}>
+  const View =  <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react/index' : '/'}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

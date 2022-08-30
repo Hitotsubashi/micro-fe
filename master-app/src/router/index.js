@@ -67,23 +67,47 @@ export const constantRoutes = [
       }
     ]
   },
+  // {
+  //   path: '/micro-app',
+  //   component: Layout,
+  //   meta:{title: 'MicroApp', icon: 'el-icon-coin'},
+  //   redirect:{name:'app-react'},
+  //   children: [
+  //     {
+  //       path: 'app-react',
+  //       name: 'app-react',
+  //       component: MicroAppLayout,
+  //       meta: { title: 'ReactTSApp', microApp: true }
+  //     },
+  //     {
+  //       path: 'app-vue',
+  //       name: 'app-vue',
+  //       component: MicroAppLayout,
+  //       meta: { title: 'VueApp', microApp: true }
+  //     }
+  //   ]
+  // },
   {
-    path: '/micro-app',
+    path: '/app-react',
     component: Layout,
-    meta:{title: 'MicroApp', icon: 'el-icon-coin'},
-    redirect:{name:'app-react'},
     children: [
       {
-        path: 'app-react',
+        path: 'index',
         name: 'app-react',
-        component: MicroAppLayout,
-        meta: { title: 'ReactTSApp', microApp: true }
-      },
+        component: ()=>import('@/views/app-react'),
+        meta: { title: 'ReactTSApp', microApp: true, icon: 'el-icon-coin' }
+      }
+    ]
+  },
+  {
+    path: '/app-vue',
+    component: Layout,
+    children: [
       {
-        path: 'app-vue',
+        path: 'index',
         name: 'app-vue',
-        component: MicroAppLayout,
-        meta: { title: 'VueApp', microApp: true }
+        component: ()=>import('@/views/app-vue'),
+        meta: { title: 'VueApp', microApp: true, icon: 'el-icon-coin' }
       }
     ]
   },
