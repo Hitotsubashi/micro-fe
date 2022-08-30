@@ -70,12 +70,20 @@ export const constantRoutes = [
   {
     path: '/micro-app',
     component: Layout,
+    meta:{title: 'MicroApp', icon: 'el-icon-coin'},
+    redirect:{name:'app-react'},
     children: [
       {
         path: 'app-react',
         name: 'app-react',
         component: MicroAppLayout,
-        meta: { title: 'ReactTS', icon: 'el-icon-coin', microApp: true }
+        meta: { title: 'ReactTSApp', microApp: true }
+      },
+      {
+        path: 'app-vue',
+        name: 'app-vue',
+        component: MicroAppLayout,
+        meta: { title: 'VueApp', microApp: true }
       }
     ]
   },

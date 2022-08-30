@@ -38,10 +38,12 @@ export async function bootstrap() {
 }
 
 export async function mount(props:any) {
+  console.log('[react16] react app mount');
   render(props);
 }
 
 export async function unmount(props:any) {
+  console.log('[react16] react app unmount');
   root!.unmount()
 }
 

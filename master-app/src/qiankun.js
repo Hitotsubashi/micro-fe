@@ -6,6 +6,12 @@ registerMicroApps([
     entry: '//localhost:3000',
     container: '#micro-container',
     activeRule: '/micro-app/app-react'
+  },
+  {
+    name: 'vue app', // app name registered
+    entry: '//localhost:8081',
+    container: '#micro-container',
+    activeRule: '/micro-app/app-vue'
   }
 ])
 
