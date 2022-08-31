@@ -19,13 +19,12 @@ function render(props:any){
     root = ReactDOM.createRoot(
       container
     )
-    root.render(View)
   }else{
     root = ReactDOM.createRoot(
       document.getElementById('root') as HTMLElement
     );
-    root.render(View);
   }
+  root.render(View);
 }
 
 // @ts-ignore

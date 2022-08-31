@@ -1,5 +1,5 @@
 <template>
-  <div id="app-vue" v-loading="loading" />
+  <div id="app-purehtml" v-loading="loading" />
 </template>
 
 <script>

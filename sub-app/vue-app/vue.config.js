@@ -7,6 +7,7 @@ module.exports = defineConfig({
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
+    port:3002
   },
   configureWebpack: {
     output: {

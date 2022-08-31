@@ -1,20 +1,12 @@
 <template>
-  <div id="app-react"></div>
+  <div id="app-react" v-loading="loading" />
 </template>
 
 <script>
-import { start } from 'qiankun'
+import microAppMixin from '@/mixin/micro-app'
 
 export default {
-  mounted() {
-    if (!window.qiankunStarted) {
-      window.qiankunStarted = true
-      start({ sandbox: {
-        strictStyleIsolation: true, // 严格沙箱
-        experimentalStyleIsolation: true // 实验性沙箱
-      }})
-    }
-  }
+  mixins: [microAppMixin]
 }
 </script>
 
