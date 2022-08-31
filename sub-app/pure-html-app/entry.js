@@ -1,10 +1,5 @@
 const render = $ => {
-  try{
-    console.log($('#purehtml-container'))
-    $('#purehtml-container').html('Hello, render with jQuery');
-  }catch(error){
-    console.error(error)
-  }
+  $('#purehtml-container').html('Hello, render with jQuery');
   return Promise.resolve();
 };
   
