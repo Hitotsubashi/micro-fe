@@ -28,8 +28,3 @@ registerMicroApps([
     activeRule: '/app-purehtml/index'
   }
 ])
-
-// start({ sandbox: {
-//   strictStyleIsolation: true, // 严格沙箱
-//   experimentalStyleIsolation: true // 实验性沙箱
-// }})

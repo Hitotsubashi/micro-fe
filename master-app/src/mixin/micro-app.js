@@ -8,8 +8,8 @@ const mixin = {
       start(
 
         { sandbox: {
-          strictStyleIsolation: true // 严格沙箱
-        // experimentalStyleIsolation: true // 实验性沙箱
+          // strictStyleIsolation: true // 严格沙箱
+          experimentalStyleIsolation: true // 实验性沙箱
         }}
       )
     }

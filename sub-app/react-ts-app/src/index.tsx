@@ -17,7 +17,7 @@ function render(props:any){
   </BrowserRouter>
   if(container){
     root = ReactDOM.createRoot(
-      container
+      container.querySelector('#root')
     )
   }else{
     root = ReactDOM.createRoot(
