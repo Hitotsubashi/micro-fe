@@ -7,23 +7,33 @@
         <navbar />
       </div>
       <app-main />
+      <right-panel v-if="showSettings">
+        <settings />
+      </right-panel>
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import RightPanel from '@/components/RightPanel'
+import { Navbar, Sidebar, AppMain, Settings } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
     Navbar,
+    Settings,
     Sidebar,
-    AppMain
+    AppMain,
+    RightPanel
   },
   mixins: [ResizeMixin],
   computed: {
+    ...mapState({
+      showSettings: state => state.settings.showSettings
+    }),
     sidebar() {
       return this.$store.state.app.sidebar
     },
