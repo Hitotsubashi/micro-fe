@@ -3,6 +3,9 @@ const getters = {
   device: state => state.app.device,
   token: state => state.user.token,
   avatar: state => state.user.avatar,
-  name: state => state.user.name
+  name: state => state.user.name,
+  microAppState: state => ({
+    theme: state.settings.theme
+  })
 }
 export default getters

@@ -12,9 +12,10 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-import '@/qiankun'
+import actions from '@/qiankun'
 import '@/icons' // icon
 import '@/permission' // permission control
+import { mapGetters } from 'vuex'
 
 /**
  * If you don't want to use mock-server
@@ -40,5 +41,18 @@ new Vue({
   el: '#app',
   router,
   store,
+  computed: {
+    ...mapGetters(['microAppState'])
+  },
+  watch: {
+    'microAppState': {
+      handler(val) {
+        actions.setGlobalState({
+          ...val
+        })
+      },
+      deep: true
+    }
+  },
   render: h => h(App)
 })

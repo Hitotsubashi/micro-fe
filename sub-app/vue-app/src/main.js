@@ -2,6 +2,7 @@ import './public-path';
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router';
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -17,6 +18,7 @@ function render(props = {}) {
 
   instance = new Vue({
     router,
+    store,
     render: (h) => h(App),
   }).$mount(container ? container.querySelector('#app') : '#app');
 }
@@ -31,6 +33,9 @@ export async function bootstrap() {
 
 export async function mount(props) {
   console.log('[vue] vue app mount', props);
+  props.onGlobalStateChange((state)=>{
+    store.dispatch('app/changeTheme', state.theme)
+  })
   render(props);
 }
 
