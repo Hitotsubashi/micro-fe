@@ -1,11 +1,18 @@
 import { registerMicroApps, initGlobalState } from 'qiankun'
 import store from './store'
+import router from './router'
 import { createStore } from 'redux'
 
-function reducer(state, action) {
+const actions = initGlobalState(store.getters.microAppState)
+
+function reducer(state = {}, action) {
   switch (action.type) {
-    case '':
-      break
+    case 'UPDATE_GLOBAL_STATE':
+      actions.setGlobalState(action.payload)
+      return state
+    case 'CHANGE_ROUTE':
+      router.push(action.payload)
+      return state
     default:
       break
   }
@@ -44,5 +51,4 @@ registerMicroApps([
   }
 ])
 
-const actions = initGlobalState(store.getters.microAppState)
 export default actions

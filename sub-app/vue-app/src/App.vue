@@ -2,16 +2,19 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <ThemeColor/>
+    <ChangeRouteButton/>
   </div>
 </template>
 
 <script>
 import ThemeColor from '@/components/ThemeColor'
+import ChangeRouteButton from '@/components/ChangeRouteButton'
 
 export default {
   name: 'App',
   components:{
-    ThemeColor
+    ThemeColor,
+    ChangeRouteButton
   }
 }
 </script>

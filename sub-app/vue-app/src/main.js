@@ -10,7 +10,9 @@ let router = null;
 let instance = null;
 
 function render(props = {}) {
-  const { container } = props;
+  const { container, shared } = props;
+  Vue.prototype.$shared = shared
+
   router = new VueRouter({
     base: window.__POWERED_BY_QIANKUN__ ? '/app-vue/index' : '/',
     mode: 'history',

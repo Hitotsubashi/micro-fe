@@ -8,19 +8,22 @@ import {BrowserRouter} from 'react-router-dom'
 import { Provider } from 'react-redux';
 import store from './store';
 import {appActions} from './store/module/app'
+import { SharedContext } from './context/SharedContext';
 
 let root: ReactDOM.Root | undefined = undefined
 
 function render(props:any){
-  const { container } = props;
+  const { container,shared } = props;
   const View =  (
     <React.StrictMode>
-      <Provider store={store}>
-        {/* @ts-ignore */}
-        <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react/index' : '/'}>
-          <App />
-        </BrowserRouter>
-      </Provider>
+      <SharedContext.Provider value={shared}>
+        <Provider store={store}>
+          {/* @ts-ignore */}
+          <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react/index' : '/'}>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </SharedContext.Provider>
     </React.StrictMode>
   )
   if(container){
