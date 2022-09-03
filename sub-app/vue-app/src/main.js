@@ -35,7 +35,7 @@ export async function mount(props) {
   console.log('[vue] vue app mount', props);
   props.onGlobalStateChange((state)=>{
     store.dispatch('app/changeTheme', state.theme)
-  })
+  }, true)
   render(props);
 }
 

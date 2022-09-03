@@ -5,16 +5,24 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
+import { Provider } from 'react-redux';
+import store from './store';
+import {appActions} from './store/module/app'
+
 let root: ReactDOM.Root | undefined = undefined
 
 function render(props:any){
   const { container } = props;
-  // @ts-ignore
-  const View =  <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react/index' : '/'}>
+  const View =  (
     <React.StrictMode>
-      <App />
+      <Provider store={store}>
+        {/* @ts-ignore */}
+        <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react/index' : '/'}>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </React.StrictMode>
-  </BrowserRouter>
+  )
   if(container){
     root = ReactDOM.createRoot(
       container.querySelector('#root')
@@ -38,6 +46,10 @@ export async function bootstrap() {
 
 export async function mount(props:any) {
   console.log('[react16] react app mount');
+
+  props.onGlobalStateChange((state:any)=>{
+    store.dispatch(appActions.updateTheme(state.theme))
+  }, true)
   render(props);
 }
 

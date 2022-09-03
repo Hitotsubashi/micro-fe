@@ -1,4 +1,5 @@
 const { name } = require('./package');
+const path  = require('path')
 
 module.exports = {
   webpack: (config) => {
@@ -6,6 +7,9 @@ module.exports = {
     config.output.libraryTarget = 'umd';
     config.output.chunkLoadingGlobal = `webpackJsonp_${name}`;
     config.output.globalObject = 'window';
+    config.resolve.alias = {
+        '@': path.resolve(__dirname,'./src')
+    };
     return config;
   },
 
