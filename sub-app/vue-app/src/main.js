@@ -1,22 +1,16 @@
 import './public-path';
 import Vue from 'vue'
 import App from './App.vue'
-import VueRouter from 'vue-router';
+import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false
 
-let router = null;
 let instance = null;
 
 function render(props = {}) {
   const { container, shared } = props;
   Vue.prototype.$shared = shared
-
-  router = new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? '/app-vue/index' : '/',
-    mode: 'history',
-  });
 
   instance = new Vue({
     router,
@@ -46,6 +40,5 @@ export async function unmount() {
   instance.$destroy();
   instance.$el.innerHTML = '';
   instance = null;
-  router = null;
 }
 

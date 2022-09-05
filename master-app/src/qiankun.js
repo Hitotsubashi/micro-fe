@@ -42,7 +42,8 @@ registerMicroApps([
     entry: '//localhost:3002',
     container: '#app-vue',
     loader,
-    activeRule: '/app-vue/index',
+    // activeRule: '/app-vue/index',
+    activeRule: (location)=>location.pathname.startsWith('/app-vue/index'),
     props: { shared }
   },
   {

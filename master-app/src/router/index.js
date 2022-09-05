@@ -67,26 +67,6 @@ export const constantRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/micro-app',
-  //   component: Layout,
-  //   meta:{title: 'MicroApp', icon: 'el-icon-coin'},
-  //   redirect:{name:'app-react'},
-  //   children: [
-  //     {
-  //       path: 'app-react',
-  //       name: 'app-react',
-  //       component: MicroAppLayout,
-  //       meta: { title: 'ReactTSApp', microApp: true }
-  //     },
-  //     {
-  //       path: 'app-vue',
-  //       name: 'app-vue',
-  //       component: MicroAppLayout,
-  //       meta: { title: 'VueApp', microApp: true }
-  //     }
-  //   ]
-  // },
   {
     path: '/app-react',
     component: Layout,
@@ -96,7 +76,7 @@ export const constantRoutes = [
         name: 'app-react',
         component: MicroAppLayout,
         props: { id: 'app-react' },
-        meta: { title: 'ReactTSApp', microApp: true, icon: 'el-icon-coin' }
+        meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
       }
     ]
   },
@@ -109,8 +89,8 @@ export const constantRoutes = [
         name: 'app-vue',
         component: MicroAppLayout,
         props: { id: 'app-vue' },
-        meta: { title: 'VueApp', microApp: true, icon: 'el-icon-coin' }
-      }
+        meta: { title: 'VueApp', icon: 'el-icon-coin' },
+      },
     ]
   },
   {
@@ -122,8 +102,8 @@ export const constantRoutes = [
         name: 'app-purehtml',
         component: MicroAppLayout,
         props: { id: 'app-purehtml' },
-        meta: { title: 'PureHTMLApp', microApp: true, icon: 'el-icon-coin' }
-      }
+        meta: { title: 'PureHTMLApp', icon: 'el-icon-coin' }
+      },
     ]
   },
 
