@@ -1,9 +1,13 @@
-import { registerMicroApps, initGlobalState } from 'qiankun'
+import { registerMicroApps, initGlobalState, addErrorHandler } from 'qiankun'
 import store from './store'
 import router from './router'
 import { createStore } from 'redux'
 
 const actions = initGlobalState(store.getters.microAppState)
+
+addErrorHandler((err) => {
+  console.log(err)
+})
 
 function reducer(state = {}, action) {
   switch (action.type) {
@@ -27,7 +31,7 @@ const loader = (loading) => {
 registerMicroApps([
   {
     name: 'react app', // app name registered
-    entry: '//localhost:3001',
+    entry: '//localhost:3011',
     container: '#app-react',
     loader,
     activeRule: '/app-react/index',

@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" />
+  <div :id="id" v-loading="loading" class="container" />
 </template>
 
 <script>
@@ -30,6 +30,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .container{
+    min-height: 50vh;
+  }
 </style>
