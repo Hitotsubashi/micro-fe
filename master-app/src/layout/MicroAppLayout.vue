@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :id="id" v-if="!error" v-loading="loading" class="container" />
+    <div v-if="!error" :id="id" v-loading="loading" class="container" />
     <el-result v-else icon="error" title="微应用加载失败" />
   </div>
 </template>

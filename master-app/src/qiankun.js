@@ -5,7 +5,7 @@ import { createStore } from 'redux'
 
 const actions = initGlobalState(store.getters.microAppState)
 
-addErrorHandler((err) => {
+addErrorHandler(() => {
   store.dispatch('microApp/changeError', true)
 })
 

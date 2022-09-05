@@ -1,6 +1,6 @@
 const state = {
   loading: false,
-  error: false,
+  error: false
 }
 
 const mutations = {
@@ -17,7 +17,7 @@ const actions = {
     commit('SET_ERROR', false)
     commit('SET_LOADING', loading)
   },
-  changeError({commit}, error){
+  changeError({ commit }, error) {
     commit('SET_LOADING', false)
     commit('SET_ERROR', error)
   }
