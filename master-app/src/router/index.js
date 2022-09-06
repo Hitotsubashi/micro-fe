@@ -72,11 +72,10 @@ export const constantRoutes = [
     children: [
       {
         path: 'index(.*)?',
-        menuPath:'index',
         name: 'app-react',
         component: MicroAppLayout,
         props: { id: 'app-react' },
-        meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
+        meta: { title: 'ReactTSApp',menuPath:'index', icon: 'el-icon-coin' }
       },
       // {
       //   path: 'index*',
@@ -94,11 +93,10 @@ export const constantRoutes = [
     children: [
       {
         path: 'index(.*)?',
-        menuPath:'index',
         name: 'app-vue',
         component: MicroAppLayout,
         props: { id: 'app-vue' },
-        meta: { title: 'VueApp', icon: 'el-icon-coin' }
+        meta: { title: 'VueApp',menuPath:'index', icon: 'el-icon-coin' }
       },
       // {
       //   path: 'index*',
