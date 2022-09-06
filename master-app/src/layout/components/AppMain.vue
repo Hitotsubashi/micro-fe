@@ -1,9 +1,9 @@
 <template>
   <section class="app-main">
-    <!-- <transition :name="isMicroApp?undefined:'fade-transform'" :mode="isMicroApp?undefined:'out-in'"> -->
-    <!-- <transition> -->
-      <router-view  />
-    <!-- </transition> -->
+    <transition :name="isMicroApp?undefined:'fade-transform'" :mode="isMicroApp?undefined:'out-in'">
+      <!-- <transition name="fade-transform" mode="out-in"> -->
+      <router-view :key="key" />
+    </transition>
   </section>
 </template>
 
@@ -12,11 +12,11 @@ export default {
   name: 'AppMain',
   computed: {
     key() {
-      return this.$route.path
+      return this.$route.name
+    },
+    isMicroApp() {
+      return this.$route.meta.microApp
     }
-    // isMicroApp() {
-    //   return this.$route.meta.microApp
-    // }
   }
 }
 </script>

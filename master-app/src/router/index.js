@@ -75,8 +75,8 @@ export const constantRoutes = [
         name: 'app-react',
         component: MicroAppLayout,
         props: { id: 'app-react' },
-        meta: { title: 'ReactTSApp',menuPath:'index', icon: 'el-icon-coin' }
-      },
+        meta: { title: 'ReactTSApp', microApp: true, menuPath: 'index', icon: 'el-icon-coin' }
+      }
       // {
       //   path: 'index*',
       //   name: 'app-react',
@@ -96,8 +96,8 @@ export const constantRoutes = [
         name: 'app-vue',
         component: MicroAppLayout,
         props: { id: 'app-vue' },
-        meta: { title: 'VueApp',menuPath:'index', icon: 'el-icon-coin' }
-      },
+        meta: { title: 'VueApp', microApp: true, menuPath: 'index', icon: 'el-icon-coin' }
+      }
       // {
       //   path: 'index*',
       //   name: 'app-vue',
@@ -117,8 +117,8 @@ export const constantRoutes = [
         name: 'app-purehtml',
         component: MicroAppLayout,
         props: { id: 'app-purehtml' },
-        meta: { title: 'PureHTMLApp', icon: 'el-icon-coin' }
-      },
+        meta: { title: 'PureHTMLApp', microApp: true, icon: 'el-icon-coin' }
+      }
     ]
   },
 

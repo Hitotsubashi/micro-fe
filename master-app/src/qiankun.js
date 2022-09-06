@@ -5,8 +5,9 @@ import { createStore } from 'redux'
 
 const actions = initGlobalState(store.getters.microAppState)
 
-addErrorHandler(() => {
+addErrorHandler((error) => {
   store.dispatch('microApp/changeError', true)
+  console.error(error)
 })
 
 function reducer(state = {}, action) {
@@ -42,8 +43,7 @@ registerMicroApps([
     entry: '//localhost:3002',
     container: '#app-vue',
     loader,
-    // activeRule: '/app-vue/index',
-    activeRule: (location)=>location.pathname.startsWith('/app-vue/index'),
+    activeRule: '/app-vue/index',
     props: { shared }
   },
   {
