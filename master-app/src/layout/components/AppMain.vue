@@ -1,9 +1,9 @@
 <template>
   <section class="app-main">
     <!-- <transition :name="isMicroApp?undefined:'fade-transform'" :mode="isMicroApp?undefined:'out-in'"> -->
-    <transition>
-      <router-view :key="key" />
-    </transition>
+    <!-- <transition> -->
+      <router-view  />
+    <!-- </transition> -->
   </section>
 </template>
 

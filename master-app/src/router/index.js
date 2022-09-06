@@ -77,6 +77,14 @@ export const constantRoutes = [
         component: MicroAppLayout,
         props: { id: 'app-react' },
         meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
+      },
+      {
+        path: 'index*',
+        name: 'app-react',
+        component: MicroAppLayout,
+        props: { id: 'app-react' },
+        hidden: true,
+        meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
       }
     ]
   },
@@ -89,8 +97,16 @@ export const constantRoutes = [
         name: 'app-vue',
         component: MicroAppLayout,
         props: { id: 'app-vue' },
-        meta: { title: 'VueApp', icon: 'el-icon-coin' },
+        meta: { title: 'VueApp', icon: 'el-icon-coin' }
       },
+      {
+        path: 'index*',
+        name: 'app-vue',
+        component: MicroAppLayout,
+        props: { id: 'app-vue' },
+        hidden: true,
+        meta: { title: 'VueApp', icon: 'el-icon-coin' }
+      }
     ]
   },
   {

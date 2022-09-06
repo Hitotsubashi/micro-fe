@@ -2,7 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ThemeColor from '@/components/ThemeColor';
-import ChangeRouteButton from './components/ChangeRouteButton';
+import ChangeMicroAppButton from './components/ChangeMicroAppButton';
+import ChangeRoute from './components/ChangeRoute';
+
 
 function App() {
   return (
@@ -10,7 +12,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <ThemeColor />
-        <ChangeRouteButton/>
+        <ChangeMicroAppButton/>
+        <ChangeRoute/>
       </header>
     </div>
   );
