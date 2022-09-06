@@ -54,7 +54,6 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-
   {
     path: '/form',
     component: Layout,
@@ -72,20 +71,21 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index',
+        path: 'index(.*)?',
+        menuPath:'index',
         name: 'app-react',
         component: MicroAppLayout,
         props: { id: 'app-react' },
         meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
       },
-      {
-        path: 'index*',
-        name: 'app-react',
-        component: MicroAppLayout,
-        props: { id: 'app-react' },
-        hidden: true,
-        meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
-      }
+      // {
+      //   path: 'index*',
+      //   name: 'app-react',
+      //   component: MicroAppLayout,
+      //   props: { id: 'app-react' },
+      //   hidden: true,
+      //   meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
+      // }
     ]
   },
   {
@@ -93,20 +93,21 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index',
+        path: 'index(.*)?',
+        menuPath:'index',
         name: 'app-vue',
         component: MicroAppLayout,
         props: { id: 'app-vue' },
         meta: { title: 'VueApp', icon: 'el-icon-coin' }
       },
-      {
-        path: 'index*',
-        name: 'app-vue',
-        component: MicroAppLayout,
-        props: { id: 'app-vue' },
-        hidden: true,
-        meta: { title: 'VueApp', icon: 'el-icon-coin' }
-      }
+      // {
+      //   path: 'index*',
+      //   name: 'app-vue',
+      //   component: MicroAppLayout,
+      //   props: { id: 'app-vue' },
+      //   hidden: true,
+      //   meta: { title: 'VueApp', icon: 'el-icon-coin' }
+      // }
     ]
   },
   {
