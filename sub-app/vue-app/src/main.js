@@ -18,6 +18,15 @@ function render(props = {}) {
     router,
     store,
     render: (h) => h(App),
+    watch:{
+      '$route':{
+        handler(){
+          let matched = this.$route.matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+          this.$shared.dispatch({type:'UPDATE_BREADCRUMB', payload: matched})
+        },
+        immediate: true
+      }
+    }
   }).$mount(container ? container.querySelector('#app') : '#app');
 
   if(window.__POWERED_BY_QIANKUN__&&process.env.NODE_ENV==='development'){

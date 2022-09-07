@@ -5,14 +5,16 @@ Vue.use(Router)
 
 const routes = [
     {
-        path: '/pageA',
+        path: '/page-a',
         name:'page-a',
         component: () => import('@/views/PageA/index'),
+        meta: {title:'PageA'}
     },
     {
-        path: '/pageB',
+        path: '/page-b',
         name:'page-b',
         component: () => import('@/views/PageB/index'),
+        meta: {title:'PageB'}
     },
     {
         path: '/',

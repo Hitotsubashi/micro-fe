@@ -11,7 +11,7 @@
 
 <script>
 import pathToRegexp from 'path-to-regexp'
-
+import {mapState} from 'vuex'
 export default {
   data() {
     return {
@@ -19,12 +19,20 @@ export default {
     }
   },
   watch: {
-    $route() {
-      this.getBreadcrumb()
+    routeIncludeMicroApp: {
+      handler(){
+        this.getBreadcrumb()
+      },
+      immedate: true
     }
   },
-  created() {
-    this.getBreadcrumb()
+  computed:{
+    ...mapState({
+      microAppBreadcrumbs: state=>state.microApp.breadcrumbs
+    }),
+    routeIncludeMicroApp(){
+      return [this.$route, this.microAppBreadcrumbs]
+    }
   },
   methods: {
     getBreadcrumb() {
@@ -36,7 +44,9 @@ export default {
         matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
       }
 
-      this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+      this.levelList = matched
+        .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+        .concat(this.microAppBreadcrumbs)
     },
     isDashboard(route) {
       const name = route && route.name
