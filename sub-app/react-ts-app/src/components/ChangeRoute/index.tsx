@@ -1,8 +1,27 @@
 import React, { FC } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useRoutes } from "react-router-dom";
 import './index.scss'
 
 const ChangeRoute: FC = ()=>{
+    const routes = [
+        {
+            path:'/',
+            element: <div>MainPage</div>,
+        },
+        {
+            path:'/PageA',
+            element: <div>PageA</div>,
+            breadcrumb: 'PageA'
+        },
+        {
+            path:'/PageB',
+            element: <div>PageB</div>,
+            breadcrumb: 'PageB'
+        }
+    ]
+
+    const element = useRoutes(routes)
+
     return (
         <div>
             <div className="change-route-buttons">
@@ -10,11 +29,7 @@ const ChangeRoute: FC = ()=>{
                 <Link className="button" to="/PageB">PageB</Link>
                 <Link className="button" to="/">MainPage</Link>
             </div>
-            <Routes>
-                <Route path="/PageA" element={<div>PageA</div>} />
-                <Route path="/PageB" element={<div>PageB</div>} />
-                <Route path="/" element={<div>MainPage</div>} />
-            </Routes>
+            {element}
         </div>
     )
 }
