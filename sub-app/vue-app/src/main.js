@@ -6,17 +6,25 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-let instance = null;
+let instance
+// let subDiv
 
 function render(props = {}) {
   const { container, shared } = props;
-  Vue.prototype.$shared = shared
+  Vue.prototype.$shared = shared;
 
   instance = new Vue({
+    name:'micro-vue-app',
     router,
     store,
     render: (h) => h(App),
   }).$mount(container ? container.querySelector('#app') : '#app');
+
+  // if(window.__POWERED_BY_QIANKUN__&&process.env.NODE_ENV==='development'){
+  //   subDiv = document.createElement('div')
+  //   subDiv.__vue__ = instance
+  //   document.body.appendChild(subDiv)
+  // }
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
@@ -40,5 +48,9 @@ export async function unmount() {
   instance.$destroy();
   instance.$el.innerHTML = '';
   instance = null;
+
+  // subDiv.__vue__ = null;
+  // document.body.removeChild(subDiv)
+  // subDiv = null;
 }
 
