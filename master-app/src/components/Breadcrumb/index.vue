@@ -31,7 +31,7 @@ export default {
       handler() {
         this.getBreadcrumb()
       },
-      immedate: true
+      immediate: true
     }
   },
   methods: {
