@@ -12,6 +12,8 @@ import { SharedContext } from './context/SharedContext';
 
 let root: ReactDOM.Root | undefined = undefined
 
+export const basename = '/app-react/index'
+
 function render(props:any){
   const { container,shared } = props;
   const View =  (
@@ -19,7 +21,7 @@ function render(props:any){
       <SharedContext.Provider value={shared}>
         <Provider store={store}>
           {/* @ts-ignore */}
-          <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/app-react/index' : '/'}>
+          <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? basename : '/'}>
             <App />
           </BrowserRouter>
         </Provider>

@@ -1,7 +1,7 @@
 const state = {
   loading: false,
   error: false,
-  breadcrumbs: [],
+  breadcrumbs: []
 }
 
 const mutations = {
@@ -11,7 +11,7 @@ const mutations = {
   SET_ERROR: (state, error) => {
     state.error = error
   },
-  SET_BREADCRUMBS: (state, breadcrumbs)=>{
+  SET_BREADCRUMBS: (state, breadcrumbs) => {
     state.breadcrumbs = breadcrumbs
   }
 }
@@ -25,7 +25,7 @@ const actions = {
     commit('SET_LOADING', false)
     commit('SET_ERROR', error)
   },
-  updateBreadcrumbs({commit}, breadcrumbs){
+  updateBreadcrumbs({ commit }, breadcrumbs) {
     commit('SET_BREADCRUMBS', breadcrumbs)
   }
 }

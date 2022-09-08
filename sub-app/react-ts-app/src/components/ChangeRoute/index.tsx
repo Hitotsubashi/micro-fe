@@ -1,7 +1,8 @@
 import { useShared } from "@/context/SharedContext";
 import React, { FC, useEffect } from "react";
-import { Link,  matchRoutes,  useLocation,  useRoutes, Outlet, useNavigate } from "react-router-dom";
+import { Link,  matchRoutes,  useLocation,  useRoutes, Outlet } from "react-router-dom";
 import './index.scss'
+import {basename} from '@/index'
 
 export const routes = [
     {
@@ -50,7 +51,7 @@ const ChangeRoute: FC = ()=>{
     useEffect(() => {
         const matched = matchRoutes(routes, location.pathname)!
             .map(({route, pathname})=>({
-                    path: '/app-react/index'+pathname,
+                    path: basename+pathname,
                     // @ts-ignore
                     meta: route.meta
             }))

@@ -40,8 +40,8 @@ export default {
       if (meta.activeMenu) {
         return meta.activeMenu
       }
-      if(meta.menuPath) {
-        return path.slice(0, path.indexOf(meta.menuPath)+meta.menuPath.length)
+      if (meta.menuPath) {
+        return path.slice(0, path.indexOf(meta.menuPath) + meta.menuPath.length)
       }
       return path
     },

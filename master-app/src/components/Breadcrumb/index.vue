@@ -11,27 +11,27 @@
 
 <script>
 import pathToRegexp from 'path-to-regexp'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
       levelList: null
     }
   },
+  computed: {
+    ...mapState({
+      microAppBreadcrumbs: state => state.microApp.breadcrumbs
+    }),
+    routeIncludeMicroApp() {
+      return [this.$route, this.microAppBreadcrumbs]
+    }
+  },
   watch: {
     routeIncludeMicroApp: {
-      handler(){
+      handler() {
         this.getBreadcrumb()
       },
       immedate: true
-    }
-  },
-  computed:{
-    ...mapState({
-      microAppBreadcrumbs: state=>state.microApp.breadcrumbs
-    }),
-    routeIncludeMicroApp(){
-      return [this.$route, this.microAppBreadcrumbs]
     }
   },
   methods: {
@@ -67,7 +67,7 @@ export default {
         this.$router.push(redirect)
         return
       }
-      console.log(this.pathCompile(path));
+      console.log(this.pathCompile(path))
       this.$router.push(this.pathCompile(path))
     }
   }
