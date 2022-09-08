@@ -9,13 +9,16 @@ import { Provider } from 'react-redux';
 import store from './store';
 import {appActions} from './store/module/app'
 import { SharedContext } from './context/SharedContext';
+import { Store } from 'redux';
 
-let root: ReactDOM.Root | undefined = undefined
+let root: ReactDOM.Root | null 
+let sharedStore: Store | null
 
 export const basename = '/app-react/index'
 
 function render(props:any){
   const { container,shared } = props;
+  sharedStore = shared
   const View =  (
     <React.StrictMode>
       <SharedContext.Provider value={shared}>
@@ -60,6 +63,8 @@ export async function mount(props:any) {
 
 export async function unmount(props:any) {
   console.log('[react16] react app unmount');
+  sharedStore?.dispatch({type:'UPDATE_BREADCRUMB', payload: []})
+  sharedStore = null
   root!.unmount()
 }
 

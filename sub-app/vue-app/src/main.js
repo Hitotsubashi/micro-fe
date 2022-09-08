@@ -28,6 +28,9 @@ function render(props = {}) {
         },
         immediate: true
       }
+    },
+    beforeDestroy(){
+      this.$shared.dispatch({type:'UPDATE_BREADCRUMB', payload: []})
     }
   }).$mount(container ? container.querySelector('#app') : '#app');
 
