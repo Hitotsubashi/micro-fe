@@ -6,6 +6,8 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
+
+import { loader, shared } from '@/qiankun'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -73,18 +75,18 @@ export const constantRoutes = [
       {
         path: 'index(.*)?',
         name: 'app-react',
+        microApp: {
+          name: 'react app', // app name registered
+          entry: '//localhost:3001',
+          container: '#app-react',
+          loader,
+          activeRule: '/app-react/index',
+          props: { shared }
+        },
         component: MicroAppLayout,
         props: { id: 'app-react' },
         meta: { title: 'ReactTSApp', microApp: true, menuPath: 'index', icon: 'el-icon-coin' }
       }
-      // {
-      //   path: 'index*',
-      //   name: 'app-react',
-      //   component: MicroAppLayout,
-      //   props: { id: 'app-react' },
-      //   hidden: true,
-      //   meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
-      // }
     ]
   },
   {
@@ -94,18 +96,18 @@ export const constantRoutes = [
       {
         path: 'index(.*)?',
         name: 'app-vue',
+        microApp: {
+          name: 'vue app', // app name registered
+          entry: '//localhost:3002',
+          container: '#app-vue',
+          loader,
+          activeRule: '/app-vue/index',
+          props: { shared }
+        },
         component: MicroAppLayout,
         props: { id: 'app-vue' },
         meta: { title: 'VueApp', microApp: true, menuPath: 'index', icon: 'el-icon-coin' }
       }
-      // {
-      //   path: 'index*',
-      //   name: 'app-vue',
-      //   component: MicroAppLayout,
-      //   props: { id: 'app-vue' },
-      //   hidden: true,
-      //   meta: { title: 'VueApp', icon: 'el-icon-coin' }
-      // }
     ]
   },
   {
@@ -115,6 +117,14 @@ export const constantRoutes = [
       {
         path: 'index',
         name: 'app-purehtml',
+        microApp: {
+          name: 'purehtml app', // app name registered
+          entry: '//localhost:3003',
+          container: '#app-purehtml',
+          loader,
+          activeRule: '/app-purehtml/index',
+          props: { shared }
+        },
         component: MicroAppLayout,
         props: { id: 'app-purehtml' },
         meta: { title: 'PureHTMLApp', microApp: true, icon: 'el-icon-coin' }

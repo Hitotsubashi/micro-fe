@@ -1,4 +1,4 @@
-import { registerMicroApps, initGlobalState, addErrorHandler } from 'qiankun'
+import { initGlobalState, addErrorHandler } from 'qiankun'
 import store from './store'
 import router from './router'
 import { createStore } from 'redux'
@@ -26,37 +26,10 @@ function reducer(state = {}, action) {
   }
 }
 
-const shared = createStore(reducer, {})
+export const shared = createStore(reducer, {})
 
-const loader = (loading) => {
+export const loader = (loading) => {
   store.dispatch('microApp/changeLoading', loading)
 }
-
-registerMicroApps([
-  {
-    name: 'react app', // app name registered
-    entry: '//localhost:3001',
-    container: '#app-react',
-    loader,
-    activeRule: '/app-react/index',
-    props: { shared }
-  },
-  {
-    name: 'vue app', // app name registered
-    entry: '//localhost:3002',
-    container: '#app-vue',
-    loader,
-    activeRule: '/app-vue/index',
-    props: { shared }
-  },
-  {
-    name: 'purehtml app', // app name registered
-    entry: '//localhost:3003',
-    container: '#app-purehtml',
-    loader,
-    activeRule: '/app-purehtml/index',
-    props: { shared }
-  }
-])
 
 export default actions
