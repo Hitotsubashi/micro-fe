@@ -2,11 +2,10 @@ import store from './store'
 import router from './router'
 import { createStore } from 'redux'
 
-
 function reducer(state = {}, action) {
   switch (action.type) {
     case 'UPDATE_GLOBAL_STATE':
-      actions.setGlobalState(action.payload)
+      // actions.setGlobalState(action.payload)
       return state
     case 'CHANGE_ROUTE':
       router.push(action.payload)

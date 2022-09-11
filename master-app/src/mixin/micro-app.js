@@ -1,5 +1,5 @@
 import { mapGetters } from 'vuex'
-import {initGlobalState, addErrorHandler} from 'qiankun'
+import { addErrorHandler, initGlobalState } from 'qiankun'
 import store from '@/store'
 
 const actions = initGlobalState(store.getters.microAppState)
@@ -22,5 +22,5 @@ export default {
       },
       deep: true
     }
-  },
+  }
 }

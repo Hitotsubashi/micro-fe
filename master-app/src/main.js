@@ -40,6 +40,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  mixins:[microAppMixin],
+  mixins: [microAppMixin],
   render: h => h(App)
 })
