@@ -37,7 +37,16 @@ export default {
     //     }
     //   })
     // }
-    this.microApp = loadMicroApp(this.$route.microApp)
+
+    this.microApp = loadMicroApp(
+      this.$route.meta.microApp,
+      {
+        sandbox: {
+          // strictStyleIsolation: true, // 严格沙箱
+          experimentalStyleIsolation: true // 实验性沙箱
+        }
+      }
+    )
   },
   beforeDestroy() {
     this.microApp.unmount()

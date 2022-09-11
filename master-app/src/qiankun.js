@@ -1,14 +1,7 @@
-import { initGlobalState, addErrorHandler } from 'qiankun'
 import store from './store'
 import router from './router'
 import { createStore } from 'redux'
 
-const actions = initGlobalState(store.getters.microAppState)
-
-addErrorHandler((error) => {
-  store.dispatch('microApp/changeError', true)
-  console.error(error)
-})
 
 function reducer(state = {}, action) {
   switch (action.type) {
@@ -32,4 +25,3 @@ export const loader = (loading) => {
   store.dispatch('microApp/changeLoading', loading)
 }
 
-export default actions

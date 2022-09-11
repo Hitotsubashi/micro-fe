@@ -75,17 +75,21 @@ export const constantRoutes = [
       {
         path: 'index(.*)?',
         name: 'app-react',
-        microApp: {
-          name: 'react app', // app name registered
-          entry: '//localhost:3001',
-          container: '#app-react',
-          loader,
-          activeRule: '/app-react/index',
-          props: { shared }
-        },
         component: MicroAppLayout,
         props: { id: 'app-react' },
-        meta: { title: 'ReactTSApp', microApp: true, menuPath: 'index', icon: 'el-icon-coin' }
+        meta: {
+          title: 'ReactTSApp',
+          microApp: {
+            name: 'react app', // app name registered
+            entry: '//localhost:3001',
+            container: '#app-react',
+            loader,
+            activeRule: '/app-react/index',
+            props: { shared }
+          },
+          menuPath: 'index',
+          icon: 'el-icon-coin'
+        }
       }
     ]
   },
@@ -96,17 +100,21 @@ export const constantRoutes = [
       {
         path: 'index(.*)?',
         name: 'app-vue',
-        microApp: {
-          name: 'vue app', // app name registered
-          entry: '//localhost:3002',
-          container: '#app-vue',
-          loader,
-          activeRule: '/app-vue/index',
-          props: { shared }
-        },
         component: MicroAppLayout,
         props: { id: 'app-vue' },
-        meta: { title: 'VueApp', microApp: true, menuPath: 'index', icon: 'el-icon-coin' }
+        meta: {
+          title: 'VueApp',
+          microApp: {
+            name: 'vue app', // app name registered
+            entry: '//localhost:3002',
+            container: '#app-vue',
+            loader,
+            activeRule: '/app-vue/index',
+            props: { shared }
+          },
+          menuPath: 'index',
+          icon: 'el-icon-coin'
+        }
       }
     ]
   },
@@ -117,17 +125,20 @@ export const constantRoutes = [
       {
         path: 'index',
         name: 'app-purehtml',
-        microApp: {
-          name: 'purehtml app', // app name registered
-          entry: '//localhost:3003',
-          container: '#app-purehtml',
-          loader,
-          activeRule: '/app-purehtml/index',
-          props: { shared }
-        },
         component: MicroAppLayout,
         props: { id: 'app-purehtml' },
-        meta: { title: 'PureHTMLApp', microApp: true, icon: 'el-icon-coin' }
+        meta: {
+          title: 'PureHTMLApp',
+          microApp: {
+            name: 'purehtml app', // app name registered
+            entry: '//localhost:3003',
+            container: '#app-purehtml',
+            loader,
+            activeRule: '/app-purehtml/index',
+            props: { shared }
+          },
+          icon: 'el-icon-coin'
+        }
       }
     ]
   },

@@ -12,11 +12,10 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-import actions from '@/qiankun'
+// import actions from '@/qiankun'
 import '@/icons' // icon
 import '@/permission' // permission control
-import { mapGetters } from 'vuex'
-
+import microAppMixin from '@/mixin/micro-app'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -41,18 +40,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  computed: {
-    ...mapGetters(['microAppState'])
-  },
-  watch: {
-    'microAppState': {
-      handler(val) {
-        actions.setGlobalState({
-          ...val
-        })
-      },
-      deep: true
-    }
-  },
+  mixins:[microAppMixin],
   render: h => h(App)
 })
