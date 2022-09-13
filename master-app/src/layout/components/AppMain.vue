@@ -2,7 +2,9 @@
   <section class="app-main">
     <transition :name="isMicroApp?undefined:'fade-transform'" :mode="isMicroApp?undefined:'out-in'">
       <!-- <transition name="fade-transform" mode="out-in"> -->
-      <router-view :key="key" />
+      <keep-alive :include="cachedViews">
+        <router-view :key="key" />
+      </keep-alive>
     </transition>
   </section>
 </template>
@@ -13,6 +15,9 @@ export default {
   computed: {
     key() {
       return this.$route.name
+    },
+    cachedViews() {
+      return this.$store.state.tagsView.cachedViews
     },
     isMicroApp() {
       return this.$route.meta.microApp
