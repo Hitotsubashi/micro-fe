@@ -58,6 +58,7 @@ export async function mount(props:any) {
   props.onGlobalStateChange((state:any)=>{
     store.dispatch(appActions.updateTheme(state.theme))
   }, true)
+  
   render(props);
 }
 

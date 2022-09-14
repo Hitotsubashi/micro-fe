@@ -38,6 +38,7 @@ Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 
 new Vue({
+  name:'master-app',
   el: '#app',
   router,
   store,
