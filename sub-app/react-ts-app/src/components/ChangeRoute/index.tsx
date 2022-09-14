@@ -68,9 +68,9 @@ const ChangeRoute: FC = ()=>{
                         // @ts-ignore
                         meta: route.meta
                 }))
-                .filter(item => 
-                    item.meta && item.meta.title && item.meta.breadcrumb !== false
-                )
+                // .filter(item => 
+                //     item.meta && item.meta.title && item.meta.breadcrumb !== false
+                // )
             shared!.dispatch({type:'UPDATE_ROUTES', payload: matched})
         }
     }, [location.pathname,shared])

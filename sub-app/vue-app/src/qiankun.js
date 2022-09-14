@@ -15,7 +15,7 @@ export const microAppMixin = {
         '$route':{
             handler(){
               const matched = this.$route.matched
-                  .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+                  // .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
                   .map(item=>({...item,path: this.$router.options.base+item.path}))
               this.$shared.dispatch({type:'UPDATE_ROUTES', payload: matched})
             },

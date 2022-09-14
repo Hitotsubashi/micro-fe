@@ -45,7 +45,7 @@ export default {
     ...mapState({
       visitedViews: state => state.tagsView.visitedViews,
       routes: state => state.permission.routes,
-      microAppRoutes: state => state.microApp.routes
+      microAppRoutes: state => state.microApp.routes.filter(item=>item.meta && item.meta.title)
     })
   },
   watch: {
@@ -105,7 +105,9 @@ export default {
       }
     },
     addTags() {
+      console.log(123);
       const { name } = this.$route
+      console.log();
       if (name) {
         if (this.microAppRoutes && this.microAppRoutes.length) {
           this.$store.dispatch('tagsView/addView',

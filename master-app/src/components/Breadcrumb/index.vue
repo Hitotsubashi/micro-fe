@@ -46,10 +46,9 @@ export default {
 
       this.levelList = matched
         .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
-        .concat(this.microAppRoutes)
-        // .concat(this.microAppRoutes
-        //   .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
-        //   )
+        .concat(this.microAppRoutes
+          .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+          )
     },
     isDashboard(route) {
       const name = route && route.name
@@ -70,7 +69,6 @@ export default {
         this.$router.push(redirect)
         return
       }
-      console.log(this.pathCompile(path))
       this.$router.push(this.pathCompile(path))
     }
   }
