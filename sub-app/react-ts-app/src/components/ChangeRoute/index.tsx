@@ -60,7 +60,7 @@ const ChangeRoute: FC = ()=>{
                 .filter(item => 
                     item.meta && item.meta.title && item.meta.breadcrumb !== false
                 )
-            shared!.dispatch({type:'UPDATE_BREADCRUMB', payload: matched})
+            shared!.dispatch({type:'UPDATE_ROUTES', payload: matched})
         }
     }, [location.pathname,shared])
 

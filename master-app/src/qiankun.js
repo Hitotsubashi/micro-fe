@@ -18,8 +18,8 @@ function reducer(state = {}, action) {
     case 'CHANGE_ROUTE':
       router.push(action.payload)
       return state
-    case 'UPDATE_BREADCRUMB':
-      store.dispatch('microApp/updateBreadcrumbs', action.payload)
+    case 'UPDATE_ROUTES':
+      store.dispatch('microApp/updateRoutes', action.payload)
       return state
     default:
       break

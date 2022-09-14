@@ -20,10 +20,10 @@ export default {
   },
   computed: {
     ...mapState({
-      microAppBreadcrumbs: state => state.microApp.breadcrumbs
+      microAppRoutes: state => state.microApp.routes
     }),
     routeIncludeMicroApp() {
-      return [this.$route, this.microAppBreadcrumbs]
+      return [this.$route, this.microAppRoutes]
     }
   },
   watch: {
@@ -46,7 +46,7 @@ export default {
 
       this.levelList = matched
         .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
-        .concat(this.microAppBreadcrumbs)
+        .concat(this.microAppRoutes)
     },
     isDashboard(route) {
       const name = route && route.name

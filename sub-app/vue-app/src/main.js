@@ -3,7 +3,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import {microAppMixin} from '@/qiankun'
+import {microAppMixin} from './qiankun'
 
 Vue.config.productionTip = false
 
