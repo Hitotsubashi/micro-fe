@@ -1,8 +1,19 @@
 import { useShared } from "@/context/SharedContext";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link,  matchRoutes,  useLocation,  useRoutes, Outlet } from "react-router-dom";
 import './index.scss'
 import {basename} from '@/index'
+
+const PageB: FC = ()=>{
+    const [value, setValue] = useState<string>()
+
+    return (
+        <>
+            <div>PageB</div>
+            <input value={value} onChange={(e)=>setValue(e.target.value)}/>
+        </>
+    )
+}
 
 export const routes = [
     {
@@ -35,7 +46,7 @@ export const routes = [
     },
     {
         path:'/page-b',
-        element: <div>PageB</div>,
+        element: <PageB/>,
         meta: {title: 'PageB'},
     }
 ]

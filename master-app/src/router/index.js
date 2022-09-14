@@ -3,9 +3,10 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+import microAppRoutes from './modules/micro-app'
+
 /* Layout */
 import Layout from '@/layout'
-import MicroAppLayout from '@/layout/MicroAppLayout'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -66,64 +67,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/app-react',
-    component: Layout,
-    children: [
-      {
-        path: 'index(.*)?',
-        name: 'app-react',
-        component: MicroAppLayout,
-        props: { id: 'app-react' },
-        meta: { title: 'ReactTSApp', microApp: true, noCache: true, menuPath: 'index', icon: 'el-icon-coin' }
-      }
-      // {
-      //   path: 'index*',
-      //   name: 'app-react',
-      //   component: MicroAppLayout,
-      //   props: { id: 'app-react' },
-      //   hidden: true,
-      //   meta: { title: 'ReactTSApp', icon: 'el-icon-coin' }
-      // }
-    ]
-  },
-  {
-    path: '/app-vue',
-    component: Layout,
-    children: [
-      {
-        path: 'index(.*)?',
-        name: 'app-vue',
-        component: MicroAppLayout,
-        props: { id: 'app-vue' },
-        meta: { title: 'VueApp', microApp: true, noCache: true, menuPath: 'index', icon: 'el-icon-coin' }
-      }
-      // {
-      //   path: 'index*',
-      //   name: 'app-vue',
-      //   component: MicroAppLayout,
-      //   props: { id: 'app-vue' },
-      //   hidden: true,
-      //   meta: { title: 'VueApp', icon: 'el-icon-coin' }
-      // }
-    ]
-  },
-  {
-    path: '/app-purehtml',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'app-purehtml',
-        component: MicroAppLayout,
-        props: { id: 'app-purehtml' },
-        meta: { title: 'PureHTMLApp', microApp: true, noCache: true, icon: 'el-icon-coin' }
-      }
-    ]
-  },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  ...microAppRoutes
 ]
 
 /**
@@ -162,7 +106,9 @@ export const asyncRoutes = [
         }
       }
     ]
-  }
+  },
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

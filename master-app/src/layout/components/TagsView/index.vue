@@ -28,7 +28,7 @@
 <script>
 import ScrollPane from './ScrollPane'
 import path from 'path'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   components: { ScrollPane },
@@ -43,9 +43,9 @@ export default {
   },
   computed: {
     ...mapState({
-      visitedViews: state=>state.tagsView.visitedViews,
-      routes: state=>state.permission.routes,
-      microAppRoutes: state=>state.microApp.routes,
+      visitedViews: state => state.tagsView.visitedViews,
+      routes: state => state.permission.routes,
+      microAppRoutes: state => state.microApp.routes
     })
   },
   watch: {
@@ -107,17 +107,17 @@ export default {
     addTags() {
       const { name } = this.$route
       if (name) {
-        if(this.$route.meta.microApp){
+        if (this.microAppRoutes && this.microAppRoutes.length) {
           this.$store.dispatch('tagsView/addView',
             {
               ...this.$route,
-              meta:{
+              meta: {
                 ...this.$route.meta,
-                title: `${this.$route.meta.title}-${this.microAppRoutes[this.microAppRoutes.length-1].meta.title}`
+                title: `${this.$route.meta.title}-${this.microAppRoutes[this.microAppRoutes.length - 1].meta.title}`
               }
             }
           )
-        }else{
+        } else {
           this.$store.dispatch('tagsView/addView', this.$route)
         }
       }

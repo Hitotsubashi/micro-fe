@@ -14,10 +14,10 @@ export const microAppMixin = {
     watch:{
         '$route':{
             handler(){
-            const matched = this.$route.matched
-                .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
-                .map(item=>({...item,path: this.$router.options.base+item.path}))
-            this.$shared.dispatch({type:'UPDATE_ROUTES', payload: matched})
+              const matched = this.$route.matched
+                  .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+                  .map(item=>({...item,path: this.$router.options.base+item.path}))
+              this.$shared.dispatch({type:'UPDATE_ROUTES', payload: matched})
             },
             immediate: true
         }

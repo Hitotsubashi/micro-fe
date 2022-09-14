@@ -28,6 +28,7 @@ router.beforeEach(async(to, from, next) => {
     } else {
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
       if (hasRoles) {
+        console.log(1, to)
         next()
       } else {
         try {
@@ -46,7 +47,9 @@ router.beforeEach(async(to, from, next) => {
 
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
+          console.log(2, { ...to })
           next({ ...to, replace: true })
+          // next()
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
@@ -58,7 +61,6 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()
