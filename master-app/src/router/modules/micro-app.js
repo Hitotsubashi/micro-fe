@@ -40,7 +40,7 @@ const microAppRoutes = [
         name: 'app-purehtml',
         component: Vue.extend({...MicroAppLayout,name: 'app-purehtml'}),
         props: { id: 'app-purehtml' },
-        meta: { title: 'PureHTMLApp', microApp: true, icon: 'el-icon-coin' }
+        meta: { title: 'PureHTMLApp', microApp: true, noCache: true, icon: 'el-icon-coin' }
       }
     ]
   }
