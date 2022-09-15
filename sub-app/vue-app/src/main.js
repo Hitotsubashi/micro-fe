@@ -3,11 +3,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import {microAppMixin} from './qiankun'
 
 Vue.config.productionTip = false
 
 let instance
-let subDiv
+// let subDiv
 
 function render(props = {}) {
   const { container, shared } = props;
@@ -18,27 +19,14 @@ function render(props = {}) {
     router,
     store,
     render: (h) => h(App),
-    watch:{
-      '$route':{
-        handler(){
-          const matched = this.$route.matched
-            .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
-            .map(item=>({...item,path: this.$router.options.base+item.path}))
-          this.$shared.dispatch({type:'UPDATE_BREADCRUMB', payload: matched})
-        },
-        immediate: true
-      }
-    },
-    beforeDestroy(){
-      this.$shared.dispatch({type:'UPDATE_BREADCRUMB', payload: []})
-    }
+    mixins: container?[microAppMixin]:undefined,
   }).$mount(container ? container.querySelector('#app') : '#app');
 
-  if(window.__POWERED_BY_QIANKUN__&&process.env.NODE_ENV==='development'){
-    subDiv = document.createElement('div')
-    subDiv.__vue__ = instance
-    document.body.appendChild(subDiv)
-  }
+  // if(window.__POWERED_BY_QIANKUN__&&process.env.NODE_ENV==='development'){
+  //   subDiv = document.createElement('div')
+  //   subDiv.__vue__ = instance
+  //   document.body.appendChild(subDiv)
+  // }
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
@@ -63,8 +51,8 @@ export async function unmount() {
   instance.$el.innerHTML = '';
   instance = null;
 
-  subDiv.__vue__ = null;
-  document.body.removeChild(subDiv)
-  subDiv = null;
+  // subDiv.__vue__ = null;
+  // document.body.removeChild(subDiv)
+  // subDiv = null;
 }
 

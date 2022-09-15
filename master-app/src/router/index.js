@@ -3,11 +3,10 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+import microAppRoutes from './modules/micro-app'
+
 /* Layout */
 import Layout from '@/layout'
-import MicroAppLayout from '@/layout/MicroAppLayout'
-
-import { loader, shared } from '@/qiankun'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -33,6 +32,17 @@ import { loader, shared } from '@/qiankun'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -68,81 +78,46 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/app-react',
-    component: Layout,
-    children: [
-      {
-        path: 'index(.*)?',
-        name: 'app-react',
-        component: MicroAppLayout,
-        props: { id: 'app-react' },
-        meta: {
-          title: 'ReactTSApp',
-          microApp: {
-            name: 'react app', // app name registered
-            entry: '//localhost:3001',
-            container: '#app-react',
-            loader,
-            activeRule: '/app-react/index',
-            props: { shared }
-          },
-          menuPath: 'index',
-          icon: 'el-icon-coin'
-        }
-      }
-    ]
-  },
-  {
-    path: '/app-vue',
-    component: Layout,
-    children: [
-      {
-        path: 'index(.*)?',
-        name: 'app-vue',
-        component: MicroAppLayout,
-        props: { id: 'app-vue' },
-        meta: {
-          title: 'VueApp',
-          microApp: {
-            name: 'vue app', // app name registered
-            entry: '//localhost:3002',
-            container: '#app-vue',
-            loader,
-            activeRule: '/app-vue/index',
-            props: { shared }
-          },
-          menuPath: 'index',
-          icon: 'el-icon-coin'
-        }
-      }
-    ]
-  },
-  {
-    path: '/app-purehtml',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'app-purehtml',
-        component: MicroAppLayout,
-        props: { id: 'app-purehtml' },
-        meta: {
-          title: 'PureHTMLApp',
-          microApp: {
-            name: 'purehtml app', // app name registered
-            entry: '//localhost:3003',
-            container: '#app-purehtml',
-            loader,
-            activeRule: '/app-purehtml/index',
-            props: { shared }
-          },
-          icon: 'el-icon-coin'
-        }
-      }
-    ]
-  },
+  ...microAppRoutes
+]
 
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Permission',
+    meta: {
+      title: 'Permission',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/permission/page'),
+        name: 'PagePermission',
+        meta: {
+          title: 'Page Permission',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'directive',
+        component: () => import('@/views/permission/directive'),
+        name: 'DirectivePermission',
+        meta: {
+          title: 'Directive Permission'
+          // if do not set roles, means: this page does not require permission
+        }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

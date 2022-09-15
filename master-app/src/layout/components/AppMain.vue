@@ -1,7 +1,9 @@
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
-      <router-view :key="key" />
+      <keep-alive :include="cachedViews">
+        <router-view :key="key" />
+      </keep-alive>
     </transition>
   </section>
 </template>
@@ -9,10 +11,21 @@
 <script>
 export default {
   name: 'AppMain',
+  watch: {
+    '$route': {
+      handler(){
+        this.$store.dispatch('tagsView/addView', this.$route)
+      },
+      immediate: true
+    }
+  },
   computed: {
     key() {
       return this.$route.name
-    }
+    },
+    cachedViews() {
+      return this.$store.state.tagsView.cachedViews
+    },
   }
 }
 </script>

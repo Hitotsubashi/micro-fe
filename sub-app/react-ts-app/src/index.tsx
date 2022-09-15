@@ -58,12 +58,13 @@ export async function mount(props:any) {
   props.onGlobalStateChange((state:any)=>{
     store.dispatch(appActions.updateTheme(state.theme))
   }, true)
+
   render(props);
 }
 
 export async function unmount(props:any) {
   console.log('[react16] react app unmount');
-  sharedStore?.dispatch({type:'UPDATE_BREADCRUMB', payload: []})
+  sharedStore?.dispatch({type:'UPDATE_ROUTES', payload: []})
   sharedStore = null
   root!.unmount()
 }

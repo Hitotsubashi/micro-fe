@@ -49,17 +49,19 @@ const ChangeRoute: FC = ()=>{
     const shared = useShared()
 
     useEffect(() => {
-        const matched = matchRoutes(routes, location.pathname)!
-            .map(({route, pathname})=>({
-                    path: basename+pathname,
-                    // @ts-ignore
-                    meta: route.meta
-            }))
-            .filter(item => 
-                item.meta && item.meta.title && item.meta.breadcrumb !== false
-            )
-        shared?.dispatch({type:'UPDATE_BREADCRUMB', payload: matched})
-        
+        // @ts-ignore
+        if(window.__POWERED_BY_QIANKUN__){
+            const matched = matchRoutes(routes, location.pathname)!
+                .map(({route, pathname})=>({
+                        path: basename+pathname,
+                        // @ts-ignore
+                        meta: route.meta
+                }))
+                // .filter(item => 
+                //     item.meta && item.meta.title && item.meta.breadcrumb !== false
+                // )
+            shared!.dispatch({type:'UPDATE_ROUTES', payload: matched})
+        }
     }, [location.pathname,shared])
 
     return (

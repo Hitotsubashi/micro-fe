@@ -38,6 +38,7 @@ Vue.config.productionTip = false
 
 new Vue({
   el: '#app',
+  name: 'MasterApp',
   router,
   store,
   mixins: [microAppMixin],

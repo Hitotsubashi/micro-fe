@@ -1,10 +1,15 @@
 <template>
-  <div>PageB</div>
+    <div>PageB</div> 
 </template>
 
 <script>
 export default {
-    name:'PageB'
+    name:'PageB',
+    data(){
+        return {
+            value: ''
+        }
+    }
 }
 </script>
 

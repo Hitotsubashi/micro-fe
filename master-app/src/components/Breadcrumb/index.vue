@@ -20,10 +20,10 @@ export default {
   },
   computed: {
     ...mapState({
-      microAppBreadcrumbs: state => state.microApp.breadcrumbs
+      microAppRoutes: state => state.microApp.routes
     }),
     routeIncludeMicroApp() {
-      return [this.$route, this.microAppBreadcrumbs]
+      return [this.$route, this.microAppRoutes]
     }
   },
   watch: {
@@ -37,7 +37,7 @@ export default {
   methods: {
     getBreadcrumb() {
       // only show routes with meta.title
-      let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
+      let matched = this.$route.matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
@@ -46,7 +46,9 @@ export default {
 
       this.levelList = matched
         .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
-        .concat(this.microAppBreadcrumbs)
+        .concat(this.microAppRoutes
+          .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+          )
     },
     isDashboard(route) {
       const name = route && route.name
@@ -67,7 +69,6 @@ export default {
         this.$router.push(redirect)
         return
       }
-      console.log(this.pathCompile(path))
       this.$router.push(this.pathCompile(path))
     }
   }

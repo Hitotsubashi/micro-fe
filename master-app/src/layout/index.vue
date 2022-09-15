@@ -27,12 +27,12 @@ export default {
     Settings,
     Sidebar,
     AppMain,
-    RightPanel
+    RightPanel,
   },
   mixins: [ResizeMixin],
   computed: {
     ...mapState({
-      showSettings: state => state.settings.showSettings
+      showSettings: state => state.settings.showSettings,
     }),
     sidebar() {
       return this.$store.state.app.sidebar
