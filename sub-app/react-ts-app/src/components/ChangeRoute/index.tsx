@@ -1,8 +1,7 @@
-import { useShared } from "@/context/SharedContext";
-import React, { FC, useEffect } from "react";
-import { Link,  matchRoutes,  useLocation,  useRoutes, Outlet } from "react-router-dom";
+import React, { FC } from "react";
+import { Link,  useRoutes, Outlet } from "react-router-dom";
 import './index.scss'
-import {basename} from '@/index'
+
 
 export const routes = [
     {
@@ -43,27 +42,7 @@ export const routes = [
 const ChangeRoute: FC = ()=>{
 
     const element = useRoutes(routes)
-
-    const location = useLocation()
-
-    const shared = useShared()
-
-    useEffect(() => {
-        // @ts-ignore
-        if(window.__POWERED_BY_QIANKUN__){
-            const matched = matchRoutes(routes, location.pathname)!
-                .map(({route, pathname})=>({
-                        path: basename+pathname,
-                        // @ts-ignore
-                        meta: route.meta
-                }))
-                // .filter(item => 
-                //     item.meta && item.meta.title && item.meta.breadcrumb !== false
-                // )
-            shared!.dispatch({type:'UPDATE_ROUTES', payload: matched})
-        }
-    }, [location.pathname,shared])
-
+    
     return (
         <div>
             <div className="change-route-buttons">
