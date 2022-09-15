@@ -76,7 +76,6 @@ const microAppRoutes = [
             activeRule: '/app-purehtml/index',
             props: { shared }
           },
-          noCache: true,
           icon: 'el-icon-coin'
         }
       }
