@@ -2,8 +2,6 @@ import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
 import Vue from 'vue'
 
-console.log('MicroAppLayout', MicroAppLayout);
-
 const microAppRoutes = [
   {
     path: '/app-react',
