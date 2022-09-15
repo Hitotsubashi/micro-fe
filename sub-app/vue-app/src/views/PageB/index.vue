@@ -1,8 +1,5 @@
 <template>
-    <div>
-      <div>PageB</div> 
-        <input v-model="value"/>
-    </div>
+    <div>PageB</div> 
 </template>
 
 <script>
