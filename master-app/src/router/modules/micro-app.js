@@ -1,8 +1,8 @@
 import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
 import Vue from 'vue'
+import { loader, shared } from '@/qiankun'
 
-console.log('MicroAppLayout', MicroAppLayout);
 
 const microAppRoutes = [
   {
@@ -14,7 +14,20 @@ const microAppRoutes = [
         name: 'app-react',
         component: Vue.extend({...MicroAppLayout,name: 'app-react'}),
         props: { id: 'app-react' },
-        meta: { title: 'ReactTSApp', microApp: true, noCache: true, menuPath: 'index', icon: 'el-icon-coin' }
+        meta: {
+          title: 'ReactTSApp',
+          microApp: {
+            name: 'react app', // app name registered
+            entry: '//localhost:3001',
+            container: '#app-react',
+            loader,
+            activeRule: '/app-react/index',
+            props: { shared }
+          },
+          noCache: true,
+          menuPath: 'index',
+          icon: 'el-icon-coin'
+        }
       }
     ]
   },
@@ -27,7 +40,20 @@ const microAppRoutes = [
         name: 'app-vue',
         component: Vue.extend({...MicroAppLayout,name: 'app-vue'}),
         props: { id: 'app-vue' },
-        meta: { title: 'VueApp', microApp: true, noCache: true, menuPath: 'index', icon: 'el-icon-coin' }
+        meta: {
+          title: 'VueApp',
+          microApp: {
+            name: 'vue app', // app name registered
+            entry: '//localhost:3002',
+            container: '#app-vue',
+            loader,
+            activeRule: '/app-vue/index',
+            props: { shared }
+          },
+          noCache: true,
+          menuPath: 'index',
+          icon: 'el-icon-coin'
+        }
       }
     ]
   },
@@ -40,7 +66,19 @@ const microAppRoutes = [
         name: 'app-purehtml',
         component: Vue.extend({...MicroAppLayout,name: 'app-purehtml'}),
         props: { id: 'app-purehtml' },
-        meta: { title: 'PureHTMLApp', microApp: true, noCache: true, icon: 'el-icon-coin' }
+        meta: {
+          title: 'PureHTMLApp',
+          microApp: {
+            name: 'purehtml app', // app name registered
+            entry: '//localhost:3003',
+            container: '#app-purehtml',
+            loader,
+            activeRule: '/app-purehtml/index',
+            props: { shared }
+          },
+          noCache: true,
+          icon: 'el-icon-coin'
+        }
       }
     ]
   }
