@@ -11,21 +11,21 @@
 <script>
 export default {
   name: 'AppMain',
-  watch: {
-    '$route': {
-      handler(){
-        this.$store.dispatch('tagsView/addView', this.$route)
-      },
-      immediate: true
-    }
-  },
   computed: {
     key() {
       return this.$route.name
     },
     cachedViews() {
       return this.$store.state.tagsView.cachedViews
-    },
+    }
+  },
+  watch: {
+    '$route': {
+      handler() {
+        this.$store.dispatch('tagsView/addView', this.$route)
+      },
+      immediate: true
+    }
   }
 }
 </script>

@@ -3,7 +3,6 @@ import MicroAppLayout from '@/layout/MicroAppLayout'
 import Vue from 'vue'
 import { loader, shared } from '@/qiankun'
 
-
 const microAppRoutes = [
   {
     path: '/app-react',
@@ -12,7 +11,7 @@ const microAppRoutes = [
       {
         path: 'index*',
         name: 'app-react',
-        component: Vue.extend({...MicroAppLayout,name: 'app-react'}),
+        component: Vue.extend({ ...MicroAppLayout, name: 'AppReact' }),
         props: { id: 'app-react' },
         meta: {
           title: 'ReactTSApp',
@@ -38,7 +37,7 @@ const microAppRoutes = [
       {
         path: 'index*',
         name: 'app-vue',
-        component: Vue.extend({...MicroAppLayout,name: 'app-vue'}),
+        component: Vue.extend({ ...MicroAppLayout, name: 'AppVue' }),
         props: { id: 'app-vue' },
         meta: {
           title: 'VueApp',
@@ -64,7 +63,7 @@ const microAppRoutes = [
       {
         path: 'index',
         name: 'app-purehtml',
-        component: Vue.extend({...MicroAppLayout,name: 'app-purehtml'}),
+        component: Vue.extend({ ...MicroAppLayout, name: 'AppPurehtml' }),
         props: { id: 'app-purehtml' },
         meta: {
           title: 'PureHTMLApp',

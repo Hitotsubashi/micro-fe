@@ -28,16 +28,6 @@ export default {
     })
   },
   mounted() {
-    // if (!window.qiankunStarted) {
-    //   window.qiankunStarted = true
-    //   start({
-    //     sandbox: {
-    //       // strictStyleIsolation: true, // 严格沙箱
-    //       experimentalStyleIsolation: true // 实验性沙箱
-    //     }
-    //   })
-    // }
-
     this.microApp = loadMicroApp(
       this.$route.meta.microApp,
       {
