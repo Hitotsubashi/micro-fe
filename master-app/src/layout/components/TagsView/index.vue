@@ -105,11 +105,9 @@ export default {
       }
     },
     addTags() {
-      console.log(123);
       const { name } = this.$route
-      console.log();
       if (name) {
-        if (this.microAppRoutes && this.microAppRoutes.length) {
+        if (this.$route.meta.microApp && this.microAppRoutes && this.microAppRoutes.length) {
           this.$store.dispatch('tagsView/addView',
             {
               ...this.$route,

@@ -1,5 +1,8 @@
 import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
+import Vue from 'vue'
+
+console.log('MicroAppLayout', MicroAppLayout);
 
 const microAppRoutes = [
   {
@@ -9,7 +12,7 @@ const microAppRoutes = [
       {
         path: 'index*',
         name: 'app-react',
-        component: MicroAppLayout,
+        component: Vue.extend({...MicroAppLayout,name: 'app-react'}),
         props: { id: 'app-react' },
         meta: { title: 'ReactTSApp', microApp: true, noCache: true, menuPath: 'index', icon: 'el-icon-coin' }
       }
@@ -22,7 +25,7 @@ const microAppRoutes = [
       {
         path: 'index*',
         name: 'app-vue',
-        component: MicroAppLayout,
+        component: Vue.extend({...MicroAppLayout,name: 'app-vue'}),
         props: { id: 'app-vue' },
         meta: { title: 'VueApp', microApp: true, noCache: true, menuPath: 'index', icon: 'el-icon-coin' }
       }
@@ -35,9 +38,9 @@ const microAppRoutes = [
       {
         path: 'index',
         name: 'app-purehtml',
-        component: MicroAppLayout,
+        component: Vue.extend({...MicroAppLayout,name: 'app-purehtml'}),
         props: { id: 'app-purehtml' },
-        meta: { title: 'PureHTMLApp', microApp: true, noCache: true, icon: 'el-icon-coin' }
+        meta: { title: 'PureHTMLApp', microApp: true, icon: 'el-icon-coin' }
       }
     ]
   }
