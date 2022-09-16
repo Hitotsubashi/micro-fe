@@ -1,5 +1,5 @@
 import './public-path';
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -16,10 +16,8 @@ let sharedStore: Store | null
 
 export const basename = '/app-react/index'
 
-function render(props:any){
-  const { container,shared } = props;
-  sharedStore = shared
-  const View =  (
+const View:FC = ()=>{
+  return (
     <React.StrictMode>
       <SharedContext.Provider value={shared}>
         <Provider store={store}>
@@ -30,6 +28,14 @@ function render(props:any){
         </Provider>
       </SharedContext.Provider>
     </React.StrictMode>
+  )
+}
+
+function render(props:any){
+  const { container,shared } = props;
+  sharedStore = shared
+  const View =  (
+    
   )
   if(container){
     root = ReactDOM.createRoot(
