@@ -43,10 +43,10 @@ const routes = [
     ],
   },
   {
-    path: "/404",
+    path: "*",
     component: () => import("@/views/404"),
   },
-  { path: "*", redirect: "/404", hidden: true },
+  // { path: "*", redirect: "/404", hidden: true },
 ];
 
 const router = new Router({

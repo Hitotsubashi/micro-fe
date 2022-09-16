@@ -5,14 +5,14 @@
 <script>
 export default {
   name: "404-page",
-  beforeCreate() {
-    if (window.__POWERED_BY_QIANKUN__) {
-      this.$shared.dispatch({
-        type: "CHANGE_ROUTE",
-        payload: "/404",
-      });
-    }
-  },
+//   mounted() {
+//     if (window.__POWERED_BY_QIANKUN__) {
+//       this.$shared.dispatch({
+//         type: "CHANGE_ROUTE",
+//         payload: "/404",
+//       });
+//     }
+//   },
 };
 </script>
 
