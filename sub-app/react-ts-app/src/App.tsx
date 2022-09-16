@@ -1,52 +1,84 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import ThemeColor from '@/components/ThemeColor';
-import ChangeMicroAppButton from './components/ChangeMicroAppButton';
-import ChangeRoute, { routes } from './components/ChangeRoute';
-import {basename} from '@/index'
-import {  matchRoutes,  useLocation } from "react-router-dom";
-import { useShared } from "@/context/SharedContext";
-import {  useEffect } from "react";
+import { Link, Outlet, useRoutes } from 'react-router-dom';
+import Index from '@/pages/index';
+import { basename } from '@/index';
+import { matchRoutes, useLocation } from 'react-router-dom';
+import { useShared } from '@/context/SharedContext';
+import { useEffect } from 'react';
+import Page404 from '@/pages/404';
+
+export const routes = [
+  {
+    path: '/',
+    element: <Index />,
+    children: [
+      {
+        index: true,
+        element: <div>MainPage</div>,
+      },
+      {
+        path: 'page-a',
+        element: (
+          <div>
+            PageA
+            <div className="change-route-buttons">
+              <Link className="button" to="/page-a/a-1">
+                A1
+              </Link>
+              <Link className="button" to="/page-a/a-2">
+                A2
+              </Link>
+              <Outlet />
+            </div>
+          </div>
+        ),
+        meta: { title: 'PageA' },
+        children: [
+          {
+            path: 'a-1',
+            meta: { title: 'A1' },
+            element: <div>A1</div>,
+          },
+          {
+            path: 'a-2',
+            meta: { title: 'A2' },
+            element: <div>A2</div>,
+          },
+        ],
+      },
+      {
+        path: 'page-b',
+        element: <div>PageB</div>,
+        meta: { title: 'PageB' },
+      },
+    ],
+  },
+  { path: '*', element: <Page404 /> },
+];
 
 function App() {
+  const location = useLocation();
 
-  const location = useLocation()
+  const shared = useShared();
 
-    const shared = useShared()
-
-    useEffect(() => {
+  useEffect(() => {
+    // @ts-ignore
+    if (window.__POWERED_BY_QIANKUN__) {
+      const matched = matchRoutes(routes, location.pathname)!.map(({ route, pathname }) => ({
+        path: basename + pathname,
         // @ts-ignore
-        if(window.__POWERED_BY_QIANKUN__){
-            const matched = matchRoutes(routes, location.pathname)!
-            
-            console.log('matched',matched);
-            
-            if(matched.length===0){
-              console.log(404)
-            }
-                
-            shared!.dispatch({
-              type:'UPDATE_ROUTES', 
-              payload: matched.map(({route, pathname})=>({
-                path: basename+pathname,
-                // @ts-ignore
-                meta: route.meta
-              }))
-            })
-        }
-    }, [location.pathname,shared])
+        meta: route.meta,
+      }));
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <ThemeColor />
-        <ChangeMicroAppButton/>
-        <ChangeRoute/>
-      </header>
-    </div>
-  );
+      shared!.dispatch({
+        type: 'UPDATE_ROUTES',
+        payload: matched,
+      });
+    }
+  }, [location.pathname, shared]);
+
+  const element = useRoutes(routes);
+
+  return element;
 }
 
 export default App;

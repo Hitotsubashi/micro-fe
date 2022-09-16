@@ -4,10 +4,8 @@
 
 <script>
 export default {
-    name:'PageMain'
-}
+  name: "PageMain",
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
