@@ -34,7 +34,7 @@ const loader = (loading) => {
 
 registerMicroApps([
   {
-    name: 'react app', // app name registered
+    name: 'react app',
     entry: '//localhost:3001',
     container: '#app-react',
     loader,
@@ -42,7 +42,7 @@ registerMicroApps([
     props: { shared }
   },
   {
-    name: 'vue app', // app name registered
+    name: 'vue app',
     entry: '//localhost:3002',
     container: '#app-vue',
     loader,
@@ -50,7 +50,15 @@ registerMicroApps([
     props: { shared }
   },
   {
-    name: 'purehtml app', // app name registered
+    name: 'vue3 app',
+    entry: '//localhost:3004',
+    container: '#app-vue3',
+    loader,
+    activeRule: '/app-vue3/index',
+    props: { shared }
+  },
+  {
+    name: 'purehtml app',
     entry: '//localhost:3003',
     container: '#app-purehtml',
     loader,
