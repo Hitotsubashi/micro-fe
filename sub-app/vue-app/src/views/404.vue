@@ -14,5 +14,6 @@ export default {
 .container{
     text-align: center;
     margin-top: 20vh;
+    font-size: 18px;
 }
 </style>
