@@ -6,20 +6,20 @@
 
 <script>
 export default {
-    methods:{
-        changeRoute(){
-            this.$shared.dispatch({
-                type: 'CHANGE_ROUTE',
-                payload: '/app-react/index'
-            })
-        }
-    }
-}
+  methods: {
+    changeRoute() {
+      this.$shared.dispatch({
+        type: "CHANGE_ROUTE",
+        payload: "/app-react/index",
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    .row{
-        margin: 8px;
-        text-align: center;
-    }
+.row {
+  margin: 8px;
+  text-align: center;
+}
 </style>
