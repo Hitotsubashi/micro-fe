@@ -22,6 +22,14 @@ export default {
     isMicroApp() {
       return this.$route.meta.microApp
     }
+  },
+  watch: {
+    '$route': {
+      handler() {
+        this.$store.dispatch('tagsView/addView', this.$route)
+      },
+      immediate: true
+    }
   }
 }
 </script>
