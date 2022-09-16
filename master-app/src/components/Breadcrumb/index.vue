@@ -48,7 +48,7 @@ export default {
         .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
         .concat(this.microAppRoutes
           .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
-          )
+        )
     },
     isDashboard(route) {
       const name = route && route.name
@@ -64,9 +64,14 @@ export default {
       return toPath(params)
     },
     handleLink(item) {
-      const { redirect, path } = item
+      const { redirect, path, meta, parent } = item
       if (redirect) {
         this.$router.push(redirect)
+        return
+      }
+      if (meta.microApp && meta.menuPath) {
+        const microAppPath = meta.menuPath.startsWith('/') ? meta.menuPath : (parent.path || '') + '/' + meta.menuPath
+        this.$router.push(microAppPath)
         return
       }
       this.$router.push(this.pathCompile(path))
