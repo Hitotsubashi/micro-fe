@@ -5,36 +5,48 @@ Vue.use(Router)
 
 const routes = [
     {
-        path: '/page-a',
-        name:'page-a',
-        component: () => import('@/views/PageA/index'),
-        meta: {title:'PageA'},
-        children:[
-            {
-                path: 'a-1',
-                name: 'page-a-1',
-                component: () => import('@/views/PageA/A1'),
-                meta: {title:'A1'},
-            },
-            {
-                path: 'a-2',
-                name: 'page-a-2',
-                component: () => import('@/views/PageA/A2'),
-                meta: {title:'A2'},
-            }
-        ]
-    },
-    {
-        path: '/page-b',
-        name:'page-b',
-        component: () => import('@/views/PageB/index'),
-        meta: {title:'PageB'}
-    },
-    {
         path: '/',
-        name: 'page-main',
-        component: () => import('@/views/PageMain/index'),
-    }
+        name: 'homepage',
+        component: () => import('@/views/index.vue'),
+        children:[
+          {
+            path: '/page-a',
+            name:'page-a',
+            component: () => import('@/views/PageA/index'),
+            meta: {title:'PageA'},
+            children:[
+                {
+                    path: 'a-1',
+                    name: 'page-a-1',
+                    component: () => import('@/views/PageA/A1'),
+                    meta: {title:'A1'},
+                },
+                {
+                    path: 'a-2',
+                    name: 'page-a-2',
+                    component: () => import('@/views/PageA/A2'),
+                    meta: {title:'A2'},
+                }
+            ]
+          },
+          {
+            path: '/page-b',
+            name:'page-b',
+            component: () => import('@/views/PageB/index'),
+            meta: {title:'PageB'}
+          },
+          {
+            path: '/',
+            name: 'page-main',
+            component: () => import('@/views/PageMain/index'),
+          },
+        ]
+      },
+      {
+        path: '/404',
+        component: () => import('@/views/404'),
+      },
+      { path: '*', redirect: '/404', hidden: true }
 ]
 
 const router =  new Router({

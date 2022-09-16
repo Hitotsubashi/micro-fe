@@ -21,12 +21,6 @@ function render(props = {}) {
     render: (h) => h(App),
     mixins: container?[microAppMixin]:undefined,
   }).$mount(container ? container.querySelector('#app') : '#app');
-
-  // if(window.__POWERED_BY_QIANKUN__&&process.env.NODE_ENV==='development'){
-  //   subDiv = document.createElement('div')
-  //   subDiv.__vue__ = instance
-  //   document.body.appendChild(subDiv)
-  // }
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
@@ -50,9 +44,5 @@ export async function unmount() {
   instance.$destroy();
   instance.$el.innerHTML = '';
   instance = null;
-
-  // subDiv.__vue__ = null;
-  // document.body.removeChild(subDiv)
-  // subDiv = null;
 }
 
