@@ -61,7 +61,6 @@ function App() {
   const shared = useShared();
 
   useEffect(() => {
-    // @ts-ignore
     if (window.__POWERED_BY_QIANKUN__) {
       const matched = matchRoutes(routes, location.pathname)!.map(({ route, pathname }) => ({
         path: basename + pathname,

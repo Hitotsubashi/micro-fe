@@ -15,7 +15,6 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const history = createWebHistory(
-  // @ts-expect-error: Unreachable code error
   window.__POWERED_BY_QIANKUN__ ? "/app-vue3/index" : "/"
 );
 

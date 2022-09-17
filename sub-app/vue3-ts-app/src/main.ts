@@ -12,7 +12,6 @@ function render(props: any) {
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 
-// @ts-ignore
 if (!window.__POWERED_BY_QIANKUN__) {
   render({});
 }
@@ -23,8 +22,7 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   render(props);
-  // instance.config.globalProperties.$onGlobalStateChange = props.onGlobalStateChange;
-  // instance.config.globalProperties.$setGlobalState = props.setGlobalState;
+  instance!.config.globalProperties.$shared = props.shared;
 }
 
 export async function unmount() {

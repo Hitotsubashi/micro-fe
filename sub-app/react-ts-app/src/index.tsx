@@ -38,7 +38,6 @@ function render(props: any) {
   );
 }
 
-// @ts-ignore
 if (!window.__POWERED_BY_QIANKUN__) {
   render({});
 }
