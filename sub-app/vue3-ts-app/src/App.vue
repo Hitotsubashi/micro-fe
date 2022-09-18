@@ -3,6 +3,11 @@
     <router-view />
   </div>
 </template>
+<script>
+export default {
+  name: "Vue3TSApp",
+};
+</script>
 
 <style lang="scss">
 #app {

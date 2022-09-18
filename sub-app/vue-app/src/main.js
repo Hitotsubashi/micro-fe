@@ -15,7 +15,7 @@ function render(props = {}) {
   Vue.prototype.$shared = shared;
 
   instance = new Vue({
-    name: "micro-vue-app",
+    name: "VueApp",
     router,
     store,
     render: (h) => h(App),
