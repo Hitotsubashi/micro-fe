@@ -8,11 +8,16 @@ export function useMicroApp() {
 
   const router = useRouter();
 
-  watch(route, (value) => {
-    const matched = value.matched.map((item) => ({
-      ...item,
-      path: router.options.history.base + item.path,
-    }));
-    $shared.dispatch({ type: "UPDATE_ROUTES", payload: matched });
-  });
+  watch(
+    route,
+    (value) => {
+      const matched = value.matched.map((item) => ({
+        ...item,
+        path: router.options.history.base + item.path,
+      }));
+      console.log(matched);
+      $shared.dispatch({ type: "UPDATE_ROUTES", payload: matched });
+    },
+    { immediate: true }
+  );
 }
