@@ -1,3 +1,4 @@
+import "./public-path";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router, { destroyRouter } from "./router";
@@ -8,8 +9,9 @@ let instance: ReturnType<typeof createApp> | null = null;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function render(props: any) {
-  const { container } = props;
+  const { container, shared } = props;
   instance = createApp(App).use(pinia).use(router);
+  instance.provide("$shared", shared);
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 
@@ -23,7 +25,7 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   render(props);
-  instance!.config.globalProperties.$shared = props.shared;
+  // instance!.config.globalProperties.$shared = props.shared;
   props.onGlobalStateChange((state: any) => {
     const app = useAppStore();
     app.changeTheme(state.theme);
