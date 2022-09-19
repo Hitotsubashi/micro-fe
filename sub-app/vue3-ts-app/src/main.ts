@@ -11,7 +11,9 @@ let instance: ReturnType<typeof createApp> | null = null;
 function render(props: any) {
   const { container, shared } = props;
   instance = createApp(App).use(pinia).use(router);
-  instance.provide("$shared", shared);
+  if (window.__POWERED_BY_QIANKUN__) {
+    instance.provide("$shared", shared);
+  }
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 

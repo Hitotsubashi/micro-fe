@@ -39,7 +39,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: "PageB" },
       },
       {
-        path: "index",
+        path: "/",
         name: "page-main",
         component: () => import("@/views/PageMain/index.vue"),
       },

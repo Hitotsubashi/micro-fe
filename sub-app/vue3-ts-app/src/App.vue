@@ -3,10 +3,18 @@
     <router-view />
   </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+import { useMicroApp } from "@/hooks/useMicroApp";
+
+export default defineComponent({
   name: "Vue3TSApp",
-};
+  setup() {
+    if (window.__POWERED_BY_QIANKUN__) {
+      useMicroApp();
+    }
+  },
+});
 </script>
 
 <style lang="scss">

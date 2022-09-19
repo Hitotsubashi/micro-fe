@@ -2,10 +2,12 @@
   <div class="container">404</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue-demi";
+
+export default defineComponent({
   name: "404-page",
-};
+});
 </script>
 
 <style lang="scss" scoped>
