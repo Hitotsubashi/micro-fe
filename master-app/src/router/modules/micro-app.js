@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
 import Vue from 'vue'
-import { loader, shared } from '@/qiankun'
+import { loader, sharedDispatcher } from '@/qiankun'
 
 const microAppRoutes = [
   {
@@ -21,7 +21,7 @@ const microAppRoutes = [
             container: '#app-react',
             loader,
             activeRule: '/app-react/index',
-            props: { shared }
+            props: { shared: sharedDispatcher }
           },
           noCache: true,
           menuPath: 'index',
@@ -47,7 +47,7 @@ const microAppRoutes = [
             container: '#app-vue',
             loader,
             activeRule: '/app-vue/index',
-            props: { shared }
+            props: { shared: sharedDispatcher }
           },
           noCache: true,
           menuPath: 'index',
@@ -65,7 +65,20 @@ const microAppRoutes = [
         name: 'AppVue3',
         component: Vue.extend({ ...MicroAppLayout, name: 'AppVue3' }),
         props: { id: 'app-vue3' },
-        meta: { title: 'Vue3App', microApp: true, noCache: true, menuPath: 'index', icon: 'el-icon-coin' }
+        meta: {
+          title: 'Vue3App',
+          microApp: {
+            name: 'vue3 app',
+            entry: '//localhost:3004',
+            container: '#app-vue3',
+            loader,
+            activeRule: '/app-vue3/index',
+            props: { shared: sharedDispatcher }
+          },
+          noCache: true,
+          menuPath: 'index',
+          icon: 'el-icon-coin'
+        }
       }
     ]
   },
@@ -86,7 +99,7 @@ const microAppRoutes = [
             container: '#app-purehtml',
             loader,
             activeRule: '/app-purehtml/index',
-            props: { shared }
+            props: { shared: sharedDispatcher }
           },
           icon: 'el-icon-coin'
         }

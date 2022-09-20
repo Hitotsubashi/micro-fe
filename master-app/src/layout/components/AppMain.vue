@@ -26,14 +26,6 @@ export default {
       },
       immediate: true
     }
-  },
-  watch: {
-    '$route': {
-      handler() {
-        this.$store.dispatch('tagsView/addView', this.$route)
-      },
-      immediate: true
-    }
   }
 }
 </script>

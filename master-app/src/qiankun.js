@@ -23,12 +23,3 @@ export const sharedDispatcher = {
     this.reducer(action)
   }
 }
-
-const actions = initGlobalState(store.getters.microAppState)
-
-addErrorHandler((error) => {
-  store.dispatch('microApp/changeError', true)
-  console.error(error)
-})
-
-export default actions
