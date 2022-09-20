@@ -40,7 +40,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "/",
-        name: "page-main",
+        name: "home",
         component: () => import("@/views/PageMain/index.vue"),
       },
     ],
