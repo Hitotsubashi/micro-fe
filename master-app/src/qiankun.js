@@ -1,26 +1,34 @@
 import store from './store'
 import router from './router'
-import { createStore } from 'redux'
-
-function reducer(state = {}, action) {
-  switch (action.type) {
-    case 'UPDATE_GLOBAL_STATE':
-      // actions.setGlobalState(action.payload)
-      return state
-    case 'CHANGE_ROUTE':
-      router.push(action.payload)
-      return state
-    case 'UPDATE_ROUTES':
-      store.dispatch('microApp/updateRoutes', action.payload)
-      return state
-    default:
-      break
-  }
-}
-
-export const shared = createStore(reducer, {})
 
 export const loader = (loading) => {
   store.dispatch('microApp/changeLoading', loading)
 }
 
+export const sharedDispatcher = {
+  reducer(action) {
+    switch (action.type) {
+      case 'CHANGE_ROUTE':
+        router.push(action.payload)
+        break
+      case 'UPDATE_ROUTES':
+        store.dispatch('microApp/updateRoutes', action.payload)
+        break
+      default:
+        break
+    }
+  },
+
+  dispatch(action) {
+    this.reducer(action)
+  }
+}
+
+const actions = initGlobalState(store.getters.microAppState)
+
+addErrorHandler((error) => {
+  store.dispatch('microApp/changeError', true)
+  console.error(error)
+})
+
+export default actions

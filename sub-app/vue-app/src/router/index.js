@@ -6,7 +6,6 @@ Vue.use(Router);
 const routes = [
   {
     path: "/",
-    name: "homepage",
     component: () => import("@/views/index.vue"),
     children: [
       {
@@ -44,6 +43,7 @@ const routes = [
   },
   {
     path: "*",
+    name: "404",
     component: () => import("@/views/404"),
   },
   // { path: "*", redirect: "/404", hidden: true },
