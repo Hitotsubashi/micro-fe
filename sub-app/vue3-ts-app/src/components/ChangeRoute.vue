@@ -3,7 +3,7 @@
     <div class="change-route-buttons">
       <router-link class="button" :to="{ name: 'page-a' }">PageA</router-link>
       <router-link class="button" :to="{ name: 'page-b' }">PageB</router-link>
-      <router-link class="button" :to="{ name: 'page-main' }">主页</router-link>
+      <router-link class="button" :to="{ name: 'home' }">主页</router-link>
     </div>
     <router-view></router-view>
   </div>
