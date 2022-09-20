@@ -1,7 +1,6 @@
 import { registerMicroApps, initGlobalState, addErrorHandler } from 'qiankun'
 import store from './store'
 import router from './router'
-import { createStore } from 'redux'
 
 const actions = initGlobalState(store.getters.microAppState)
 
@@ -10,23 +9,24 @@ addErrorHandler((error) => {
   console.error(error)
 })
 
-function reducer(state = {}, action) {
-  switch (action.type) {
-    case 'UPDATE_GLOBAL_STATE':
-      actions.setGlobalState(action.payload)
-      return state
-    case 'CHANGE_ROUTE':
-      router.push(action.payload)
-      return state
-    case 'UPDATE_ROUTES':
-      store.dispatch('microApp/updateRoutes', action.payload)
-      return state
-    default:
-      break
+const sharedDispatcher = {
+  reducer(action) {
+    switch (action.type) {
+      case 'CHANGE_ROUTE':
+        router.push(action.payload)
+        break
+      case 'UPDATE_ROUTES':
+        store.dispatch('microApp/updateRoutes', action.payload)
+        break
+      default:
+        break
+    }
+  },
+
+  dispatch(action) {
+    this.reducer(action)
   }
 }
-
-const shared = createStore(reducer, {})
 
 const loader = (loading) => {
   store.dispatch('microApp/changeLoading', loading)
@@ -39,7 +39,7 @@ registerMicroApps([
     container: '#app-react',
     loader,
     activeRule: '/app-react/index',
-    props: { shared }
+    props: { shared: sharedDispatcher }
   },
   {
     name: 'vue app',
@@ -47,7 +47,7 @@ registerMicroApps([
     container: '#app-vue',
     loader,
     activeRule: '/app-vue/index',
-    props: { shared }
+    props: { shared: sharedDispatcher }
   },
   {
     name: 'vue3 app',
@@ -55,7 +55,7 @@ registerMicroApps([
     container: '#app-vue3',
     loader,
     activeRule: '/app-vue3/index',
-    props: { shared }
+    props: { shared: sharedDispatcher }
   },
   {
     name: 'purehtml app',
@@ -63,7 +63,7 @@ registerMicroApps([
     container: '#app-purehtml',
     loader,
     activeRule: '/app-purehtml/index',
-    props: { shared }
+    props: { shared: sharedDispatcher }
   }
 ])
 
