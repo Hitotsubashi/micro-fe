@@ -13,6 +13,7 @@ const routes = [
         name: "page-a",
         component: () => import("@/views/PageA/index"),
         meta: { title: "PageA" },
+        redirect: { name: "page-a-2" },
         children: [
           {
             path: "a-1",

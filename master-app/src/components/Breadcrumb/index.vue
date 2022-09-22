@@ -48,6 +48,7 @@ export default {
         .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
         .concat(this.microAppRoutes
           .filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+          .map(item => ({ ...item, microApp: true }))
         )
     },
     isDashboard(route) {
@@ -64,8 +65,8 @@ export default {
       return toPath(params)
     },
     handleLink(item) {
-      const { redirect, path, meta, parent } = item
-      if (redirect) {
+      const { redirect, path, meta, parent, microApp } = item
+      if (!microApp && redirect) {
         this.$router.push(redirect)
         return
       }
