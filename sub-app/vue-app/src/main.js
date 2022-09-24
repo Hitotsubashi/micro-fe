@@ -1,9 +1,9 @@
 import "./public-path";
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router";
 import store from "./store";
 import { microAppMixin } from "./qiankun";
+import getRouter from "./router";
 
 Vue.config.productionTip = false;
 
@@ -11,12 +11,12 @@ let instance;
 // let subDiv
 
 function render(props = {}) {
-  const { container, shared } = props;
+  const { container, shared,basepath } = props;
   Vue.prototype.$shared = shared;
 
   instance = new Vue({
     name: "VueApp",
-    router,
+    router: getRouter(basepath),
     store,
     render: (h) => h(App),
     mixins: container ? [microAppMixin] : undefined,

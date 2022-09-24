@@ -14,10 +14,8 @@ import { Store } from 'redux';
 let root: ReactDOM.Root | null;
 let sharedStore: Store | null;
 
-export const basename = '/app-react/index';
-
 function render(props: any) {
-  const { container, shared } = props;
+  const { container, shared, basepath } = props;
   sharedStore = shared;
   if (container) {
     root = ReactDOM.createRoot(container.querySelector('#root'));
@@ -29,7 +27,7 @@ function render(props: any) {
       <SharedContext.Provider value={shared}>
         <Provider store={store}>
           {/* @ts-ignore */}
-          <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? basename : '/'}>
+          <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? basepath : '/'}>
             <App />
           </BrowserRouter>
         </Provider>

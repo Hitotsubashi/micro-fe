@@ -3,6 +3,7 @@ import {
   createWebHistory,
   Router,
   RouteRecordRaw,
+  RouterHistory,
 } from "vue-router";
 import Home from "../views/Home.vue";
 
@@ -52,19 +53,22 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 
-const history = createWebHistory(
-  window.__POWERED_BY_QIANKUN__ ? "/app-vue3/index" : "/"
-);
+let history: RouterHistory;
+let router: Router;
 
-let router: Router = createRouter({
-  history,
-  routes,
-});
+export function getRouter(base: string) {
+  if (!router) {
+    history = createWebHistory(window.__POWERED_BY_QIANKUN__ ? base : "/");
+    router = createRouter({
+      history,
+      routes,
+    });
+  }
+  return router;
+}
 
 export function destroyRouter() {
   // @ts-expect-error: Unreachable code error
   router = null;
   history.destroy();
 }
-
-export default router;
