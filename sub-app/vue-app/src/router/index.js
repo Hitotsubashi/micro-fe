@@ -57,7 +57,7 @@ export default function getRouter(base){
     router = new Router({
       mode: "history", // require service support
       scrollBehavior: () => ({ y: 0 }),
-      base: window.__POWERED_BY_QIANKUN__ ? "/app-vue/index" : "/",
+      base: window.__POWERED_BY_QIANKUN__ ? base : "/",
       routes,
     });
   }
