@@ -50,11 +50,17 @@ const routes = [
   // { path: "*", redirect: "/404", hidden: true },
 ];
 
-const router = new Router({
-  mode: "history", // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  base: window.__POWERED_BY_QIANKUN__ ? "/app-vue/index" : "/",
-  routes,
-});
+let router
 
-export default router;
+export default function getRouter(base){
+  if(!router){
+    router = new Router({
+      mode: "history", // require service support
+      scrollBehavior: () => ({ y: 0 }),
+      base: window.__POWERED_BY_QIANKUN__ ? "/app-vue/index" : "/",
+      routes,
+    });
+  }
+  return router
+}
+
