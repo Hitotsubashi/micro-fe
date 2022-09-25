@@ -27,7 +27,6 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   render(props);
-  // instance!.config.globalProperties.$shared = props.shared;
   props.onGlobalStateChange((state: any) => {
     const app = useAppStore();
     app.changeTheme(state.theme);
