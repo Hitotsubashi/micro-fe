@@ -14,7 +14,7 @@ export default {
   name: 'AppMain',
   computed: {
     key() {
-      return this.$route.name
+      return this.$route.name || this.$route.path
     },
     cachedViews() {
       return this.$store.state.tagsView.cachedViews
