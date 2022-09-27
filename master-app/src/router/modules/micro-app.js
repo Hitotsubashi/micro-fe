@@ -75,7 +75,7 @@ const microAppRoutes = [
             activeRule: '/app-vue3/index',
             props: { shared: sharedDispatcher,basepath: '/app-vue3/index' }
           },
-          noCache: true,
+          // noCache: true,
           menuPath: 'index',
           icon: 'el-icon-coin'
         }
