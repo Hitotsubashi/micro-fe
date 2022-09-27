@@ -1,7 +1,7 @@
 import "./public-path";
 import { createApp } from "vue";
 import App from "./App.vue";
-import { getRouter, destroyRouter } from "./router";
+// import { getRouter, destroyRouter } from "./router";
 import pinia from "./pinia";
 import { useAppStore } from "./pinia/modules/app";
 
@@ -9,8 +9,9 @@ let instance: ReturnType<typeof createApp> | null = null;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function render(props: any) {
-  const { container, shared, basepath } = props;
-  instance = createApp(App).use(pinia).use(getRouter(basepath));
+  const { container, shared } = props;
+  instance = createApp(App).use(pinia);
+  // .use(getRouter(basepath));
   if (window.__POWERED_BY_QIANKUN__) {
     instance.provide("$shared", shared);
   }
@@ -36,5 +37,5 @@ export async function mount(props: any) {
 export async function unmount() {
   instance!.unmount();
   instance!._container!.innerHTML = "";
-  destroyRouter();
+  // destroyRouter();
 }
