@@ -39,7 +39,10 @@ registerMicroApps([
     container: '#app-react',
     loader,
     activeRule: '/app-react/index',
-    props: { shared: sharedDispatcher }
+    props: {
+      shared: sharedDispatcher,
+      basepath: '/app-react/index'
+    }
   },
   {
     name: 'vue app',
@@ -47,7 +50,10 @@ registerMicroApps([
     container: '#app-vue',
     loader,
     activeRule: '/app-vue/index',
-    props: { shared: sharedDispatcher }
+    props: {
+      shared: sharedDispatcher,
+      basepath: '/app-vue/index'
+    }
   },
   {
     name: 'vue3 app',
@@ -55,7 +61,10 @@ registerMicroApps([
     container: '#app-vue3',
     loader,
     activeRule: '/app-vue3/index',
-    props: { shared: sharedDispatcher }
+    props: {
+      shared: sharedDispatcher,
+      basepath: '/app-vue3/index'
+    }
   },
   {
     name: 'purehtml app',

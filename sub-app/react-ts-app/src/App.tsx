@@ -1,9 +1,8 @@
-import { Link, Outlet, useRoutes } from 'react-router-dom';
+import { Link, Outlet, UNSAFE_NavigationContext, useRoutes } from 'react-router-dom';
 import Index from '@/pages/index';
-import { basename } from '@/index';
 import { matchRoutes, useLocation } from 'react-router-dom';
 import { useShared } from '@/context/SharedContext';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Page404 from '@/pages/404';
 
 export const routes = [
@@ -56,6 +55,8 @@ export const routes = [
 ];
 
 function App() {
+  const {basename} = useContext(UNSAFE_NavigationContext);
+
   const location = useLocation();
 
   const shared = useShared();
@@ -73,7 +74,7 @@ function App() {
         payload: matched,
       });
     }
-  }, [location.pathname, shared]);
+  }, [basename, location.pathname, shared]);
 
   const element = useRoutes(routes);
 
