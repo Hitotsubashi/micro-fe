@@ -5,18 +5,12 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-// import { useMicroApp } from "@/hooks/useMicroApp";
 import Home from "@/views/Home.vue";
 
 export default defineComponent({
   name: "Vue3TSApp",
   components: {
     Home,
-  },
-  setup() {
-    // if (window.__POWERED_BY_QIANKUN__) {
-    //   useMicroApp();
-    // }
   },
 });
 </script>
