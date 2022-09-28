@@ -23,7 +23,7 @@ const microAppRoutes = [
             activeRule: '/app-react/index',
             props: {
               shared: sharedDispatcher,
-              basepath: '/app-react/index',
+              basepath: '/app-react/index'
             }
           },
           noCache: true,
@@ -51,8 +51,8 @@ const microAppRoutes = [
             loader,
             activeRule: '/app-vue/index',
             props: {
-              shared: sharedDispatcher ,
-              basepath: '/app-vue/index',
+              shared: sharedDispatcher,
+              basepath: '/app-vue/index'
             }
           },
           noCache: true,
@@ -81,7 +81,7 @@ const microAppRoutes = [
             activeRule: '/app-vue3/index',
             props: {
               shared: sharedDispatcher,
-              basepath:'/app-vue3/index',
+              basepath: '/app-vue3/index'
             }
           },
           // noCache: true,
