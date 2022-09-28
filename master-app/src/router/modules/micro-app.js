@@ -16,7 +16,7 @@ const microAppRoutes = [
         meta: {
           title: 'ReactTSApp',
           microApp: {
-            name: 'react app', // app name registered
+            name: 'react app',
             entry: '//localhost:3001',
             container: '#app-react',
             loader,
@@ -45,7 +45,7 @@ const microAppRoutes = [
         meta: {
           title: 'VueApp',
           microApp: {
-            name: 'vue app', // app name registered
+            name: 'vue app',
             entry: '//localhost:3002',
             container: '#app-vue',
             loader,
@@ -103,7 +103,7 @@ const microAppRoutes = [
         meta: {
           title: 'PureHTMLApp',
           microApp: {
-            name: 'purehtml app', // app name registered
+            name: 'purehtml app',
             entry: '//localhost:3003',
             container: '#app-purehtml',
             loader,
