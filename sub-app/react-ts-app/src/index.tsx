@@ -12,11 +12,11 @@ import { SharedContext } from './context/SharedContext';
 import { Store } from 'redux';
 
 let root: ReactDOM.Root | null;
-let sharedStore: Store | null;
+let sharedDispatcher: any;
 
 function render(props: any) {
   const { container, shared, basepath } = props;
-  sharedStore = shared;
+  sharedDispatcher = shared;
   if (container) {
     root = ReactDOM.createRoot(container.querySelector('#root'));
   } else {
@@ -56,8 +56,8 @@ export async function mount(props: any) {
 
 export async function unmount(props: any) {
   console.log('[react16] react app unmount');
-  sharedStore?.dispatch({ type: 'UPDATE_ROUTES', payload: [] });
-  sharedStore = null;
+  sharedDispatcher?.dispatch({ type: 'UPDATE_ROUTES', payload: [] });
+  sharedDispatcher = null;
   root!.unmount();
 }
 

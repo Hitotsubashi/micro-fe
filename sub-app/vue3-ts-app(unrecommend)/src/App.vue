@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <Home />
+    <router-view />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import Home from "@/views/Home.vue";
+import { useMicroApp } from "@/hooks/useMicroApp";
 
 export default defineComponent({
   name: "Vue3TSApp",
-  components: {
-    Home,
+  setup() {
+    if (window.__POWERED_BY_QIANKUN__) {
+      useMicroApp();
+    }
   },
 });
 </script>

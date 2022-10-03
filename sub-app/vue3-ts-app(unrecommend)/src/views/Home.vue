@@ -4,6 +4,7 @@
     <HelloWorld msg="Welcome to Your Vue3 + TypeScript App" />
     <ThemeColor />
     <ChangeMicroAppButton />
+    <ChangeRoute />
     <input v-model="value" />
   </div>
 </template>
@@ -13,6 +14,7 @@ import { defineComponent, ref } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import ThemeColor from "@/components/ThemeColor.vue";
 import ChangeMicroAppButton from "@/components/ChangeMicroAppButton.vue";
+import ChangeRoute from "@/components/ChangeRoute.vue";
 
 export default defineComponent({
   name: "HomePage",
@@ -20,6 +22,7 @@ export default defineComponent({
     HelloWorld,
     ThemeColor,
     ChangeMicroAppButton,
+    ChangeRoute,
   },
   setup() {
     const value = ref("");
