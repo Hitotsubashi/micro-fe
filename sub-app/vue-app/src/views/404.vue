@@ -5,14 +5,6 @@
 <script>
 export default {
   name: "404-page",
-//   mounted() {
-//     if (window.__POWERED_BY_QIANKUN__) {
-//       this.$shared.dispatch({
-//         type: "CHANGE_ROUTE",
-//         payload: "/404",
-//       });
-//     }
-//   },
 };
 </script>
 

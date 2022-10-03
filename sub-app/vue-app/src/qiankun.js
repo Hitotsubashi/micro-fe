@@ -20,13 +20,21 @@ export const microAppMixin = {
             ...item,
             path: this.$router.options.base + item.path,
           }));
-        this.$shared.dispatch({ type: "UPDATE_ROUTES", payload: matched });
+        window.dispatchEvent(
+          new CustomEvent(
+            'micro-app-dispatch',{
+              detail:{ type: "UPDATE_ROUTES", payload: matched }
+            }
+          )
+        )
       },
       immediate: true,
     },
   },
   beforeDestroy() {
-    this.$shared.dispatch({ type: "UPDATE_ROUTES", payload: [] });
+    window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
+      detail:{ type: "UPDATE_ROUTES", payload: [] }
+    }))
 
     this.subDiv.__vue__ = null;
     document.body.removeChild(this.subDiv);

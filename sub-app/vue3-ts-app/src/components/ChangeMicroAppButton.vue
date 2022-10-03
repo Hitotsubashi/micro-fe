@@ -5,15 +5,15 @@
 </template>
 
 <script lang="ts" setup>
-import { inject } from "vue";
-
-const $shared = inject("$shared") as any;
-
 function changeRoute() {
-  $shared.dispatch({
-    type: "CHANGE_ROUTE",
-    payload: "/app-react/index",
-  });
+  window.dispatchEvent(
+    new CustomEvent("micro-app-dispatch", {
+      detail: {
+        type: "CHANGE_ROUTE",
+        payload: "/app-react/index",
+      },
+    })
+  );
 }
 </script>
 

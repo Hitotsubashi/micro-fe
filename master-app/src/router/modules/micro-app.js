@@ -1,7 +1,7 @@
 import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
 import Vue from 'vue'
-import { loader, sharedDispatcher } from '@/qiankun'
+import { loader } from '@/qiankun'
 
 const microAppRoutes = [
   {
@@ -21,7 +21,7 @@ const microAppRoutes = [
             container: '#app-react',
             loader,
             activeRule: '/app-react/index',
-            props: { shared: sharedDispatcher,basepath: '/app-react/index' }
+            props: { basepath: '/app-react/index' }
           },
           noCache: true,
           menuPath: 'index',
@@ -47,7 +47,7 @@ const microAppRoutes = [
             container: '#app-vue',
             loader,
             activeRule: '/app-vue/index',
-            props: { shared: sharedDispatcher,basepath: '/app-vue/index' }
+            props: { basepath: '/app-vue/index' }
           },
           noCache: true,
           menuPath: 'index',
@@ -73,7 +73,7 @@ const microAppRoutes = [
             container: '#app-vue3',
             loader,
             activeRule: '/app-vue3/index',
-            props: { shared: sharedDispatcher,basepath: '/app-vue3/index' }
+            props: { basepath: '/app-vue3/index' }
           },
           // noCache: true,
           menuPath: 'index',
@@ -99,7 +99,6 @@ const microAppRoutes = [
             container: '#app-purehtml',
             loader,
             activeRule: '/app-purehtml/index',
-            props: { shared: sharedDispatcher }
           },
           icon: 'el-icon-coin'
         }

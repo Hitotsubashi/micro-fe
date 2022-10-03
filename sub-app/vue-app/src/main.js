@@ -8,11 +8,9 @@ import getRouter from "./router";
 Vue.config.productionTip = false;
 
 let instance;
-// let subDiv
 
 function render(props = {}) {
-  const { container, shared,basepath } = props;
-  Vue.prototype.$shared = shared;
+  const { container,basepath } = props;
 
   instance = new Vue({
     name: "VueApp",

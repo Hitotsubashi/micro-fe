@@ -1,7 +1,6 @@
 import { Link, Outlet, UNSAFE_NavigationContext, useRoutes } from 'react-router-dom';
 import Index from '@/pages/index';
 import { matchRoutes, useLocation } from 'react-router-dom';
-import { useShared } from '@/context/SharedContext';
 import { useContext, useEffect } from 'react';
 import Page404 from '@/pages/404';
 
@@ -59,8 +58,6 @@ function App() {
 
   const location = useLocation();
 
-  const shared = useShared();
-
   useEffect(() => {
     if (window.__POWERED_BY_QIANKUN__) {
       const matched = matchRoutes(routes, location.pathname)!.map(({ route, pathname }) => ({
@@ -68,13 +65,16 @@ function App() {
         // @ts-ignore
         meta: route.meta,
       }));
+      console.log(123);
 
-      shared!.dispatch({
-        type: 'UPDATE_ROUTES',
-        payload: matched,
-      });
+      window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
+        detail:{
+          type: 'UPDATE_ROUTES',
+          payload: matched,
+        }
+      }))
     }
-  }, [basename, location.pathname, shared]);
+  }, [basename, location.pathname]);
 
   const element = useRoutes(routes);
 
