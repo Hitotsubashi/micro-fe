@@ -1,15 +1,16 @@
-import { useShared } from '@/context/SharedContext';
+
 import { FC } from 'react';
 import styles from './index.module.scss';
 
 const ChangeRouteButton: FC = () => {
-  const shared = useShared();
 
   const changeRoute = () => {
-    shared?.dispatch({
-      type: 'CHANGE_ROUTE',
-      payload: '/app-vue/index',
-    });
+    window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
+      detail:{
+        type: 'CHANGE_ROUTE',
+        payload: '/app-vue/index',
+      }
+    }))
   };
 
   return (

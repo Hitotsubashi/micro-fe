@@ -1,9 +1,7 @@
-import { inject, watch } from "vue";
+import { watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export function useMicroApp() {
-  const $shared = inject("$shared") as any;
-
   const route = useRoute();
 
   const router = useRouter();
@@ -15,8 +13,11 @@ export function useMicroApp() {
         ...item,
         path: router.options.history.base + item.path,
       }));
-      console.log(matched);
-      $shared.dispatch({ type: "UPDATE_ROUTES", payload: matched });
+      window.dispatchEvent(
+        new CustomEvent("micro-app-dispatch", {
+          detail: { type: "UPDATE_ROUTES", payload: matched },
+        })
+      );
     },
     { immediate: true }
   );

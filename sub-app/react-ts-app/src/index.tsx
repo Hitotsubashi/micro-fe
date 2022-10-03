@@ -8,15 +8,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import { appActions } from './store/module/app';
-import { SharedContext } from './context/SharedContext';
-import { Store } from 'redux';
 
 let root: ReactDOM.Root | null;
-let sharedDispatcher: any;
 
 function render(props: any) {
-  const { container, shared, basepath } = props;
-  sharedDispatcher = shared;
+  const { container, basepath } = props;
   if (container) {
     root = ReactDOM.createRoot(container.querySelector('#root'));
   } else {
@@ -24,14 +20,11 @@ function render(props: any) {
   }
   root.render(
     <React.StrictMode>
-      <SharedContext.Provider value={shared}>
         <Provider store={store}>
-          {/* @ts-ignore */}
           <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? basepath : '/'}>
             <App />
           </BrowserRouter>
         </Provider>
-      </SharedContext.Provider>
     </React.StrictMode>,
   );
 }
@@ -56,8 +49,12 @@ export async function mount(props: any) {
 
 export async function unmount(props: any) {
   console.log('[react16] react app unmount');
-  sharedDispatcher?.dispatch({ type: 'UPDATE_ROUTES', payload: [] });
-  sharedDispatcher = null;
+  window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
+    detail: {
+      type: 'UPDATE_ROUTES',
+      payload: [],
+    }
+  }))
   root!.unmount();
 }
 

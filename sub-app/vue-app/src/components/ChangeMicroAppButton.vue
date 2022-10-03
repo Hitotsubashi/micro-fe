@@ -8,10 +8,12 @@
 export default {
   methods: {
     changeRoute() {
-      this.$shared.dispatch({
-        type: "CHANGE_ROUTE",
-        payload: "/app-react/index",
-      });
+      window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
+        detail:{
+          type: "CHANGE_ROUTE",
+          payload: "/app-react/index",
+        }
+      }))
     },
   },
 };
