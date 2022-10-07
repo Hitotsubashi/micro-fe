@@ -54,7 +54,7 @@ export const routes = [
 ];
 
 function App() {
-  const {basename} = useContext(UNSAFE_NavigationContext);
+  const { basename } = useContext(UNSAFE_NavigationContext);
 
   const location = useLocation();
 
@@ -65,14 +65,15 @@ function App() {
         // @ts-ignore
         meta: route.meta,
       }));
-      console.log(123);
 
-      window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
-        detail:{
-          type: 'UPDATE_ROUTES',
-          payload: matched,
-        }
-      }))
+      window.dispatchEvent(
+        new CustomEvent('micro-app-dispatch', {
+          detail: {
+            type: 'UPDATE_ROUTES',
+            payload: matched,
+          },
+        }),
+      );
     }
   }, [basename, location.pathname]);
 
