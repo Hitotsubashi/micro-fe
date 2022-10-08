@@ -1,7 +1,6 @@
 <template>
   <section class="app-main">
-    <!-- <transition :name="isMicroApp?undefined:'fade-transform'" :mode="isMicroApp?undefined:'out-in'"> -->
-      <transition name="fade-transform">
+    <transition name="fade-transform">
       <keep-alive :include="cachedViews">
         <router-view :key="key" />
       </keep-alive>
@@ -19,9 +18,6 @@ export default {
     cachedViews() {
       return this.$store.state.tagsView.cachedViews
     },
-    isMicroApp() {
-      return this.$route.meta.microApp
-    }
   },
   watch: {
     '$route': {
