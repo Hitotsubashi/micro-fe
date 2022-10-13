@@ -28,6 +28,7 @@ export default {
     })
   },
   mounted() {
+    this.$store.dispatch('microApp/changeLoading', true)
     this.microApp = loadMicroApp(
       this.$route.meta.microApp,
       {
@@ -37,9 +38,16 @@ export default {
         }
       }
     )
+    this.microApp.mountPromise
+      .then(()=>{
+        this.$store.dispatch('microApp/changeLoading', false)
+      })
+      .catch(()=>{
+        this.$store.dispatch('microApp/changeError', true)
+      })
   },
   beforeDestroy() {
-    this.microApp.unmount()
+    this.microApp?.unmount()
   }
 }
 </script>
