@@ -49,12 +49,6 @@ export async function mount(props: any) {
 
 export async function unmount(props: any) {
   console.log('[react16] react app unmount');
-  // window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
-  //   detail: {
-  //     type: 'UPDATE_ROUTES',
-  //     payload: [],
-  //   }
-  // }))
   root!.unmount();
 }
 
