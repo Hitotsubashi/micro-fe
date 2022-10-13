@@ -10,8 +10,6 @@ export default function useUploadRoutes() {
 
   useEffect(() => {
     if (window.__POWERED_BY_QIANKUN__) {
-      console.log(1);
-
       const matched = matchRoutes(routes, location.pathname)!.map(({ route, pathname }) => ({
         path: basename + pathname,
         // @ts-ignore
@@ -31,18 +29,14 @@ export default function useUploadRoutes() {
 
   useEffect(
     () => () => {
-      if (window.__POWERED_BY_QIANKUN__) {
-        console.log(2);
-
-        window.dispatchEvent(
-          new CustomEvent('micro-app-dispatch', {
-            detail: {
-              type: 'UPDATE_ROUTES',
-              payload: [],
-            },
-          }),
-        );
-      }
+      window.dispatchEvent(
+        new CustomEvent('micro-app-dispatch', {
+          detail: {
+            type: 'UPDATE_ROUTES',
+            payload: [],
+          },
+        }),
+      );
     },
     [],
   );
