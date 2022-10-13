@@ -21,20 +21,20 @@ export const microAppMixin = {
             path: this.$router.options.base + item.path,
           }));
         window.dispatchEvent(
-          new CustomEvent(
-            'micro-app-dispatch',{
-              detail:{ type: "UPDATE_ROUTES", payload: matched }
-            }
-          )
-        )
+          new CustomEvent("micro-app-dispatch", {
+            detail: { type: "UPDATE_ROUTES", payload: matched },
+          })
+        );
       },
       immediate: true,
     },
   },
   beforeDestroy() {
-    window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
-      detail:{ type: "UPDATE_ROUTES", payload: [] }
-    }))
+    window.dispatchEvent(
+      new CustomEvent("micro-app-dispatch", {
+        detail: { type: "UPDATE_ROUTES", payload: [] },
+      })
+    );
 
     this.subDiv.__vue__ = null;
     document.body.removeChild(this.subDiv);
