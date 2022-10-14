@@ -2,8 +2,9 @@ import "./public-path";
 import Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
-import { microAppMixin } from "./qiankun";
 import getRouter from "./router";
+import devtoolEnhanceMixin from '@/mixin/micro-app/devtool-enhance-mixin'
+import uploadRoutesMixin from '@/mixin/micro-app/upload-routes-mixin'
 
 Vue.config.productionTip = false;
 
@@ -17,7 +18,7 @@ function render(props = {}) {
     router: getRouter(basepath),
     store,
     render: (h) => h(App),
-    mixins: container ? [microAppMixin] : undefined,
+    mixins: container ? [devtoolEnhanceMixin,uploadRoutesMixin] : undefined,
   }).$mount(container ? container.querySelector("#app") : "#app");
 }
 
