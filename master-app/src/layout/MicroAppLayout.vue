@@ -39,10 +39,10 @@ export default {
       }
     )
     this.microApp.mountPromise
-      .then(()=>{
+      .then(() => {
         this.$store.dispatch('microApp/changeLoading', false)
       })
-      .catch(()=>{
+      .catch(() => {
         this.$store.dispatch('microApp/changeError', true)
       })
   },

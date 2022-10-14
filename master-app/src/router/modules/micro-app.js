@@ -96,8 +96,7 @@ const microAppRoutes = [
             name: 'purehtml app',
             entry: '//localhost:3003',
             container: '#app-purehtml',
-
-            activeRule: '/app-purehtml/index',
+            activeRule: '/app-purehtml/index'
           },
           icon: 'el-icon-coin'
         }
