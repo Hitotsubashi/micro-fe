@@ -25,10 +25,52 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <style type="text/css">
+			#root .pic{
+				width: 64px;
+				height: 64px;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left:0;
+				right:0;
+				margin: 40vh auto 0;
+      }
+
+			#root .pic i{
+				display: block;
+				float: left;
+				width: 6px;
+				height: 50px;
+				background: rgb(24, 144, 255);
+				margin: 0 2px;
+				transform: scaleY(0.4);
+				animation: load 1.2s infinite;
+			}
+
+			#root .pic i:nth-child(1){animation-delay:0.1s }
+			#root .pic i:nth-child(2){animation-delay:0.2s }
+			#root .pic i:nth-child(3){animation-delay:0.3s }
+			#root .pic i:nth-child(4){animation-delay:0.4s}
+			#root .pic i:nth-child(5){animation-delay:0.5s }
+
+			@keyframes load{
+				0%,40%,100%{transform: scaleY(0.4)}
+				20%{transform:scaleY(1) }
+			}
+		</style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="pic">
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+			</div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

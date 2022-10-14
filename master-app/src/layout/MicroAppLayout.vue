@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!error" :id="id" v-loading="loading" class="container" />
+    <div v-if="!error" :id="id" v-loading="loading" :class="{'loading-container':loading}" />
     <el-result v-else icon="error" title="微应用加载失败" />
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container{
-    min-height: 50vh;
+  .loading-container{
+    height: 80vh;
   }
 </style>

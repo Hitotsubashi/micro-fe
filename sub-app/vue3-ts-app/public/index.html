@@ -6,12 +6,54 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <style type="text/css">
+			#app .pic{
+				width: 64px;
+				height: 64px;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left:0;
+				right:0;
+				margin: 40vh auto 0;
+      }
+
+			#app .pic i{
+				display: block;
+				float: left;
+				width: 6px;
+				height: 50px;
+				background: rgb(24, 144, 255);
+				margin: 0 2px;
+				transform: scaleY(0.4);
+				animation: load 1.2s infinite;
+			}
+
+			#app .pic i:nth-child(1){animation-delay:0.1s }
+			#app .pic i:nth-child(2){animation-delay:0.2s }
+			#app .pic i:nth-child(3){animation-delay:0.3s }
+			#app .pic i:nth-child(4){animation-delay:0.4s}
+			#app .pic i:nth-child(5){animation-delay:0.5s }
+
+			@keyframes load{
+				0%,40%,100%{transform: scaleY(0.4)}
+				20%{transform:scaleY(1) }
+			}
+		</style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <div class="pic">
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+				<i></i>
+			</div>
+    </div>
     <!-- built files will be auto injected -->
   </body>
 </html>
