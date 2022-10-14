@@ -17,7 +17,7 @@ export default {
     },
     cachedViews() {
       return this.$store.state.tagsView.cachedViews
-    },
+    }
   },
   watch: {
     '$route': {
