@@ -11,7 +11,6 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-import './qiankun.js'
 
 // import actions from '@/qiankun'
 import '@/icons' // icon

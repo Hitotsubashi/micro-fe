@@ -1,8 +1,7 @@
-import { Link, Outlet, UNSAFE_NavigationContext, useRoutes } from 'react-router-dom';
+import { Link, Outlet, useRoutes } from 'react-router-dom';
 import Index from '@/pages/index';
-import { matchRoutes, useLocation } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
 import Page404 from '@/pages/404';
+import useUploadRoutes from './hooks/useUploadRoutes';
 
 export const routes = [
   {
@@ -54,28 +53,7 @@ export const routes = [
 ];
 
 function App() {
-  const { basename } = useContext(UNSAFE_NavigationContext);
-
-  const location = useLocation();
-
-  useEffect(() => {
-    if (window.__POWERED_BY_QIANKUN__) {
-      const matched = matchRoutes(routes, location.pathname)!.map(({ route, pathname }) => ({
-        path: basename + pathname,
-        // @ts-ignore
-        meta: route.meta,
-      }));
-
-      window.dispatchEvent(
-        new CustomEvent('micro-app-dispatch', {
-          detail: {
-            type: 'UPDATE_ROUTES',
-            payload: matched,
-          },
-        }),
-      );
-    }
-  }, [basename, location.pathname]);
+  useUploadRoutes();
 
   const element = useRoutes(routes);
 

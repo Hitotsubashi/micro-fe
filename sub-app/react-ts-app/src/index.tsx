@@ -20,11 +20,11 @@ function render(props: any) {
   }
   root.render(
     <React.StrictMode>
-        <Provider store={store}>
-          <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? basepath : '/'}>
-            <App />
-          </BrowserRouter>
-        </Provider>
+      <Provider store={store}>
+        <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? basepath : '/'}>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </React.StrictMode>,
   );
 }
@@ -49,12 +49,6 @@ export async function mount(props: any) {
 
 export async function unmount(props: any) {
   console.log('[react16] react app unmount');
-  window.dispatchEvent(new CustomEvent('micro-app-dispatch',{
-    detail: {
-      type: 'UPDATE_ROUTES',
-      payload: [],
-    }
-  }))
   root!.unmount();
 }
 

@@ -1,7 +1,6 @@
 import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
 import Vue from 'vue'
-import { loader } from '@/qiankun'
 
 const microAppRoutes = [
   {
@@ -19,7 +18,7 @@ const microAppRoutes = [
             name: 'react app',
             entry: '//localhost:3001',
             container: '#app-react',
-            loader,
+
             activeRule: '/app-react/index',
             props: { basepath: '/app-react/index' }
           },
@@ -45,7 +44,7 @@ const microAppRoutes = [
             name: 'vue app',
             entry: '//localhost:3002',
             container: '#app-vue',
-            loader,
+
             activeRule: '/app-vue/index',
             props: { basepath: '/app-vue/index' }
           },
@@ -69,9 +68,9 @@ const microAppRoutes = [
           title: 'Vue3App',
           microApp: {
             name: 'vue3 app',
-            entry: '//localhost:3004',
+            entry: '//localhost:3005',
             container: '#app-vue3',
-            loader,
+
             activeRule: '/app-vue3/index',
             props: { basepath: '/app-vue3/index' }
           },
@@ -97,7 +96,7 @@ const microAppRoutes = [
             name: 'purehtml app',
             entry: '//localhost:3003',
             container: '#app-purehtml',
-            loader,
+
             activeRule: '/app-purehtml/index',
           },
           icon: 'el-icon-coin'
