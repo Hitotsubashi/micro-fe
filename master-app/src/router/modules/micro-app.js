@@ -68,7 +68,7 @@ const microAppRoutes = [
           title: 'Vue3App',
           microApp: {
             name: 'vue3 app',
-            entry: '//localhost:3005',
+            entry: '//localhost:3004',
             container: '#app-vue3',
 
             activeRule: '/app-vue3/index',
