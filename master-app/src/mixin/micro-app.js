@@ -2,6 +2,7 @@ import { mapGetters } from 'vuex'
 import { initGlobalState } from 'qiankun'
 import store from '@/store'
 import router from '@/router'
+import { logout } from '@/utils/auth'
 
 const actions = initGlobalState(store.getters.microAppState)
 
@@ -13,6 +14,9 @@ const handleMicroAppDispatchEvent = (e) => {
       break
     case 'UPDATE_ROUTES':
       store.dispatch('microApp/updateRoutes', action.payload)
+      break
+    case 'LOGOUT':
+      logout(action.payload)
       break
     default:
       break
