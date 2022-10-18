@@ -60,7 +60,7 @@ const microAppRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index*',
+        path: 'index',
         name: 'AppVue3',
         component: Vue.extend({ ...MicroAppLayout, name: 'AppVue3' }),
         props: { id: 'app-vue3' },
@@ -70,12 +70,10 @@ const microAppRoutes = [
             name: 'vue3 app',
             entry: '//localhost:3004',
             container: '#app-vue3',
-
             activeRule: '/app-vue3/index',
             props: { basepath: '/app-vue3/index' }
           },
           // noCache: true,
-          menuPath: 'index',
           icon: 'el-icon-coin'
         }
       }
