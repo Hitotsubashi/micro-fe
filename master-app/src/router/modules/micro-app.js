@@ -34,11 +34,11 @@ const microAppRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index*',
+        path: 'index',
         name: 'AppVue3',
         component: Vue.extend({ ...MicroAppLayout, name: 'AppVue3' }),
         props: { id: 'app-vue3' },
-        meta: { title: 'Vue3App', microApp: true, noCache: true, menuPath: 'index', icon: 'el-icon-coin' }
+        meta: { title: 'Vue3App', microApp: true, noCache: true, icon: 'el-icon-coin' }
       }
     ]
   },
