@@ -41,6 +41,7 @@ export async function mount(props) {
 export async function unmount() {
   console.log("[vue] vue app unmount");
   instance.$destroy();
+  // 防止存在内存泄漏，可看https://github.com/umijs/qiankun/issues/674
   instance.$el.innerHTML = "";
   instance = null;
 }
