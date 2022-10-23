@@ -7,6 +7,7 @@ module.exports = defineConfig({
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
+    hot: true,
     port:3002,
     open: false
   },
