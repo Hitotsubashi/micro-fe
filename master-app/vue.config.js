@@ -37,13 +37,14 @@ module.exports = {
       errors: true
     },
     before: require('./mock/mock-server.js'),
-    // proxy:{
-    //   '/vue-app': {
-    //     target: 'http',
-    //     ws: true,
-    //     changeOrigin: true
-    //   },
-    // }
+    proxy:{
+      '/vue-app': {
+        target: 'http://localhost:3002',
+        ws: true,
+        changeOrigin: true,
+        // pathRewrite: { '^/vue-app': '' },
+      },
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

@@ -18,7 +18,7 @@ registerMicroApps([
   },
   {
     name: 'vue app',
-    entry: '//localhost:3002',
+    entry: `/vue-app`,
     container: '#app-vue',
     loader,
     activeRule: '/app-vue/index',
