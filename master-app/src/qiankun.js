@@ -1,6 +1,8 @@
 import { registerMicroApps, start } from 'qiankun'
 import store from './store'
 
+const isProd = process.env.NODE_ENV === "production"
+
 const loader = (loading) => {
   store.dispatch('microApp/changeLoading', loading)
 }
@@ -18,7 +20,7 @@ registerMicroApps([
   },
   {
     name: 'vue app',
-    entry: `/vue-app`,
+    entry: isProd?`//${location.host}/vue-app/`:'//localhost:3002',
     container: '#app-vue',
     loader,
     activeRule: '/app-vue/index',

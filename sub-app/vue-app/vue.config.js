@@ -1,9 +1,11 @@
 const { defineConfig } = require("@vue/cli-service");
 const { name } = require("./package");
 
+const isProd = process.env.NODE_ENV === "production";
+
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: "/vue-app/",
+  publicPath: isProd ? "/vue-app/" : undefined,
   devServer: {
     headers: {
       "Access-Control-Allow-Origin": "*",
