@@ -40,7 +40,7 @@ registerMicroApps([
   },
   {
     name: 'purehtml app',
-    entry: '//localhost:3003',
+    entry: isProd?`//${location.host}/html-app/`:'//localhost:3003',
     container: '#app-purehtml',
     loader,
     activeRule: '/app-purehtml/index'
