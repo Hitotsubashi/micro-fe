@@ -10,7 +10,7 @@ const loader = (loading) => {
 registerMicroApps([
   {
     name: 'react app',
-    entry: '//localhost:3001',
+    entry: isProd?`//${location.host}/react-app/`:'//localhost:3001',
     container: '#app-react',
     loader,
     activeRule: '/app-react/index',
