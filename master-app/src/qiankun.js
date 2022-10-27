@@ -30,7 +30,7 @@ registerMicroApps([
   },
   {
     name: 'vue3 app',
-    entry: '//localhost:3004',
+    entry: isProd?`//${location.host}/vue3-app/`:'//localhost:3004',
     container: '#app-vue3',
     loader,
     activeRule: '/app-vue3/index',
