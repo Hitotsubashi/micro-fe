@@ -1,0 +1,29 @@
+name: Master-App-CD
+on:
+  push:
+    branches: vue-app-release
+env:
+  DOC_NAME: master-app
+jobs:
+  CD:
+    steps:
+      # 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      # 在CD Workflow中会给每个生成的制品打上标签，而标签取值于version值
+      - name: Read Version
+        # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
+        id: version
+        uses: ashley-taylor/read-json-property-action@v1.0
+        with:
+          path: "./${DOC_NAME}/package.json"
+          property: version.name
+      # ssh登陆部署服务器
+      - name: SSH Deploy Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.REMOTE_HOST}}
+          username: ${{secrets.REMOTE_USER}}
+          key: ${{secrets.DEPLOY_TOKEN}}
+          script:
+            - cd
