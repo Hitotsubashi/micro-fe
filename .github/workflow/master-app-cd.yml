@@ -3,7 +3,7 @@ on:
   push:
     branches: vue-app-release
 env:
-  DOC_NAME: master-app
+  DOC_NAME: sub-app/vue-app
 jobs:
   CD:
     steps:
@@ -18,12 +18,16 @@ jobs:
         with:
           path: "./${DOC_NAME}/package.json"
           property: version.name
+      - name: Save Secret-Key as PEM-File
+        run: |
+          echo "$secrets.DEPLOY_TOKEN" >> secret.pem
+          cat secret.pem
       # ssh登陆部署服务器
-      - name: SSH Deploy Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{secrets.REMOTE_HOST}}
-          username: ${{secrets.REMOTE_USER}}
-          key: ${{secrets.DEPLOY_TOKEN}}
-          script:
-            - cd
+      # - name: SSH Deploy Server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{secrets.REMOTE_HOST}}
+      #     username: ${{secrets.REMOTE_USER}}
+      #     key: ${{secrets.DEPLOY_TOKEN}}
+      #     script:
+      #       - cd
