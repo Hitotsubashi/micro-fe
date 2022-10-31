@@ -49,7 +49,6 @@ jobs:
           script: |
             ${{format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
             ${{format('cd {0}/{1}' , secrets.TARGET, env.APP_DOC_NAME)}}
-            pwd
             ${{ format('docker build -t {0} .', env.Image)}}
             ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
             ${{ format('docker run -d --name {0} --network {1} {2}',env.Container,env.Network,env.Image)}}
