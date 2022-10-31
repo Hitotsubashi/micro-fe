@@ -21,7 +21,7 @@ jobs:
           property: "version.name"
       - name: Save Secret-Key as PEM-File
         run: |
-          echo "$secrets.DEPLOY_TOKEN" >> secret.pem
+          echo $secrets.DEPLOY_TOKEN >> secret.pem
           cat secret.pem
       # ssh登陆部署服务器
       # - name: SSH Deploy Server
