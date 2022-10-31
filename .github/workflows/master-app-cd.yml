@@ -23,7 +23,6 @@ jobs:
           JSON="${JSON//$'\n'/''}"
           JSON="${JSON//$'\r'/''}"
           # end of optional handling for multi line json
-          echo "$JSON"
           echo "package=$JSON" >> $GITHUB_OUTPUT
       - name: Upload Workspace to Deploy Server
         uses: easingthemes/ssh-deploy@main
