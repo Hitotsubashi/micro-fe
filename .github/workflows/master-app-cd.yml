@@ -1,4 +1,4 @@
-name: Master-App-CD
+name: Vue-App-CD
 on:
   push:
     branches: vue-app-release
