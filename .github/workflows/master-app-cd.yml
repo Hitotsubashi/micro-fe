@@ -27,7 +27,7 @@ jobs:
           SOURCE: $DOC_NAME
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
-          TARGET: "/root/project"
+          TARGET: ${{secrets.TARGET}}
       # ssh登陆部署服务器
       # - name: SSH Deploy Server
       #   uses: appleboy/ssh-action@master
