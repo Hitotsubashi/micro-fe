@@ -42,6 +42,6 @@ jobs:
           script: |
             docker ps -q --filter "name=$Container" | grep -q . && docker rm -f $Container
             cd ${{secrets.TARGET}}/$APP_PATH
-            docker build -t $Image
+            docker build -t $Image .
             docker network ls -q --filter "name=$Network" | grep -q . || docker network create microfe
             docker run -d --name $Container --network $Network $Image
