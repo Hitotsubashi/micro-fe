@@ -3,37 +3,45 @@ on:
   push:
     branches: vue-app-release
 env:
-  DOC_NAME: sub-app/vue-app
+  APP_PATH: sub-app/vue-app
 jobs:
   CD:
     runs-on: ubuntu-latest
     steps:
       # 拉取代码
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout
       # 在CD Workflow中会给每个生成的制品打上标签，而标签取值于version值
-      - name: Read Version
+      - name: Read Package
         # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
-        id: version
-        uses: ashley-taylor/read-json-property-action@v1.0
+        id: package
+        uses: ashley-taylor/read-json-property-action
         with:
-          path: ${{ format('./{0}/package.json',env.DOC_NAME) }}
+          path: ${{ format('./{0}/package.json',env.APP_PATH) }}
           property: "version.name"
       - name: Upload Workspace to Deploy Server
-        uses: easingthemes/ssh-deploy@v2.0.7
+        uses: easingthemes/ssh-deploy
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}
           ARGS: "-avzr --delete"
-          SOURCE: $DOC_NAME
+          SOURCE: $APP_PATH
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
           TARGET: ${{secrets.TARGET}}
-      # ssh登陆部署服务器
-      # - name: SSH Deploy Server
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{secrets.REMOTE_HOST}}
-      #     username: ${{secrets.REMOTE_USER}}
-      #     key: ${{secrets.DEPLOY_TOKEN}}
-      #     script:
-      #       - cd
+      - name: Generate and Start Docker Container
+        uses: appleboy/ssh-action@master
+        env:
+          Container: ${{steps.package.outputs.name}}
+          Version: ${{steps.package.outputs.version}}
+          Image: ${{steps.package.outputs.name}}:${{steps.package.outputs.version}}
+          Network: microfe
+        with:
+          host: ${{secrets.REMOTE_HOST}}
+          username: ${{secrets.REMOTE_USER}}
+          key: ${{ secrets.DEPLOY_TOKEN }}
+          script: |
+            docker ps -q --filter "name=$Container" | grep -q . && docker rm -f $Container
+            cd ${{secrets.TARGET}}/$APP_PATH
+            docker build -t $Image
+            docker network ls -q --filter "name=$Network" | grep -q . || docker network create microfe
+            docker run -d --name $Container --network $Network $Image
