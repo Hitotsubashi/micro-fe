@@ -17,7 +17,7 @@ jobs:
         id: version
         uses: notiz-dev/github-action-json-property@release
         with:
-          path: ${{ format('./{0}/package.json',$DOC_NAME) }}
+          path: ${{ format('./{0}/package.json',env.DOC_NAME) }}
           prop_path: "version.name"
       - name: Save Secret-Key as PEM-File
         run: |
