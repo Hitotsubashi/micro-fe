@@ -18,9 +18,9 @@ jobs:
         run: |
           JSON=`cat ./$APP_PATH/package.json`
           # the following lines are only required for multi line json
-          JSON="${JSON//'%'/'%25'}"
-          JSON="${JSON//$'\n'/'%0A'}"
-          JSON="${JSON//$'\r'/'%0D'}"
+          JSON="${JSON//'%'/''}"
+          JSON="${JSON//$'\n'/''}"
+          JSON="${JSON//$'\r'/''}"
           # end of optional handling for multi line json
           echo "$JSON"
           echo "package=$JSON" >> $GITHUB_OUTPUT
