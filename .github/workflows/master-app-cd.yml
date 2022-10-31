@@ -10,17 +10,17 @@ jobs:
     steps:
       # 拉取代码
       - name: Checkout repository
-        uses: actions/checkout
+        uses: actions/checkout@v3
       # 在CD Workflow中会给每个生成的制品打上标签，而标签取值于version值
       - name: Read Package
         # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
         id: package
-        uses: ashley-taylor/read-json-property-action
+        uses: ashley-taylor/read-json-property-action@v1.0
         with:
           path: ${{ format('./{0}/package.json',env.APP_PATH) }}
           property: "version.name"
       - name: Upload Workspace to Deploy Server
-        uses: easingthemes/ssh-deploy
+        uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}
           ARGS: "-avzr --delete"
