@@ -4,6 +4,7 @@ on:
     branches: vue-app-release
 env:
   APP_PATH: sub-app/vue-app
+  APP_DOC_NAME: vue-app
 jobs:
   CD:
     runs-on: ubuntu-latest
@@ -33,6 +34,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
           TARGET: ${{secrets.TARGET}}
+          EXCLUDE: "/dist/, /node_modules/"
       - name: Generate and Start Docker Container
         uses: appleboy/ssh-action@master
         env:
@@ -46,7 +48,7 @@ jobs:
           key: ${{ secrets.DEPLOY_TOKEN }}
           script: |
             ${{format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
-            ${{format('cd {0}/{1}' , secrets.TARGET, env.APP_PATH)}}
+            ${{format('cd {0}/{1}' , secrets.TARGET, env.APP_DOC_NAME)}}
             pwd
             ${{ format('docker build -t {0} .', env.Image)}}
             ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
