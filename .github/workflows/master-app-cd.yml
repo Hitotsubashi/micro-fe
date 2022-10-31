@@ -12,13 +12,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       # 在CD Workflow中会给每个生成的制品打上标签，而标签取值于version值
-      - name: Read Package
+      - name: Read Package JSON
         # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
-        id: package
-        uses: ashley-taylor/read-json-property-action@v1.0
-        with:
-          path: ${{ format('./{0}/package.json',env.APP_PATH) }}
-          property: "version.name"
+        id: read_package
+        run: |
+          JSON=`cat ./$APP_PATH/package.json`
+          # the following lines are only required for multi line json
+          JSON="${JSON//'%'/'%25'}"
+          JSON="${JSON//$'\n'/'%0A'}"
+          JSON="${JSON//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "package=$JSON" >> $GITHUB_OUTPUT
       - name: Upload Workspace to Deploy Server
         uses: easingthemes/ssh-deploy@main
         env:
@@ -31,9 +35,9 @@ jobs:
       - name: Generate and Start Docker Container
         uses: appleboy/ssh-action@master
         env:
-          Container: ${{steps.package.outputs.name}}
-          Version: ${{steps.package.outputs.version}}
-          Image: ${{steps.package.outputs.name}}:${{steps.package.outputs.version}}
+          Container: ${{fromJson(steps.read_package.outputs.package).name}}
+          Version: ${{fromJson(steps.read_package.outputs.package).version}}
+          Image: ${{fromJson(steps.read_package.outputs.package).name}}:${{fromJson(steps.read_package.outputs.package).version}}
           Network: microfe
         with:
           host: ${{secrets.REMOTE_HOST}}
