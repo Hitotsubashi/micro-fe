@@ -15,10 +15,10 @@ jobs:
       - name: Read Version
         # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
         id: version
-        uses: ashley-taylor/read-json-property-action@v1.0
+        uses: notiz-dev/github-action-json-property@release
         with:
-          path: format("./{0}/package.json",$DOC_NAME)
-          property: version.name
+          path: ${{ format("./{0}/package.json",$DOC_NAME) }}
+          prop_path: "version.name"
       - name: Save Secret-Key as PEM-File
         run: |
           echo "$secrets.DEPLOY_TOKEN" >> secret.pem
