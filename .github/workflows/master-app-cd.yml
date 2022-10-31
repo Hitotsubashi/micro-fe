@@ -45,9 +45,9 @@ jobs:
           username: ${{secrets.REMOTE_USER}}
           key: ${{ secrets.DEPLOY_TOKEN }}
           script: |
-            docker ps -q --filter "name=$Container" | grep -q . && docker rm -f $Container
-            cd ${{secrets.TARGET}}/$APP_PATH
+            ${{format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
+            ${{format('cd {0}/{1}' , secrets.TARGET, env.APP_PATH)}}
             pwd
-            docker build -t $Image .
-            docker network ls -q --filter "name=$Network" | grep -q . || docker network create microfe
-            docker run -d --name $Container --network $Network $Image
+            ${{ format('docker build -t {0} .', env.Image)}}
+            ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
+            ${{ format('docker run -d --name {0} --network {1} {2}',env.Container,env.Network,env.Image)}}
