@@ -19,12 +19,15 @@ jobs:
         with:
           path: ${{ format('./{0}/package.json',env.DOC_NAME) }}
           property: "version.name"
-      - name: Save Secret-Key as PEM-File
-        run: |
-          touch secret.pem
-          echo "$secrets.DEPLOY_TOKEN" > secret.pem
-          ls -a
-          cat secret.pem
+      - name: Upload Workspace to Deploy Server
+        uses: easingthemes/ssh-deploy@v2.0.7
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}
+          ARGS: "-avzr --delete"
+          SOURCE: $DOC_NAME
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{secrets.REMOTE_USER}}
+          TARGET: "/root/project"
       # ssh登陆部署服务器
       # - name: SSH Deploy Server
       #   uses: appleboy/ssh-action@master
