@@ -17,7 +17,7 @@ jobs:
         id: version
         uses: ashley-taylor/read-json-property-action@v1.0
         with:
-          path: "./${DOC_NAME}/package.json"
+          path: "./$DOC_NAME/package.json"
           property: version.name
       - name: Save Secret-Key as PEM-File
         run: |
