@@ -55,6 +55,7 @@ jobs:
       # 导出docker镜像为tar
       - name: Export Image as Tar
         run: |
+          docker image ls
           docker save $Image > $ImageFile
       # 把镜像tar上传至部署服务器
       - name: Upload Image Tar to Deploy Server
@@ -66,7 +67,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
           TARGET: ${{secrets.TARGET}}
-      - name: Generate and Start Docker Container
+      - name: Run Docker Container
         uses: appleboy/ssh-action@master
         env:
           Network: microfe
