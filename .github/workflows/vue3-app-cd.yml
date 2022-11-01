@@ -12,6 +12,9 @@ jobs:
     outputs:
       matrix: ${{ fromJson(steps.read-package.outputs.package) }}
     steps:
+      # 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Read Package
         id: read-package
         run: |
