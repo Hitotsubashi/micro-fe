@@ -56,14 +56,14 @@ jobs:
       - name: Export Image as Tar
         run: |
           docker image ls
-          docker save $Image > $ImageFile
+          docker save ${{env.Image}} > ${{env.ImageFile}}
       # 把镜像tar上传至部署服务器
       - name: Upload Image Tar to Deploy Server
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}
           ARGS: "-avzr --delete"
-          SOURCE: $ImageFile
+          SOURCE: ${{env.ImageFile}}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
           TARGET: ${{secrets.TARGET}}
