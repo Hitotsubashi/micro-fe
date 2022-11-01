@@ -1,0 +1,53 @@
+name: React-App-CD
+on:
+  push:
+    branches: react-app-release
+env:
+  APP_PATH: sub-app/react-ts-app
+  APP_DOC_NAME: react-ts-app
+jobs:
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      # 在CD Workflow中会给每个生成的制品打上标签，而标签取值于version值
+      - name: Read Package JSON
+        # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
+        id: read_package
+        run: |
+          JSON=`cat ./$APP_PATH/package.json`
+          # the following lines are only required for multi line json
+          JSON="${JSON//'%'/''}"
+          JSON="${JSON//$'\n'/''}"
+          JSON="${JSON//$'\r'/''}"
+          # end of optional handling for multi line json
+          echo "package=$JSON" >> $GITHUB_OUTPUT
+      - name: Upload Workspace to Deploy Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}
+          ARGS: "-avzr --delete"
+          SOURCE: $APP_PATH
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{secrets.REMOTE_USER}}
+          TARGET: ${{secrets.TARGET}}
+          EXCLUDE: "/dist/, /node_modules/"
+      - name: Generate and Start Docker Container
+        uses: appleboy/ssh-action@master
+        env:
+          Container: ${{fromJson(steps.read_package.outputs.package).name}}
+          Version: ${{fromJson(steps.read_package.outputs.package).version}}
+          Image: ${{fromJson(steps.read_package.outputs.package).name}}:${{fromJson(steps.read_package.outputs.package).version}}
+          Network: microfe
+        with:
+          host: ${{secrets.REMOTE_HOST}}
+          username: ${{secrets.REMOTE_USER}}
+          key: ${{ secrets.DEPLOY_TOKEN }}
+          script: |
+            ${{ format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
+            ${{ format('cd {0}/{1}' , secrets.TARGET, env.APP_DOC_NAME)}}
+            ${{ format('docker build -t {0} .', env.Image)}}
+            ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
+            ${{ format('docker run -d --name {0} --network {1} {2}',env.Container,env.Network,env.Image)}}

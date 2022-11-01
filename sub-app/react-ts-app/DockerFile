@@ -1,6 +1,6 @@
 FROM node:16-alpine as build-stage
 WORKDIR /app
-COPY package*.json ./
+COPY package*.json yarn.lock ./
 RUN yarn install
 COPY . .
 RUN yarn build
