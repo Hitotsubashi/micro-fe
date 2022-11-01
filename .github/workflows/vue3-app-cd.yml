@@ -6,40 +6,66 @@ env:
   APP_PATH: sub-app/vue3-ts-app
   APP_DOC_NAME: vue3-ts-app
 jobs:
+  # 导出Package
+  Package:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ fromJson(steps.read-package.outputs.package) }}
+    steps:
+      - name: Read Package
+        id: read-package
+        run: |
+          JSON=`cat ./$APP_PATH/package.json`
+          JSON="${JSON//'%'/''}"
+          JSON="${JSON//$'\n'/''}"
+          JSON="${JSON//$'\r'/''}"
+          echo "package=$JSON" >> $GITHUB_OUTPUT
   CD:
     runs-on: ubuntu-latest
+    needs: Package
+    env:
+      Container: ${{needs.Package.outputs.matrix.name}}
+      Version: ${{needs.Package.outputs.matrix.version}}
+      Image: ${{needs.Package.outputs.matrix.name}}:${{needs.Package.outputs.matrix.version}}
+      ImageFile: ${{needs.Package.outputs.matrix.name}}.tar
     steps:
       # 拉取代码
       - name: Checkout repository
         uses: actions/checkout@v3
-      # 在CD Workflow中会给每个生成的制品打上标签，而标签取值于version值
-      - name: Read Package JSON
-        # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
-        id: read_package
+      # 安装node
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          # vite 需要在node>=12 的环境下执行
+          node-version: "16"
+          cache: "yarn"
+          cache-dependency-path: ${{ format('{0}/package-lock.json', env.APP_PATH) }}
+      # 安装docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      # 创建docker镜像
+      - name: Build Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          tags: $Image
+          context: $APP_PATH
+      # 导出docker镜像为tar
+      - name: Export Image as Tar
         run: |
-          JSON=`cat ./$APP_PATH/package.json`
-          # the following lines are only required for multi line json
-          JSON="${JSON//'%'/''}"
-          JSON="${JSON//$'\n'/''}"
-          JSON="${JSON//$'\r'/''}"
-          # end of optional handling for multi line json
-          echo "package=$JSON" >> $GITHUB_OUTPUT
-      - name: Upload Workspace to Deploy Server
+          docker save $Image > $Container.tar
+      # 把镜像tar上传至部署服务器
+      - name: Upload Image Tar to Deploy Server
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}
           ARGS: "-avzr --delete"
-          SOURCE: $APP_PATH
+          SOURCE: $ImageFile
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
           TARGET: ${{secrets.TARGET}}
-          EXCLUDE: "/dist/, /node_modules/"
       - name: Generate and Start Docker Container
         uses: appleboy/ssh-action@master
         env:
-          Container: ${{fromJson(steps.read_package.outputs.package).name}}
-          Version: ${{fromJson(steps.read_package.outputs.package).version}}
-          Image: ${{fromJson(steps.read_package.outputs.package).name}}:${{fromJson(steps.read_package.outputs.package).version}}
           Network: microfe
         with:
           host: ${{secrets.REMOTE_HOST}}
@@ -47,7 +73,7 @@ jobs:
           key: ${{ secrets.DEPLOY_TOKEN }}
           script: |
             ${{format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
-            ${{format('cd {0}/{1}' , secrets.TARGET, env.APP_DOC_NAME)}}
-            ${{ format('docker build -t {0} .', env.Image)}}
+            ${{format('cd {0}' , secrets.TARGET)}}
+            ${{ format('docker load < {0}', env.ImageFile)}}
             ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
             ${{ format('docker run -d --name {0} --network {1} {2}',env.Container,env.Network,env.Image)}}
