@@ -50,8 +50,8 @@ jobs:
       - name: Build Docker Image
         uses: docker/build-push-action@v3
         with:
-          tags: $Image
-          context: $APP_PATH
+          tags: ${{env.Image}}
+          context: ${{env.APP_PATH}}
       # 导出docker镜像为tar
       - name: Export Image as Tar
         run: |
