@@ -52,7 +52,7 @@ jobs:
       # 导出docker镜像为tar
       - name: Export Image as Tar
         run: |
-          docker save $Image > $Container.tar
+          docker save $Image > $ImageFile
       # 把镜像tar上传至部署服务器
       - name: Upload Image Tar to Deploy Server
         uses: easingthemes/ssh-deploy@main
@@ -72,8 +72,8 @@ jobs:
           username: ${{secrets.REMOTE_USER}}
           key: ${{ secrets.DEPLOY_TOKEN }}
           script: |
-            ${{format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
-            ${{format('cd {0}' , secrets.TARGET)}}
+            ${{ format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
+            ${{ format('cd {0}' , secrets.TARGET)}}
             ${{ format('docker load < {0}', env.ImageFile)}}
             ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
             ${{ format('docker run -d --name {0} --network {1} {2}',env.Container,env.Network,env.Image)}}
