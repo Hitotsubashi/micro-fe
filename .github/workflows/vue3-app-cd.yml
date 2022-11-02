@@ -63,8 +63,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
         with:
-          tag_name: ${{ env.ImageFile }}
-          release_name: ${{ env.ImageFile }}
+          tag_name: ${{ env.Image }}
+          release_name: ${{ env.Image }}
           draft: false
           prerelease: false
       # 把镜像文件上传到仓库对应的发布版本Release上
