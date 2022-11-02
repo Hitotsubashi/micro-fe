@@ -63,8 +63,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
         with:
-          tag_name: $Image
-          release_name: $Image
+          tag_name: ${{ env.ImageFile }}
+          release_name: ${{ env.ImageFile }}
           draft: false
           prerelease: false
       # 把镜像文件上传到仓库对应的发布版本Release上
@@ -76,7 +76,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ format('./{0}',env.ImageFile) }}
-          asset_name: $ImageFile
+          asset_name: ${{ env.ImageFile }}
           asset_content_type: application/tar
       # 把镜像tar上传至生产服务器
       - name: Upload Image Tar to Deploy Server
