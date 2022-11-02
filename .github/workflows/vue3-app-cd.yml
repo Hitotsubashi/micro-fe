@@ -4,7 +4,6 @@ on:
     branches: vue3-app-release
 env:
   APP_PATH: sub-app/vue3-ts-app
-  APP_DOC_NAME: vue3-ts-app
 jobs:
   # 导出Package
   Package:
@@ -39,7 +38,6 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          # vite 需要在node>=12 的环境下执行
           node-version: "16"
           cache: "yarn"
           cache-dependency-path: ${{ format('{0}/yarn.lock', env.APP_PATH) }}
@@ -53,12 +51,34 @@ jobs:
           tags: ${{env.Image}}
           context: ${{env.APP_PATH}}
           load: true
-      # 导出docker镜像为tar
+      # 导出docker镜像文件
       - name: Export Image as Tar
         run: |
-          docker image ls
+          docker images
           docker save ${{env.Image}} > ${{env.ImageFile}}
-      # 把镜像tar上传至部署服务器
+      # 创建Release版本
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
+        with:
+          tag_name: $Image
+          release_name: $Image
+          draft: false
+          prerelease: false
+      # 把镜像文件上传到仓库对应的发布版本Release上
+      - name: Update Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ format('./{0}',env.ImageFile) }}
+          asset_name: $ImageFile
+          asset_content_type: application/tar
+      # 把镜像tar上传至生产服务器
       - name: Upload Image Tar to Deploy Server
         uses: easingthemes/ssh-deploy@main
         env:
@@ -68,6 +88,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
           TARGET: ${{secrets.TARGET}}
+      # 登陆进生产服务器进行操作
       - name: Run Docker Container
         uses: appleboy/ssh-action@master
         env:
@@ -76,9 +97,18 @@ jobs:
           host: ${{secrets.REMOTE_HOST}}
           username: ${{secrets.REMOTE_USER}}
           key: ${{ secrets.DEPLOY_TOKEN }}
+          # 步骤：
+          # 1. 停止移除容器
+          # 2. 移除已有镜像
+          # 3. 进入存放镜像文件的目录且把镜像文件转为镜像
+          # 4. 检测若不存在microfe网络，则创建microfe网络
+          # 5. 根据镜像创建且运行容器，且把容器接入到microfe网络
+          # 6. 移除镜像文件
           script: |
-            ${{ format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
+            ${{ format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container) }}
+            ${{ format('docker rmi -f $(docker images -q  --filter reference="{0}")', env.Container) }}
             ${{ format('cd {0}' , secrets.TARGET)}}
             ${{ format('docker load < {0}', env.ImageFile)}}
             ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
             ${{ format('docker run -d --name {0} --network {1} {2}',env.Container,env.Network,env.Image)}}
+            ${{ format('rm {0}',env.ImageFile)}}
