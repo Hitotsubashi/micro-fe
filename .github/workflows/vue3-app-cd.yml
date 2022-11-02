@@ -52,6 +52,7 @@ jobs:
         with:
           tags: ${{env.Image}}
           context: ${{env.APP_PATH}}
+          load: true
       # 导出docker镜像为tar
       - name: Export Image as Tar
         run: |
