@@ -30,6 +30,7 @@ jobs:
       Version: ${{fromJson(needs.Package.outputs.matrix).version}}
       Image: ${{fromJson(needs.Package.outputs.matrix).name}}:${{fromJson(needs.Package.outputs.matrix).version}}
       ImageFile: ${{fromJson(needs.Package.outputs.matrix).name}}.tar
+      Release: ${{fromJson(needs.Package.outputs.matrix).name}}~${{fromJson(needs.Package.outputs.matrix).version}}
     steps:
       # 拉取代码
       - name: Checkout repository
@@ -63,8 +64,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
         with:
-          tag_name: ${{ env.Image }}
-          release_name: ${{ env.Image }}
+          tag_name: ${{ env.Release }}
+          release_name: ${{ env.Release }}
           draft: false
           prerelease: false
       # 把镜像文件上传到仓库对应的发布版本Release上
