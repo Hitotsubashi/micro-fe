@@ -57,28 +57,39 @@ jobs:
         run: |
           docker images
           docker save ${{env.Image}} > ${{env.ImageFile}}
-      # 创建Release版本
+      # 创建Release版本且上传镜像文件
       - name: Create GitHub Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
+          token: ${{ secrets.PROJECT_ACCESS_TOKEN }}
           tag_name: ${{ env.Release }}
-          release_name: ${{ env.Release }}
+          name: ${{ env.Release }}
           draft: false
           prerelease: false
+          files: |
+            ${{ env.ImageFile }}
+      # - name: Create GitHub Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
+      #   with:
+      #     tag_name: ${{ env.Release }}
+      #     release_name: ${{ env.Release }}
+      #     draft: false
+      #     prerelease: false
       # 把镜像文件上传到仓库对应的发布版本Release上
-      - name: Update Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ format('./{0}',env.ImageFile) }}
-          asset_name: ${{ env.ImageFile }}
-          asset_content_type: application/tar
+      # - name: Update Release Asset
+      #   id: upload-release-asset
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ${{ format('./{0}',env.ImageFile) }}
+      #     asset_name: ${{ env.ImageFile }}
+      #     asset_content_type: application/tar
       # 把镜像tar上传至生产服务器
       - name: Upload Image Tar to Deploy Server
         uses: easingthemes/ssh-deploy@main
