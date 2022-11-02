@@ -9,7 +9,7 @@ jobs:
   Package:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.read-package.outputs.package }}
+      info: ${{ steps.read-package.outputs.package }}
     steps:
       # 拉取代码
       - name: Checkout repository
@@ -27,10 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: Package
     env:
-      Container: ${{fromJson(needs.Package.outputs.matrix).name}}
-      Image: ${{fromJson(needs.Package.outputs.matrix).name}}:${{fromJson(needs.Package.outputs.matrix).version}}
-      ImageFile: ${{fromJson(needs.Package.outputs.matrix).name}}.tar
-      Release: ${{fromJson(needs.Package.outputs.matrix).name}}/${{fromJson(needs.Package.outputs.matrix).version}}
+      Container: ${{fromJson(needs.Package.outputs.info).name}}
+      Image: ${{fromJson(needs.Package.outputs.info).name}}:${{fromJson(needs.Package.outputs.info).version}}
+      ImageFile: ${{fromJson(needs.Package.outputs.info).name}}.tar
+      Release: ${{fromJson(needs.Package.outputs.info).name}}/${{fromJson(needs.Package.outputs.info).version}}
     steps:
       # 拉取代码
       - name: Checkout repository
