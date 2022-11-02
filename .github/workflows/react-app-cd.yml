@@ -4,50 +4,102 @@ on:
     branches: react-app-release
 env:
   APP_PATH: sub-app/react-ts-app
-  APP_DOC_NAME: react-ts-app
 jobs:
-  CD:
+  # 导出Package
+  Package:
     runs-on: ubuntu-latest
+    outputs:
+      info: ${{ steps.read-package.outputs.package }}
     steps:
       # 拉取代码
       - name: Checkout repository
         uses: actions/checkout@v3
-      # 在CD Workflow中会给每个生成的制品打上标签，而标签取值于version值
-      - name: Read Package JSON
-        # 读取出来的值会放在steps.[id].outputs.value供其他步骤step读取
-        id: read_package
+      # 读取package获取相关信息
+      - name: Read Package
+        id: read-package
         run: |
           JSON=`cat ./$APP_PATH/package.json`
-          # the following lines are only required for multi line json
           JSON="${JSON//'%'/''}"
           JSON="${JSON//$'\n'/''}"
           JSON="${JSON//$'\r'/''}"
-          # end of optional handling for multi line json
           echo "package=$JSON" >> $GITHUB_OUTPUT
-      - name: Upload Workspace to Deploy Server
+  CD:
+    runs-on: ubuntu-latest
+    needs: Package
+    env:
+      Container: ${{fromJson(needs.Package.outputs.info).name}}
+      Image: ${{fromJson(needs.Package.outputs.info).name}}:${{fromJson(needs.Package.outputs.info).version}}
+      ImageFile: ${{fromJson(needs.Package.outputs.info).name}}.tar
+      Release: ${{fromJson(needs.Package.outputs.info).name}}/${{fromJson(needs.Package.outputs.info).version}}
+    steps:
+      # 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      # 安装node
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+          cache-dependency-path: ${{ format('{0}/yarn.lock', env.APP_PATH) }}
+      # 安装docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      # 创建docker镜像
+      - name: Build Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          tags: ${{env.Image}}
+          context: ${{env.APP_PATH}}
+          load: true
+      # 导出docker镜像文件
+      - name: Export Image as Tar
+        run: |
+          docker images
+          docker save ${{env.Image}} > ${{env.ImageFile}}
+      # 创建Release版本且上传镜像文件
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.PROJECT_ACCESS_TOKEN }}
+          tag_name: ${{ env.Release }}
+          name: ${{ env.Release }}
+          draft: false
+          prerelease: false
+          files: |
+            ${{ env.ImageFile }}
+      # 把镜像tar上传至生产服务器
+      - name: Upload Image Tar to Deploy Server
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}
           ARGS: "-avzr --delete"
-          SOURCE: $APP_PATH
+          SOURCE: ${{env.ImageFile}}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{secrets.REMOTE_USER}}
           TARGET: ${{secrets.TARGET}}
-          EXCLUDE: "/dist/, /node_modules/"
-      - name: Generate and Start Docker Container
+      # 登陆进生产服务器进行操作
+      - name: Run Docker Container
         uses: appleboy/ssh-action@master
         env:
-          Container: ${{fromJson(steps.read_package.outputs.package).name}}
-          Version: ${{fromJson(steps.read_package.outputs.package).version}}
-          Image: ${{fromJson(steps.read_package.outputs.package).name}}:${{fromJson(steps.read_package.outputs.package).version}}
           Network: microfe
         with:
           host: ${{secrets.REMOTE_HOST}}
           username: ${{secrets.REMOTE_USER}}
           key: ${{ secrets.DEPLOY_TOKEN }}
+          # 步骤：
+          # 1. 停止移除容器
+          # 2. 移除已有镜像
+          # 3. 进入存放镜像文件的目录且把镜像文件转为镜像
+          # 4. 检测若不存在microfe网络，则创建microfe网络
+          # 5. 根据镜像创建且运行容器，且把容器接入到microfe网络
+          # 6. 移除镜像文件
           script: |
-            ${{ format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container)}}
-            ${{ format('cd {0}/{1}' , secrets.TARGET, env.APP_DOC_NAME)}}
-            ${{ format('docker build -t {0} .', env.Image)}}
+            ${{ format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container) }}
+            ${{ format('docker rmi -f $(docker images -q  --filter reference="{0}")', env.Container) }}
+            ${{ format('cd {0}' , secrets.TARGET)}}
+            ${{ format('docker load < {0}', env.ImageFile)}}
             ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
             ${{ format('docker run -d --name {0} --network {1} {2}',env.Container,env.Network,env.Image)}}
+            ${{ format('rm {0}',env.ImageFile)}}
