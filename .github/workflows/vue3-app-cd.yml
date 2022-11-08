@@ -45,15 +45,29 @@ jobs:
       # 安装docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      # 构建缓存
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          # Key is named differently to avoid collision
+          key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-multi-buildx
       # 创建docker镜像
       - name: Build Docker Image
         uses: docker/build-push-action@v3
         with:
-          cache-from: type=local,src=path/to/dir
-          cache-to: type=local,dest=path/to/dir
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
           tags: ${{env.Image}}
           context: ${{env.APP_PATH}}
           load: true
+      # change cache dest
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
       # 导出docker镜像文件
       - name: Export Image as Tar
         run: |
