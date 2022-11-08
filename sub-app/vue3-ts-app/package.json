@@ -1,7 +1,8 @@
 {
   "name": "vue3-ts-app",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "private": true,
+  "check-build":"test",
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
