@@ -51,7 +51,7 @@ jobs:
         with:
           path: /tmp/.buildx-cache
           # Key is named differently to avoid collision
-          key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-multi-buildx
           restore-keys: |
             ${{ runner.os }}-multi-buildx
       # 创建docker镜像
