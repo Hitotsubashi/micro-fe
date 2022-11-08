@@ -49,6 +49,8 @@ jobs:
       - name: Build Docker Image
         uses: docker/build-push-action@v3
         with:
+          cache-from: type=local,src=path/to/dir
+          cache-to: type=local,dest=path/to/dir
           tags: ${{env.Image}}
           context: ${{env.APP_PATH}}
           load: true
