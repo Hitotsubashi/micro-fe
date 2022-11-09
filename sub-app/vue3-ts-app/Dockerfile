@@ -4,6 +4,7 @@ COPY package*.json yarn.lock ./
 RUN yarn install
 COPY public src .browserslistrc babel.config.js tsconfig.json vue.config.js .eslintrc.js ./
 RUN ls -a src
+RUN ls -a
 RUN yarn build
 
 FROM nginx:stable-alpine as deploy-stage
