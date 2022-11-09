@@ -11,10 +11,10 @@ jobs:
   Rollback:
     runs-on: ubuntu-latest
     env:
-      Container: $NAME
-      Image: $NAME:${{ github.event.inputs.version }}
-      ImageFile: $NAME.tar
-      Release: $NAME/${{ github.event.inputs.version }}
+      Container: ${{env.NAME}}
+      Image: ${{env.NAME}}:${{ github.event.inputs.version }}
+      ImageFile: ${{env.NAME}}.tar
+      Release: ${{env.NAME}}/${{ github.event.inputs.version }}
     steps:
       - name: Echo Input
         run: |
