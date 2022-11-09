@@ -5,16 +5,14 @@ on:
       version:
         description: "choose a version to deploy"
         required: true
-env:
-  NAME: vue3-ts-app
 jobs:
   Rollback:
     runs-on: ubuntu-latest
     env:
-      Container: ${{env.NAME}}
-      Image: ${{env.NAME}}:${{ github.event.inputs.version }}
-      ImageFile: ${{env.NAME}}.tar
-      Release: ${{env.NAME}}/${{ github.event.inputs.version }}
+      Container: vue3-ts-app
+      Image: vue3-ts-app:${{ github.event.inputs.version }}
+      ImageFile: vue3-ts-app.tar
+      Release: vue3-ts-app/${{ github.event.inputs.version }}
     steps:
       - name: Echo Input
         run: |
