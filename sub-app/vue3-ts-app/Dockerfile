@@ -2,7 +2,7 @@ FROM node:16-alpine as build-stage
 WORKDIR /app
 COPY package*.json yarn.lock ./
 RUN yarn install
-COPY public src .browserslistrc babel.config.js tsconfig.json vue.config.js .eslintrc.js ./
+COPY . .
 RUN ls -a src
 RUN ls -a
 RUN yarn build
