@@ -20,7 +20,7 @@ jobs:
       - name: Download Artifact
         uses: dsaltares/fetch-gh-release-asset@master
         with:
-          version: ${{env.Release}}
+          version: "tags/${{env.Release}}"
           file: ${{env.ImageFile}}
           token: ${{ secrets.GITHUB_TOKEN }}
       # 把镜像tar上传至生产服务器
