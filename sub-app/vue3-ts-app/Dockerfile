@@ -3,8 +3,6 @@ WORKDIR /app
 COPY package*.json yarn.lock ./
 RUN yarn install
 COPY . .
-RUN ls -a src
-RUN ls -a
 RUN yarn build
 
 FROM nginx:stable-alpine as deploy-stage
