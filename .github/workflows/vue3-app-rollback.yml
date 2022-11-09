@@ -1,9 +1,10 @@
 name: Vue3AppRollback
 on:
   workflow_dispatch:
-    version:
-      description: "choose a version to deploy"
-      required: true
+    inputs:
+      version:
+        description: "choose a version to deploy"
+        required: true
 env:
   NAME: vue3-ts-app
 jobs:
