@@ -1,0 +1,60 @@
+name: Vue3AppRollback
+on:
+  workflow_dispatch:
+    version:
+      description: "choose a version to deploy"
+      required: true
+env:
+  NAME: vue3-ts-app
+jobs:
+  Rollback:
+    runs-on: ubuntu-latest
+    env:
+      Container: $NAME
+      Image: $NAME:${{ github.event.inputs.version }}
+      ImageFile: $NAME.tar
+      Release: $NAME/${{ github.event.inputs.version }}
+    steps:
+      - name: Echo Input
+        run: |
+          echo "Version: $VERSION"
+      - name: Download Artifact
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          version: $Release
+          file: $ImageFile
+          token: ${{ secrets.GITHUB_TOKEN }}
+      # 把镜像tar上传至生产服务器
+      - name: Upload Image Tar to Deploy Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_TOKEN }}
+          ARGS: "-avzr --delete"
+          SOURCE: ${{env.ImageFile}}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{secrets.REMOTE_USER}}
+          TARGET: ${{secrets.TARGET}}
+      # 登陆进生产服务器进行操作
+      - name: Run Docker Container
+        uses: appleboy/ssh-action@master
+        env:
+          Network: microfe
+        with:
+          host: ${{secrets.REMOTE_HOST}}
+          username: ${{secrets.REMOTE_USER}}
+          key: ${{ secrets.DEPLOY_TOKEN }}
+          # 步骤：
+          # 1. 停止移除容器
+          # 2. 移除已有镜像
+          # 3. 进入存放镜像文件的目录且把镜像文件转为镜像
+          # 4. 检测若不存在microfe网络，则创建microfe网络
+          # 5. 根据镜像创建且运行容器，且把容器接入到microfe网络
+          # 6. 移除镜像文件
+          script: |
+            ${{ format('docker ps -q --filter "name={0}" | grep -q . && docker rm -f {0}', env.Container) }}
+            ${{ format('docker rmi -f $(docker images -q  --filter reference="{0}")', env.Container) }}
+            ${{ format('cd {0}' , secrets.TARGET)}}
+            ${{ format('docker load < {0}', env.ImageFile)}}
+            ${{ format('docker network ls -q --filter "name={0}" | grep -q . || docker network create {0}',env.Network)}}
+            ${{ format('docker run -d --name {0} --network {1} {2}',env.Container,env.Network,env.Image)}}
+            ${{ format('rm {0}',env.ImageFile)}}
