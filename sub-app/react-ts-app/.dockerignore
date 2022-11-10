@@ -1,0 +1,7 @@
+.npmrc
+.editorconfig
+.gitignore
+.prettierignore
+.prettierrc.js
+.stylelintrc.js
+README.md

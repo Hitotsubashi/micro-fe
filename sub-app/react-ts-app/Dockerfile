@@ -5,7 +5,7 @@ RUN yarn install
 COPY src ./src
 COPY public ./public
 COPY src ./src
-COPY .browserslistrc babel.config.js tsconfig.json vue.config.js .eslintrc.js ./
+COPY .env .rescriptsrc.js tsconfig.json ./
 RUN ls -a
 RUN ls -a src
 RUN yarn build
