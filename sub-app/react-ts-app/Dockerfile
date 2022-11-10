@@ -4,7 +4,6 @@ COPY package*.json yarn.lock ./
 RUN yarn install
 COPY src ./src
 COPY public ./public
-COPY src ./src
 COPY .env .rescriptsrc.js tsconfig.json ./
 RUN yarn build
 
