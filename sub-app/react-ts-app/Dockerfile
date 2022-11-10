@@ -6,8 +6,6 @@ COPY src ./src
 COPY public ./public
 COPY src ./src
 COPY .env .rescriptsrc.js tsconfig.json ./
-RUN ls -a
-RUN ls -a src
 RUN yarn build
 
 FROM nginx:stable-alpine as deploy-stage
