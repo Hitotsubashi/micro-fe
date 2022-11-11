@@ -14,7 +14,7 @@ jobs:
       # 拉取代码
       - name: Checkout repository
         uses: actions/checkout@v3
-      # 读取package获取相关信息
+      # 读取docker.json获取相关信息
       - name: Read Info
         id: read-info
         run: |
