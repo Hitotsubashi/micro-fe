@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       # 读取package获取相关信息
-      - name: Read Package
+      - name: Read Info
         id: read-info
         run: |
           JSON=`cat ./$APP_PATH/docker.json`

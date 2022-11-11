@@ -5,7 +5,7 @@ on:
 env:
   APP_PATH: sub-app/vue3-ts-app
 jobs:
-  # 导出Package
+  # 导出Docker.json中的数据
   ReadInfo:
     runs-on: ubuntu-latest
     outputs:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       # 读取package获取相关信息
-      - name: Read Package
+      - name: Read Info
         id: read-info
         run: |
           JSON=`cat ./$APP_PATH/docker.json`
