@@ -5,13 +5,13 @@ on:
 env:
   APP_PATH: sub-app/react-ts-app
 jobs:
-  # 导出Package
+  # 导出Docker.json中的数据
   ReadInfo:
     runs-on: ubuntu-latest
     outputs:
       info: ${{ steps.read-info.outputs.info }}
     steps:
-      # 拉取代码
+      # 拉取docker.json代码
       - name: Checkout repository
         uses: actions/checkout@v3
       # 读取package获取相关信息
