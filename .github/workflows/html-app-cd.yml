@@ -18,7 +18,7 @@ jobs:
       - name: Read Package
         id: read-package
         run: |
-          JSON=`cat ./$APP_PATH/package.json`
+          JSON=`cat ./$APP_PATH/docker.json`
           JSON="${JSON//'%'/''}"
           JSON="${JSON//$'\n'/''}"
           JSON="${JSON//$'\r'/''}"
@@ -35,13 +35,6 @@ jobs:
       # 拉取代码
       - name: Checkout repository
         uses: actions/checkout@v3
-      # 安装node
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-          cache: "yarn"
-          cache-dependency-path: ${{ format('{0}/yarn.lock', env.APP_PATH) }}
       # 安装docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -49,6 +42,8 @@ jobs:
       - name: Build Docker Image
         uses: docker/build-push-action@v3
         with:
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: ${{env.Image}}
           context: ${{env.APP_PATH}}
           load: true
