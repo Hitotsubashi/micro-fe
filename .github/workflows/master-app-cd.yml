@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - release
-      - release-loadmicroapp
+      - release_**
 env:
   APP_PATH: master-app
 jobs:
