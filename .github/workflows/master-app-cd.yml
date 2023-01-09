@@ -1,7 +1,9 @@
 name: Master-App-CD
 on:
   push:
-    branches: release
+    branches:
+      - release
+      - release-**
 env:
   APP_PATH: master-app
 jobs:

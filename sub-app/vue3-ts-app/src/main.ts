@@ -18,10 +18,11 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 export async function bootstrap() {
-  console.log("%c%s", "color: green;", "vue3.0 app bootstraped");
+  console.log("vue3 app bootstraped");
 }
 
 export async function mount(props: any) {
+  console.log("vue] vue3 app mount", props);
   render(props);
   props.onGlobalStateChange((state: any) => {
     const app = useAppStore();
@@ -30,6 +31,7 @@ export async function mount(props: any) {
 }
 
 export async function unmount() {
+  console.log("[vue] vue3 app unmount");
   instance!.unmount();
   instance!._container!.innerHTML = "";
 }

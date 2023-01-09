@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { start } from 'qiankun'
+import { loadMicroApp } from 'qiankun'
 import { mapState } from 'vuex'
 
 export default {
@@ -16,6 +16,11 @@ export default {
       type: String
     }
   },
+  data() {
+    return {
+      microApp: undefined
+    }
+  },
   computed: {
     ...mapState({
       loading: state => state.microApp.loading,
@@ -23,15 +28,26 @@ export default {
     })
   },
   mounted() {
-    if (!window.qiankunStarted) {
-      window.qiankunStarted = true
-      start({
+    this.$store.dispatch('microApp/changeLoading', true)
+    this.microApp = loadMicroApp(
+      this.$route.meta.microApp,
+      {
         sandbox: {
           // strictStyleIsolation: true, // 严格沙箱
           experimentalStyleIsolation: true // 实验性沙箱
         }
+      }
+    )
+    this.microApp.mountPromise
+      .then(()=>{
+        this.$store.dispatch('microApp/changeLoading', false)
       })
-    }
+      .catch(()=>{
+        this.$store.dispatch('microApp/changeError', true)
+      })
+  },
+  beforeDestroy() {
+    this.microApp?.unmount()
   }
 }
 </script>

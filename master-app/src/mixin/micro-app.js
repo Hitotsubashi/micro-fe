@@ -1,15 +1,10 @@
 import { mapGetters } from 'vuex'
-import { addErrorHandler, initGlobalState } from 'qiankun'
+import { initGlobalState } from 'qiankun'
 import store from '@/store'
 import router from '@/router'
 import { logout } from '@/utils/auth'
 
 const actions = initGlobalState(store.getters.microAppState)
-
-addErrorHandler((error) => {
-  store.dispatch('microApp/changeError', true)
-  console.error(error)
-})
 
 const handleMicroAppDispatchEvent = (e) => {
   const { detail: action } = e
