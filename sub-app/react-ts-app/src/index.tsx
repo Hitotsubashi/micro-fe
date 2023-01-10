@@ -6,6 +6,7 @@ import App from './App';
 import './index.css';
 import './public-path';
 import reportWebVitals from './reportWebVitals';
+import { initSentry } from './sentry';
 import store from './store';
 import { appActions } from './store/module/app';
 
@@ -18,6 +19,7 @@ function render(props: any) {
   } else {
     root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
   }
+  initSentry();
   root.render(
     <React.StrictMode>
       <Provider store={store}>

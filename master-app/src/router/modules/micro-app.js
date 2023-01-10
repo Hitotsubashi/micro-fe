@@ -2,7 +2,7 @@ import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
 import Vue from 'vue'
 
-const isProd = process.env.NODE_ENV === "production"
+const isProd = process.env.NODE_ENV === 'production'
 
 const microAppRoutes = [
   {
@@ -18,7 +18,7 @@ const microAppRoutes = [
           title: 'ReactTSApp',
           microApp: {
             name: 'react app',
-            entry: isProd?`//${location.host}/react-app/`:'//localhost:3001',
+            entry: isProd ? `//${location.host}/react-app/` : '//localhost:3001',
             container: '#app-react',
             activeRule: '/app-react/index',
             props: { basepath: '/app-react/index' }
@@ -43,7 +43,7 @@ const microAppRoutes = [
           title: 'VueApp',
           microApp: {
             name: 'vue app',
-            entry:  isProd?`//${location.host}/vue-app/`:'//localhost:3002',
+            entry: isProd ? `//${location.host}/vue-app/` : '//localhost:3002',
             container: '#app-vue',
             activeRule: '/app-vue/index',
             props: { basepath: '/app-vue/index' }
@@ -68,7 +68,7 @@ const microAppRoutes = [
           title: 'Vue3App',
           microApp: {
             name: 'vue3 app',
-            entry: isProd?`//${location.host}/vue3-app/`:'//localhost:3004',
+            entry: isProd ? `//${location.host}/vue3-app/` : '//localhost:3004',
             container: '#app-vue3',
             activeRule: '/app-vue3/index',
             props: { basepath: '/app-vue3/index' }
@@ -93,9 +93,9 @@ const microAppRoutes = [
           title: 'PureHTMLApp',
           microApp: {
             name: 'purehtml app',
-            entry: isProd?`//${location.host}/html-app/`:'//localhost:3003',
+            entry: isProd ? `//${location.host}/html-app/` : '//localhost:3003',
             container: '#app-purehtml',
-            activeRule: '/app-purehtml/index',
+            activeRule: '/app-purehtml/index'
           },
           icon: 'el-icon-coin'
         }
