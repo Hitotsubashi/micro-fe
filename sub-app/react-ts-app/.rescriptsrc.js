@@ -13,6 +13,21 @@ module.exports = (isProd ? [] : [['use-stylelint-config', '.stylelintrc.js']]).c
     config.resolve.alias = {
       '@': path.resolve(__dirname, './src'),
     };
+    if (!isProd) {
+      const oneOfRule = config.module.rules.find((r) => r.oneOf);
+      oneOfRule.oneOf.splice(0, 0, {
+        test: /\.(svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              publicPath: 'http://localhost:3001',
+            },
+          },
+        ],
+      });
+    }
+
     return config;
   },
 

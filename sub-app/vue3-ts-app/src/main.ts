@@ -3,7 +3,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import pinia from "./pinia";
 import { useAppStore } from "./pinia/modules/app";
-import { initSentry } from "./sentry";
+// import { initSentry } from "./sentry";
 
 let instance: ReturnType<typeof createApp> | null = null;
 
@@ -11,7 +11,7 @@ let instance: ReturnType<typeof createApp> | null = null;
 function render(props: any) {
   const { container } = props;
   instance = createApp(App).use(pinia);
-  initSentry(instance);
+  // initSentry(instance);
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 

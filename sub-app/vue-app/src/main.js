@@ -5,7 +5,7 @@ import store from "./store";
 import getRouter from "./router";
 import devtoolEnhanceMixin from "@/mixin/micro-app/devtool-enhance-mixin";
 import uploadRoutesMixin from "@/mixin/micro-app/upload-routes-mixin";
-import { initSentry } from "./sentry";
+// import { initSentry } from "./sentry";
 
 Vue.config.productionTip = false;
 
@@ -16,7 +16,7 @@ function render(props = {}) {
 
   const router = getRouter(basepath);
   // if (process.env.NODE_ENV === "production") {
-  initSentry(router);
+  // initSentry(router);
   // }
 
   instance = new Vue({
