@@ -39,7 +39,7 @@ jobs:
       - name: Remove Version From package.json
         uses: jossef/action-set-json-field@v2.1
         with:
-          file: my-file.json
+          file: ${{ format('{0}/package.json',env.APP_PATH)}}
           field: version
           value: v0.0.0
       # 安装docker
