@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
 import { Vue } from "@sentry/vue/types/types";
-import info from "../docker.json";
+import info from "../package.json";
 
 export function initSentry(app: Vue) {
   Sentry.init({

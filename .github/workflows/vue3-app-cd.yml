@@ -5,7 +5,7 @@ on:
 env:
   APP_PATH: sub-app/vue3-ts-app
 jobs:
-  # 导出Docker.json中的数据
+  # 导出package.json中的数据
   ReadInfo:
     runs-on: ubuntu-latest
     outputs:
@@ -14,11 +14,11 @@ jobs:
       # 拉取代码
       - name: Checkout repository
         uses: actions/checkout@v3
-      # 读取docker.json获取相关信息
+      # 读取package.json获取相关信息
       - name: Read Info
         id: read-info
         run: |
-          JSON=`cat ./$APP_PATH/docker.json`
+          JSON=`cat ./$APP_PATH/package.json`
           JSON="${JSON//'%'/''}"
           JSON="${JSON//$'\n'/''}"
           JSON="${JSON//$'\r'/''}"
@@ -35,6 +35,13 @@ jobs:
       # 拉取代码
       - name: Checkout repository
         uses: actions/checkout@v3
+      # 移除package.json里的version
+      - name: Remove Version From package.json
+        uses: jossef/action-set-json-field@v2.1
+        with:
+          file: my-file.json
+          field: version
+          value: v0.0.0
       # 安装docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
