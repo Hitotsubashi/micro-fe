@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
-import info from '../docker.json';
+import info from './docker.json';
 
 export function initSentry() {
   Sentry.init({

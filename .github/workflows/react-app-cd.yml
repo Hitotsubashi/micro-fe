@@ -18,7 +18,7 @@ jobs:
       - name: Read Info
         id: read-info
         run: |
-          JSON=`cat ./$APP_PATH/docker.json`
+          JSON=`cat ./$APP_PATH/src/docker.json`
           JSON="${JSON//'%'/''}"
           JSON="${JSON//$'\n'/''}"
           JSON="${JSON//$'\r'/''}"
