@@ -4,6 +4,7 @@ import { BrowserTracing } from '@sentry/tracing'
 // import info from '../docker.json'
 import { makeFetchTransport } from '@sentry/browser'
 
+
 const isProd = process.env.NODE_ENV === 'production'
 
 const dnsMap = {
