@@ -4,6 +4,7 @@
     <ThemeColor />
     <ChangeMicroAppButton />
     <ChangeRoute />
+    <button @click="throwError">Error</button>
   </div>
 </template>
 
@@ -18,6 +19,11 @@ export default {
     ThemeColor,
     ChangeMicroAppButton,
     ChangeRoute,
+  },
+  methods: {
+    throwError() {
+      throw new Error("vue-app error");
+    },
   },
 };
 </script>

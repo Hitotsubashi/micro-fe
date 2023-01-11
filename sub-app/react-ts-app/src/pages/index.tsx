@@ -1,9 +1,8 @@
-import React from 'react';
 import logo from '@/assets/logo.svg';
-import './index.css';
-import ThemeColor from '@/components/ThemeColor';
 import ChangeMicroAppButton from '@/components/ChangeMicroAppButton';
 import ChangeRoute from '@/components/ChangeRoute';
+import ThemeColor from '@/components/ThemeColor';
+import './index.css';
 
 function App() {
   return (
@@ -13,6 +12,13 @@ function App() {
         <ThemeColor />
         <ChangeMicroAppButton />
         <ChangeRoute />
+        <button
+          onClick={() => {
+            throw new Error('456');
+          }}
+        >
+          error
+        </button>
       </header>
     </div>
   );
