@@ -2,6 +2,7 @@ FROM node:16-alpine as build-stage
 WORKDIR /app
 COPY  yarn.lock ./
 COPY package-install.json ./package.json
+RUN cat package.json
 RUN yarn install
 # COPY src ./src
 # COPY public ./public
