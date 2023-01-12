@@ -11,8 +11,8 @@ jobs:
   ReadInfo:
     runs-on: ubuntu-latest
     outputs:
-      name: ${{ steps.read-info.outputs.name }}
-      version: ${{ steps.read-info.outputs.version }}
+      name: ${{ steps.export-info.outputs.name }}
+      version: ${{ steps.export-info.outputs.version }}
     steps:
       # 拉取docker.json代码
       - name: Checkout repository
@@ -23,6 +23,9 @@ jobs:
         uses: jaywcjlove/github-action-package@main
         with:
           path: ${{ format('{0}/package.json',env.APP_PATH)}}
+      # 导出info里的部分信息
+      - name: Export Info
+        id: export-info
         run: |
           echo "name=${{ steps.read-info.outputs.name }}" >> $GITHUB_OUTPUT
           echo "version=${{ steps.read-info.outputs.version }}" >> $GITHUB_OUTPUT
