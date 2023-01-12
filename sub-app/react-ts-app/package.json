@@ -1,6 +1,6 @@
 {
   "name": "react-ts-app",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "private": true,
   "scripts": {
     "build": "rescripts build",
@@ -28,8 +28,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
-    "@sentry/react": "^7.29.0",
-    "@sentry/tracing": "^7.29.0",
+    "@rescripts/utilities": "^0.0.8",
+    "@sentry/webpack-plugin": "^1.20.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",

@@ -18,7 +18,6 @@ function render(props: any) {
   } else {
     root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
   }
-  // initSentry();
   root.render(
     <React.StrictMode>
       <Provider store={store}>

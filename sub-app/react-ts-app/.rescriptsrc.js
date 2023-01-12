@@ -1,5 +1,7 @@
 const { name } = require('./package');
 const path = require('path');
+const { appendWebpackPlugin } = require('@rescripts/utilities');
+const SentryCliPlugin = require('@sentry/webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -27,7 +29,17 @@ module.exports = (isProd ? [] : [['use-stylelint-config', '.stylelintrc.js']]).c
         ],
       });
     }
-
+    if (isProd) {
+      console.log(`version: ${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`);
+      config = appendWebpackPlugin(
+        new SentryCliPlugin({
+          include: './build',
+          ignore: ['node_modules', 'nginx'],
+          release: `${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`,
+        }),
+        config,
+      );
+    }
     return config;
   },
 
