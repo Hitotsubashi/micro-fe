@@ -1,11 +1,13 @@
 FROM node:16-alpine as build-stage
 WORKDIR /app
-COPY package*.json yarn.lock ./
+COPY  yarn.lock ./
+COPY package-noversion.json ./package.json
 RUN yarn install
 # COPY src ./src
 # COPY public ./public
 # COPY .env .rescriptsrc.js tsconfig.json ./
 COPY . .
+RUN touch package.json
 RUN yarn build
 
 FROM nginx:stable-alpine as deploy-stage

@@ -82,10 +82,5 @@ export function initSentry(router) {
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
-    beforeSend(event, hint) {
-      console(event, hint)
-      return event
-    }
-    // transport: CustomeTransport
   })
 }
