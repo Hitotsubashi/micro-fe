@@ -7,7 +7,7 @@ RUN yarn install
 # COPY public ./public
 # COPY .env .rescriptsrc.js tsconfig.json ./
 COPY . .
-RUN touch package.json
+RUN cat package.json
 RUN yarn build
 
 FROM nginx:stable-alpine as deploy-stage
