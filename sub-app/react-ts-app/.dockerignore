@@ -5,3 +5,7 @@
 .prettierrc.js
 .stylelintrc.js
 README.md
+Makefile
+node_modules
+build
+dist
