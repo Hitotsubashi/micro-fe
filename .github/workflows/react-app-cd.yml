@@ -41,16 +41,9 @@ jobs:
       # 安装docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      # 基于package.json复制一个名为package-noversion.json的副本
-      - name: Make a duplicate Of package.json named package-noversion.json
-        run: ${{ format('cp {0}/package.json {0}/package-noversion.json',env.APP_PATH)}}
-      # 移除package-noversion.json中的version字段
-      - name: Read Info
-        id: read-info
-        uses: jaywcjlove/github-action-package@main
-        with:
-          unset: version
-          path: ${{ format('{0}/package-noversion.json',env.APP_PATH)}}
+      # 基于package.json复制一个名为package-install.json的副本，且移除与install无关的信息
+      - name: Make a duplicate Of package.json named package-install.json
+        run: ${{ format('sed -e '/version/d' {0}/package.json {0}/package-install.json',env.APP_PATH)}}
       # 创建docker镜像
       - name: Build Docker Image
         uses: docker/build-push-action@v3
