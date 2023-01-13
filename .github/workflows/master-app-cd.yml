@@ -31,7 +31,7 @@ jobs:
           echo "version=${{ steps.read-info.outputs.version }}" >> $GITHUB_OUTPUT
   CD:
     runs-on: ubuntu-latest
-    needs: Package
+    needs: ReadInfo
     env:
       Container: ${{needs.ReadInfo.outputs.name}}
       Image: ${{needs.ReadInfo.outputs.name}}:${{needs.ReadInfo.outputs.version}}
