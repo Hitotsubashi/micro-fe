@@ -65,18 +65,16 @@ const CustomeTransport = (options) => {
 }
 
 function sentryFilter(url, options) {
-  console.log(url, options)
   let app
-  console.log('includes:', options.body.includes('"type":"Error"'))
   if (options.body.includes('"type":"Error"')) {
     const [, filename] = options.body.match(/"filename":"([^"]*)"/)
     if (filename) {
       if (isProd) {
-        if (filename.includes('app-react')) {
+        if (filename.includes('react-app')) {
           app = 'react-ts-app'
-        } else if (filename.includes('app-vue')) {
+        } else if (filename.includes('vue-app')) {
           app = 'vue-app'
-        } else if (filename.includes('app-vue3')) {
+        } else if (filename.includes('vue3-app')) {
           app = 'vue3-ts-app'
         } else {
           app = 'master-app'
@@ -119,6 +117,11 @@ export function initSentry(router) {
     release: `${info.name}@${info.version}`,
     environment: process.env.NODE_ENV,
     attachStacktrace: true,
+    beforeSend(event, hint) {
+      console.log(event)
+      console.log(hint)
+      return event
+    },
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
