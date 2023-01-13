@@ -64,13 +64,6 @@ const CustomeTransport = (options) => {
   return makeFetchTransport(options, fetchImpl)
 }
 
-const releaseMap = {
-  'master-app': `${info.name}@${info.version}`,
-  'vue-app': undefined,
-  'react-ts-app': 'react-ts-app@0.1.18',
-  'vue3-ts-app': undefined
-}
-
 function sentryFilter(url, options) {
   console.log(url, options)
   let app
@@ -100,9 +93,8 @@ function sentryFilter(url, options) {
         }
       }
     }
-    console.log('app', app)
-    if (releaseMap[app]) {
-      const release = releaseMap[app]
+    if (window[`$${app}`]) {
+      const release = window[`$${app}`]
       options.body = options.body.replace(/"release":"([^"]*)"/, `"release":"${release}"`)
       return [url, options]
     } else {
