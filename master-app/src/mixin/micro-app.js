@@ -10,7 +10,8 @@ const handleMicroAppDispatchEvent = (e) => {
   const { detail: action } = e
   switch (action.type) {
     case 'SET_MICRO_APP_RELEASE':
-      const {app_name,version} = action.payload
+      // eslint-disable-next-line no-case-declarations
+      const { app_name, version } = action.payload
       window[`$${app_name}`] = version
       break
     case 'CHANGE_ROUTE':

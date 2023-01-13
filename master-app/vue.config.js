@@ -1,6 +1,8 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const info  = require('./package.json')
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -125,6 +127,15 @@ module.exports = {
             })
           // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
           config.optimization.runtimeChunk('single')
+
+          config.plugin("sentry-webpack-plugin").use(
+            new SentryWebpackPlugin({
+                include: "./dist",
+                ignore: ["node_modules", "nginx"],
+                release: `${info.name}@${info.version}`,
+            })
+
+        );
         }
       )
   }

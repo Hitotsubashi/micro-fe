@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import * as Sentry from '@sentry/vue'
 import { BrowserTracing } from '@sentry/tracing'
-import info from '../docker.json'
+import info from '../package.json'
 import { makeFetchTransport } from '@sentry/browser'
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -74,7 +74,7 @@ const releaseMap = {
 function sentryFilter(url, options) {
   console.log(url, options)
   let app
-  console.log('includes:',options.body.includes('"type":"Error"'))
+  console.log('includes:', options.body.includes('"type":"Error"'))
   if (options.body.includes('"type":"Error"')) {
     const [, filename] = options.body.match(/"filename":"([^"]*)"/)
     if (filename) {
@@ -103,7 +103,7 @@ function sentryFilter(url, options) {
     console.log('app', app)
     if (releaseMap[app]) {
       const release = releaseMap[app]
-      options.body = options.body.replace(/"release":"([^"]*)"/,`"release":"${release}"`)
+      options.body = options.body.replace(/"release":"([^"]*)"/, `"release":"${release}"`)
       return [url, options]
     } else {
       return [url, options]
@@ -112,7 +112,6 @@ function sentryFilter(url, options) {
     return [url, options]
   }
 }
-
 
 export function initSentry(router) {
   Sentry.init({
@@ -132,6 +131,6 @@ export function initSentry(router) {
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
-    transport: CustomeTransport,
+    transport: CustomeTransport
   })
 }
