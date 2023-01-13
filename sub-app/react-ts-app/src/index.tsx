@@ -34,6 +34,17 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 export async function bootstrap() {
+  window.dispatchEvent(
+    new CustomEvent('micro-app-dispatch', {
+      detail: {
+        type: 'SET_MICRO_APP_RELEASE',
+        payload: {
+          app_name: 'react-ts-app',
+          version: `${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`,
+        },
+      },
+    }),
+  );
   console.log('[react16] react app bootstraped');
 }
 
