@@ -1,10 +1,8 @@
 FROM node:16-alpine as build-stage
 WORKDIR /app
-COPY package*.json yarn.lock ./
+COPY  yarn.lock ./
+COPY package-install.json ./package.json
 RUN yarn install
-# COPY src ./src
-# COPY public ./public
-# COPY .env .rescriptsrc.js tsconfig.json ./
 COPY . .
 RUN yarn build
 

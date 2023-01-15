@@ -1,5 +1,6 @@
-const { name } = require('./package');
 const path = require('path');
+const { appendWebpackPlugin } = require('@rescripts/utilities');
+const SentryCliPlugin = require('@sentry/webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -13,6 +14,32 @@ module.exports = (isProd ? [] : [['use-stylelint-config', '.stylelintrc.js']]).c
     config.resolve.alias = {
       '@': path.resolve(__dirname, './src'),
     };
+    if (!isProd) {
+      const oneOfRule = config.module.rules.find((r) => r.oneOf);
+      oneOfRule.oneOf.splice(0, 0, {
+        test: /\.(svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              publicPath: 'http://localhost:3001',
+            },
+          },
+        ],
+      });
+    }
+    if (isProd) {
+      console.log(`version: ${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`);
+      config = appendWebpackPlugin(
+        new SentryCliPlugin({
+          include: './build',
+          ignore: ['node_modules', 'nginx'],
+          release: `${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`,
+          urlPrefix: '~/react-app',
+        }),
+        config,
+      );
+    }
     return config;
   },
 

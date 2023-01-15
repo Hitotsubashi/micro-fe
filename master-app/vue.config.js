@@ -1,6 +1,8 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const info = require('./package.json')
+const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -36,15 +38,15 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js'),
-    proxy:{
-      '/vue-app': {
-        target: 'http://localhost:3002',
-        ws: true,
-        changeOrigin: true,
-        // pathRewrite: { '^/vue-app': '' },
-      },
-    }
+    before: require('./mock/mock-server.js')
+    // proxy: {
+    //   '/vue-app/': {
+    //     target: 'http://localhost:3002',
+    //     ws: true,
+    //     changeOrigin: true,
+    //     pathRewrite: { '^/vue-app/': '' },
+    //   }
+    // }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
@@ -125,6 +127,14 @@ module.exports = {
             })
           // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
           config.optimization.runtimeChunk('single')
+
+          config.plugin('sentry-webpack-plugin').use(
+            new SentryWebpackPlugin({
+              include: './dist',
+              ignore: ['node_modules', 'nginx'],
+              release: `${info.name}@${info.version}`
+            })
+          )
         }
       )
   }

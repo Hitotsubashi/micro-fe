@@ -5,7 +5,8 @@ import store from "./store";
 import getRouter from "./router";
 import devtoolEnhanceMixin from "@/mixin/micro-app/devtool-enhance-mixin";
 import uploadRoutesMixin from "@/mixin/micro-app/upload-routes-mixin";
-import { initSentry } from "./sentry";
+const { name, version } = require("../package.json");
+// import { initSentry } from "./sentry";
 
 Vue.config.productionTip = false;
 
@@ -16,7 +17,7 @@ function render(props = {}) {
 
   const router = getRouter(basepath);
   // if (process.env.NODE_ENV === "production") {
-  initSentry(router);
+  // initSentry(router);
   // }
 
   instance = new Vue({
@@ -33,14 +34,28 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 export async function bootstrap() {
+  window.dispatchEvent(
+    new CustomEvent("micro-app-dispatch", {
+      detail: {
+        type: "SET_MICRO_APP_RELEASE",
+        payload: {
+          app_name: "vue-app",
+          version: `${name}@${version}`,
+        },
+      },
+    })
+  );
   console.log("[vue] vue app bootstraped");
 }
 
 export async function mount(props) {
   console.log("[vue] vue app mount", props);
+  // let sentryInit;
   props.onGlobalStateChange((state) => {
+    // ({ sentryInit } = state);
     store.dispatch("app/changeTheme", state.theme);
   }, true);
+  // sentryInit({ Vue });
   render(props);
 }
 

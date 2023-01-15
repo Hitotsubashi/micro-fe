@@ -1,36 +1,41 @@
 name: React-App-CD
 on:
   push:
-    branches: react-app-release
+    branches:
+      - react-app-release
+      - react-app-release-**
 env:
   APP_PATH: sub-app/react-ts-app
 jobs:
-  # 导出Docker.json中的数据
+  # 导出Package.json中的数据
   ReadInfo:
     runs-on: ubuntu-latest
     outputs:
-      info: ${{ steps.read-info.outputs.info }}
+      name: ${{ steps.export-info.outputs.name }}
+      version: ${{ steps.export-info.outputs.version }}
     steps:
-      # 拉取docker.json代码
       - name: Checkout repository
         uses: actions/checkout@v3
       # 读取package获取相关信息
       - name: Read Info
         id: read-info
+        uses: jaywcjlove/github-action-package@main
+        with:
+          path: ${{ format('{0}/package.json',env.APP_PATH)}}
+      # 导出info里的部分信息
+      - name: Export Info
+        id: export-info
         run: |
-          JSON=`cat ./$APP_PATH/docker.json`
-          JSON="${JSON//'%'/''}"
-          JSON="${JSON//$'\n'/''}"
-          JSON="${JSON//$'\r'/''}"
-          echo "info=$JSON" >> $GITHUB_OUTPUT
+          echo "name=${{ steps.read-info.outputs.name }}" >> $GITHUB_OUTPUT
+          echo "version=${{ steps.read-info.outputs.version }}" >> $GITHUB_OUTPUT
   CD:
     runs-on: ubuntu-latest
     needs: ReadInfo
     env:
-      Container: ${{fromJson(needs.ReadInfo.outputs.info).name}}
-      Image: ${{fromJson(needs.ReadInfo.outputs.info).name}}:${{fromJson(needs.ReadInfo.outputs.info).version}}
-      ImageFile: ${{fromJson(needs.ReadInfo.outputs.info).name}}.tar
-      Release: ${{fromJson(needs.ReadInfo.outputs.info).name}}/${{fromJson(needs.ReadInfo.outputs.info).version}}
+      Container: ${{needs.ReadInfo.outputs.name}}
+      Image: ${{needs.ReadInfo.outputs.name}}:${{needs.ReadInfo.outputs.version}}
+      ImageFile: ${{needs.ReadInfo.outputs.name}}.tar
+      Release: ${{needs.ReadInfo.outputs.name}}/${{needs.ReadInfo.outputs.version}}
     steps:
       # 拉取代码
       - name: Checkout repository
@@ -38,6 +43,9 @@ jobs:
       # 安装docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      # 基于package.json复制一个名为package-install.json的副本，且移除与install无关的信息
+      - name: Make a duplicate Of package.json named package-install.json
+        run: ${{ format('sed -e /\"version\"/d {0}/package.json > {0}/package-install.json',env.APP_PATH)}}
       # 创建docker镜像
       - name: Build Docker Image
         uses: docker/build-push-action@v3
