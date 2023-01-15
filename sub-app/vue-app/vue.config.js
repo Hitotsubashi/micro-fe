@@ -1,5 +1,5 @@
 const { defineConfig } = require("@vue/cli-service");
-const { name, version } = require("./package");
+const { name, version } = require("./package.json");
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 
 const isProd = process.env.NODE_ENV === "production";
