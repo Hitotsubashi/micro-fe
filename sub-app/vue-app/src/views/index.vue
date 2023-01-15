@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     throwError() {
-      throw new Error("vue-app error");
+      throw new Error("vue-app error1");
     },
   },
 };

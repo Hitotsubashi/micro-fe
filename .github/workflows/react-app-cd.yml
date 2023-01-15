@@ -14,7 +14,6 @@ jobs:
       name: ${{ steps.export-info.outputs.name }}
       version: ${{ steps.export-info.outputs.version }}
     steps:
-      # 拉取docker.json代码
       - name: Checkout repository
         uses: actions/checkout@v3
       # 读取package获取相关信息
