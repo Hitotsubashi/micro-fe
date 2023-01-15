@@ -1,4 +1,3 @@
-const { name } = require('./package');
 const path = require('path');
 const { appendWebpackPlugin } = require('@rescripts/utilities');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
