@@ -14,7 +14,7 @@ function App() {
         <ChangeRoute />
         <button
           onClick={() => {
-            throw new Error('456');
+            throw new Error('1');
           }}
         >
           error
