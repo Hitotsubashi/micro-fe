@@ -36,6 +36,7 @@ module.exports = (isProd ? [] : [['use-stylelint-config', '.stylelintrc.js']]).c
           include: './build',
           ignore: ['node_modules', 'nginx'],
           release: `${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`,
+          urlPrefix: '~/react-app',
         }),
         config,
       );
