@@ -3,7 +3,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import pinia from "./pinia";
 import { useAppStore } from "./pinia/modules/app";
-// import { initSentry } from "./sentry";
+import { name, version } from "../package.json";
 
 let instance: ReturnType<typeof createApp> | null = null;
 
@@ -20,6 +20,17 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 export async function bootstrap() {
+  window.dispatchEvent(
+    new CustomEvent("micro-app-dispatch", {
+      detail: {
+        type: "SET_MICRO_APP_RELEASE",
+        payload: {
+          app_name: "vue3-ts-app",
+          version: `${name}@${version}`,
+        },
+      },
+    })
+  );
   console.log("vue3 app bootstraped");
 }
 
