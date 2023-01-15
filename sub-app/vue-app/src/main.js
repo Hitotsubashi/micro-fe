@@ -50,9 +50,12 @@ export async function bootstrap() {
 
 export async function mount(props) {
   console.log("[vue] vue app mount", props);
+  // let sentryInit;
   props.onGlobalStateChange((state) => {
+    // ({ sentryInit } = state);
     store.dispatch("app/changeTheme", state.theme);
   }, true);
+  // sentryInit({ Vue });
   render(props);
 }
 

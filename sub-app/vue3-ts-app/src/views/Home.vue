@@ -5,6 +5,8 @@
     <ThemeColor />
     <ChangeMicroAppButton />
     <input v-model="value" />
+    <br />
+    <button @click="throwError">error</button>
   </div>
 </template>
 
@@ -23,8 +25,10 @@ export default defineComponent({
   },
   setup() {
     const value = ref("");
-
-    return { value };
+    function throwError() {
+      throw new Error("vue3 error 1");
+    }
+    return { value, throwError };
   },
 });
 </script>
