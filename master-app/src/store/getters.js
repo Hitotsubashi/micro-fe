@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/vue'
+import { vueAppInit } from '@/sentry'
 
 const getters = {
   sidebar: state => state.app.sidebar,
@@ -12,7 +12,7 @@ const getters = {
   permission_routes: state => state.permission.routes,
   microAppState: state => ({
     theme: state.settings.theme,
-    sentryInit: Sentry.init
+    sentryInit: vueAppInit
   })
 }
 export default getters

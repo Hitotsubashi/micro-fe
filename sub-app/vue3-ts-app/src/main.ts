@@ -8,10 +8,11 @@ import { name, version } from "../package.json";
 let instance: ReturnType<typeof createApp> | null = null;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function render(props: any) {
+function render(props: any, sentryInit?: any) {
   const { container } = props;
   instance = createApp(App).use(pinia);
   // initSentry(instance);
+  sentryInit?.({ app: instance });
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 
@@ -36,11 +37,13 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   console.log("vue] vue3 app mount", props);
-  render(props);
+  let sentryInit;
   props.onGlobalStateChange((state: any) => {
     const app = useAppStore();
     app.changeTheme(state.theme);
+    ({ sentryInit } = state);
   });
+  render(props, sentryInit);
 }
 
 export async function unmount() {
