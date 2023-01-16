@@ -7,9 +7,9 @@ const isProd = process.env.NODE_ENV === 'production';
 module.exports = (isProd ? [] : [['use-stylelint-config', '.stylelintrc.js']]).concat({
   webpack: (config) => {
     config.output.publicPath = isProd ? '/react-app/' : undefined;
-    config.output.library = `${name}-[name]`;
+    config.output.library = `${process.env.REACT_APP_NAME}-[name]`;
     config.output.libraryTarget = 'umd';
-    config.output.chunkLoadingGlobal = `webpackJsonp_${name}`;
+    config.output.chunkLoadingGlobal = `webpackJsonp_${process.env.REACT_APP_NAME}`;
     config.output.globalObject = 'window';
     config.resolve.alias = {
       '@': path.resolve(__dirname, './src'),
