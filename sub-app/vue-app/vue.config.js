@@ -28,7 +28,7 @@ module.exports = defineConfig({
         include: "./dist",
         ignore: ["node_modules", "nginx"],
         release: `${name}@${version}`,
-        urlPrefix: "~/vue-app",
+        // urlPrefix: "~/vue-app",
       }),
     ],
   },
