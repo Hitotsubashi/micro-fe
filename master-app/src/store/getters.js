@@ -1,5 +1,3 @@
-import { vueAppInit } from '@/sentry'
-
 const getters = {
   sidebar: state => state.app.sidebar,
   device: state => state.app.device,
@@ -11,8 +9,7 @@ const getters = {
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes,
   microAppState: state => ({
-    theme: state.settings.theme,
-    sentryInit: vueAppInit
+    theme: state.settings.theme
   })
 }
 export default getters

@@ -16,9 +16,6 @@ function render(props = {}) {
   const { container, basepath } = props;
 
   const router = getRouter(basepath);
-  // if (process.env.NODE_ENV === "production") {
-  // initSentry(router);
-  // }
 
   instance = new Vue({
     name: "VueApp",
@@ -50,12 +47,18 @@ export async function bootstrap() {
 
 export async function mount(props) {
   console.log("[vue] vue app mount", props);
-  let sentryInit;
+  let sentry;
   props.onGlobalStateChange((state) => {
-    ({ sentryInit } = state);
+    ({ sentry } = state);
     store.dispatch("app/changeTheme", state.theme);
   }, true);
-  sentryInit({ Vue });
+  Vue.config.errorHandler = (err) => {
+    sentry.captureException(err, (scope) => {
+      scope.setExtra("release", `${name}@${version}`);
+    });
+    console.error(err);
+    return true;
+  };
   render(props);
 }
 

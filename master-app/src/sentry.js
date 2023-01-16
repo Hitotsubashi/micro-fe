@@ -111,34 +111,38 @@ const sentryOptions = {
   attachStacktrace: true,
   beforeSend(event, hint) {
     console.log('hint', hint)
-    const { originalException } = hint
-    const stacks = originalException.stack.split('\n')
-    let app
-    if (stacks[1]) {
-      if (isProd) {
-        if (stacks[1].includes('react-app')) {
-          app = 'react-ts-app'
-        } else if (stacks[1].includes('vue-app')) {
-          app = 'vue-app'
-        } else if (stacks[1].includes('vue3-app')) {
-          app = 'vue3-ts-app'
+    if (event.extra?.release) {
+      event.release = event.extra.release
+    } else {
+      const { originalException } = hint
+      const stacks = originalException.stack.split('\n')
+      let app
+      if (stacks[1]) {
+        if (isProd) {
+          if (stacks[1].includes('react-app')) {
+            app = 'react-ts-app'
+          } else if (stacks[1].includes('vue-app')) {
+            app = 'vue-app'
+          } else if (stacks[1].includes('vue3-app')) {
+            app = 'vue3-ts-app'
+          } else {
+            app = 'master-app'
+          }
         } else {
-          app = 'master-app'
-        }
-      } else {
-        if (stacks[1].includes('localhost:3001')) {
-          app = 'react-ts-app'
-        } else if (stacks[1].includes('localhost:3002')) {
-          app = 'vue-app'
-        } else if (stacks[1].includes('localhost:3004')) {
-          app = 'vue3-ts-app'
-        } else {
-          app = 'master-app'
+          if (stacks[1].includes('localhost:3001')) {
+            app = 'react-ts-app'
+          } else if (stacks[1].includes('localhost:3002')) {
+            app = 'vue-app'
+          } else if (stacks[1].includes('localhost:3004')) {
+            app = 'vue3-ts-app'
+          } else {
+            app = 'master-app'
+          }
         }
       }
-    }
-    if (window[`$${app}`]) {
-      event.release = window[`$${app}`]
+      if (window[`$${app}`]) {
+        event.release = window[`$${app}`]
+      }
     }
     console.log(event)
     return event

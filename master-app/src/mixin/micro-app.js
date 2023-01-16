@@ -3,8 +3,12 @@ import { initGlobalState } from 'qiankun'
 import store from '@/store'
 import router from '@/router'
 import { logout } from '@/utils/auth'
+import * as Sentry from '@sentry/vue'
 
-const actions = initGlobalState(store.getters.microAppState)
+const actions = initGlobalState({
+  ...store.getters.microAppState,
+  sentry: Sentry
+})
 
 const handleMicroAppDispatchEvent = (e) => {
   const { detail: action } = e
@@ -47,7 +51,8 @@ export default {
     'microAppState': {
       handler(val) {
         actions.setGlobalState({
-          ...val
+          ...val,
+          sentry: Sentry
         })
       },
       deep: true

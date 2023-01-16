@@ -37,13 +37,13 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   console.log("vue] vue3 app mount", props);
-  let sentryInit;
+  // let sentryInit;
   props.onGlobalStateChange((state: any) => {
     const app = useAppStore();
     app.changeTheme(state.theme);
-    ({ sentryInit } = state);
+    // ({ sentryInit } = state);
   });
-  render(props, sentryInit);
+  render(props);
 }
 
 export async function unmount() {
