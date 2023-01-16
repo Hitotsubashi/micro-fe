@@ -4,10 +4,12 @@ import store from '@/store'
 import router from '@/router'
 import { logout } from '@/utils/auth'
 import * as Sentry from '@sentry/vue'
+import { attachErrorHandler } from '@sentry/vue'
 
 const actions = initGlobalState({
   ...store.getters.microAppState,
-  sentry: Sentry
+  sentry: Sentry,
+  attachErrorHandler
 })
 
 const handleMicroAppDispatchEvent = (e) => {
@@ -52,7 +54,8 @@ export default {
       handler(val) {
         actions.setGlobalState({
           ...val,
-          sentry: Sentry
+          sentry: Sentry,
+          attachErrorHandler
         })
       },
       deep: true
