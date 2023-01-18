@@ -49,13 +49,13 @@ export async function mount(props) {
   console.log("[vue] vue app mount", props);
   // let sentry;
   // let vueAppInit;
-  // let vueAppInit1;
-  let attachErrorHandler;
+  let vueAppInit1;
+  // let attachErrorHandler;
   props.onGlobalStateChange((state) => {
     // ({ sentry } = state);
     // ({ vueAppInit } = state);
-    // ({ vueAppInit1 } = state);
-    ({ attachErrorHandler } = state);
+    ({ vueAppInit1 } = state);
+    // ({ attachErrorHandler } = state);
     store.dispatch("app/changeTheme", state.theme);
   }, true);
   // vueAppInit({
@@ -65,11 +65,11 @@ export async function mount(props) {
   //   attachProps: true,
   // });
 
-  // vueAppInit1(Vue, {
-  //   tracesSampleRate: 1.0,
-  //   logErrors: true,
-  //   attachProps: true,
-  // });
+  vueAppInit1(Vue, {
+    tracesSampleRate: 1.0,
+    logErrors: true,
+    attachProps: true,
+  });
 
   // sentry.init({
   //   Vue,
@@ -85,7 +85,7 @@ export async function mount(props) {
   //   });
   // };
 
-  attachErrorHandler(Vue, { logErrors: true, attachProps: true });
+  // attachErrorHandler(Vue, { logErrors: true, attachProps: true });
   render(props);
 }
 
