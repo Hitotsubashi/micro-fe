@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 module.exports = defineConfig({
   parallel: false,
-  transpileDependencies: true,
+  // transpileDependencies: true,
   publicPath: isProd ? "/vue-app/" : undefined,
   devServer: {
     headers: {
