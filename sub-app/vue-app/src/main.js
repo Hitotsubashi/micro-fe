@@ -47,12 +47,12 @@ export async function bootstrap() {
 
 export async function mount(props) {
   console.log("[vue] vue app mount", props);
-  let sentry;
+  // let sentry;
   // let vueAppInit;
   // let vueAppInit1;
   let attachErrorHandler;
   props.onGlobalStateChange((state) => {
-    ({ sentry } = state);
+    // ({ sentry } = state);
     // ({ vueAppInit } = state);
     // ({ vueAppInit1 } = state);
     ({ attachErrorHandler } = state);
