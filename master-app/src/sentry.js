@@ -125,6 +125,18 @@ const sentryOptions = {
             app = 'react-ts-app'
           } else if (stacks[1].includes('vue-app')) {
             app = 'vue-app'
+            event.exception.values = ev.exception.values.map(item => {
+              const { stacktrace: { frames }, ...rest } = item
+              // FIXME: 主应用加载时，qiankun 加载当前js资源会在首行添加 ;(function(window, self, globalThis){with(window){;
+              // https://github.com/kuitos/import-html-entry/blob/master/src/index.js#L62
+              frames[frames.length - 1].colno -= 51
+              return {
+                ...rest,
+                stacktrace: {
+                  frames
+                }
+              }
+            })
           } else if (stacks[1].includes('vue3-app')) {
             app = 'vue3-ts-app'
           } else {
@@ -135,6 +147,18 @@ const sentryOptions = {
             app = 'react-ts-app'
           } else if (stacks[1].includes('localhost:3002')) {
             app = 'vue-app'
+            event.exception.values = ev.exception.values.map(item => {
+              const { stacktrace: { frames }, ...rest } = item
+              // FIXME: 主应用加载时，qiankun 加载当前js资源会在首行添加 ;(function(window, self, globalThis){with(window){;
+              // https://github.com/kuitos/import-html-entry/blob/master/src/index.js#L62
+              frames[frames.length - 1].colno -= 51
+              return {
+                ...rest,
+                stacktrace: {
+                  frames
+                }
+              }
+            })
           } else if (stacks[1].includes('localhost:3004')) {
             app = 'vue3-ts-app'
           } else {
