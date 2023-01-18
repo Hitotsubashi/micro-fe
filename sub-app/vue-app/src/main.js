@@ -47,20 +47,44 @@ export async function bootstrap() {
 
 export async function mount(props) {
   console.log("[vue] vue app mount", props);
-  // let sentry;
+  let sentry;
+  // let vueAppInit;
+  // let vueAppInit1;
   let attachErrorHandler;
   props.onGlobalStateChange((state) => {
-    // ({ sentry } = state);
+    ({ sentry } = state);
+    // ({ vueAppInit } = state);
+    // ({ vueAppInit1 } = state);
     ({ attachErrorHandler } = state);
     store.dispatch("app/changeTheme", state.theme);
   }, true);
+  // vueAppInit({
+  //   Vue,
+  //   tracesSampleRate: 1.0,
+  //   logErrors: true,
+  //   attachProps: true,
+  // });
+
+  // vueAppInit1(Vue, {
+  //   tracesSampleRate: 1.0,
+  //   logErrors: true,
+  //   attachProps: true,
+  // });
+
+  // sentry.init({
+  //   Vue,
+  //   tracesSampleRate: 1.0,
+  //   logErrors: true,
+  //   attachProps: true,
+  // });
+
   // Vue.config.errorHandler = (err) => {
+  //   console.log("Vue.config.errorHandler", err);
   //   sentry.captureException(err, (scope) => {
   //     scope.setExtra("release", `${name}@${version}`);
   //   });
-  //   console.error(err);
-  //   return true;
   // };
+
   attachErrorHandler(Vue, { logErrors: true, attachProps: true });
   render(props);
 }

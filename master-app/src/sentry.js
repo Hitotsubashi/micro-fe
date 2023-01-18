@@ -2,6 +2,8 @@ import Vue from 'vue'
 import * as Sentry from '@sentry/vue'
 import { BrowserTracing } from '@sentry/tracing'
 import info from '../package.json'
+import { attachErrorHandler, createTracingMixins } from '@sentry/vue'
+
 // import { makeFetchTransport } from '@sentry/browser'
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -151,16 +153,28 @@ const sentryOptions = {
   // transport: CustomeTransport
 }
 
-export function vueAppInit({ app, Vue, router }) {
+export function vueAppInit(options) {
   Sentry.init({
-    app, Vue, ...sentryOptions,
+    options, ...sentryOptions,
     integrations: [
       new BrowserTracing({
-        routingInstrumentation: router ? Sentry.vueRouterInstrumentation(router) : undefined,
+        routingInstrumentation: options.router ? Sentry.vueRouterInstrumentation(options.router) : undefined,
         tracePropagationTargets: ['localhost', 'my-site-url.com', /^\//]
       })
     ]
   })
+}
+
+export function vueAppInit1(app, options) {
+  attachErrorHandler(app, options)
+  if ('tracesSampleRate' in options || 'tracesSampler' in options) {
+    app.mixin(
+      createTracingMixins({
+        ...options,
+        ...options.tracingOptions
+      })
+    )
+  }
 }
 
 export function initSentry(router) {

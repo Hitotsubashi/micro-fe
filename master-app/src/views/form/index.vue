@@ -42,6 +42,7 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Create</el-button>
         <el-button @click="onCancel">Cancel</el-button>
+        <el-button type="danger" @click="throwError">Error</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -73,6 +74,9 @@ export default {
         message: 'cancel!',
         type: 'warning'
       })
+    },
+    throwError() {
+      throw new Error('master-app error1')
     }
   }
 }
