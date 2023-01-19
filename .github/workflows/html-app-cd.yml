@@ -67,6 +67,7 @@ jobs:
           name: ${{ env.Release }}
           draft: false
           prerelease: false
+          target_commitish: ${{ github.ref }}
           files: |
             ${{ env.ImageFile }}
       # 把镜像tar上传至生产服务器
