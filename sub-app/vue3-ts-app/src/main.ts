@@ -12,7 +12,11 @@ function render(props: any, sentryInit?: any) {
   const { container } = props;
   instance = createApp(App).use(pinia);
   // initSentry(instance);
-  sentryInit?.({ app: instance });
+  sentryInit?.(instance, {
+    tracesSampleRate: 1.0,
+    logErrors: true,
+    attachProps: true,
+  });
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 
@@ -37,13 +41,13 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   console.log("vue] vue3 app mount", props);
-  // let sentryInit;
+  let vueAppInit1: any;
   props.onGlobalStateChange((state: any) => {
+    ({ vueAppInit1 } = state);
     const app = useAppStore();
     app.changeTheme(state.theme);
-    // ({ sentryInit } = state);
   });
-  render(props);
+  render(props, vueAppInit1);
 }
 
 export async function unmount() {

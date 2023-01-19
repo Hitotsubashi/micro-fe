@@ -139,6 +139,18 @@ const sentryOptions = {
             })
           } else if (stacks[1].includes('vue3-app')) {
             app = 'vue3-ts-app'
+            event.exception.values = event.exception.values.map(item => {
+              const { stacktrace: { frames }, ...rest } = item
+              // FIXME: 主应用加载时，qiankun 加载当前js资源会在首行添加 window.__TEMP_EVAL_FUNC__ = function(){;(function(window, self, globalThis){with(window){;
+              // https://github.com/kuitos/import-html-entry/blob/master/src/index.js#L62
+              frames[frames.length - 1].colno -= 'window.__TEMP_EVAL_FUNC__ = function(){;(function(window, self, globalThis){with(window){;'.length
+              return {
+                ...rest,
+                stacktrace: {
+                  frames
+                }
+              }
+            })
           } else {
             app = 'master-app'
           }

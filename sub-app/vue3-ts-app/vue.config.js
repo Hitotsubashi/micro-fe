@@ -29,13 +29,25 @@ module.exports = defineConfig({
       libraryTarget: "umd", // 把微应用打包成 umd 库格式
       chunkLoadingGlobal: `webpackJsonp_${name}`,
     },
-    plugins: [
-      new SentryWebpackPlugin({
-        include: "./dist",
-        ignore: ["node_modules", "nginx"],
-        release: `${name}@${version}`,
-        urlPrefix: "~/vue3-app",
-      }),
-    ],
+    // plugins: [
+    //   new SentryWebpackPlugin({
+    //     include: "./dist",
+    //     ignore: ["node_modules", "nginx"],
+    //     release: `${name}@${version}`,
+    //     urlPrefix: "~/vue3-app",
+    //   }),
+    // ],
+  },
+  chainWebpack(config) {
+    config.when(isProd, (config) => {
+      config.plugin("sentry-webpack-plugin").use(
+        new SentryWebpackPlugin({
+          include: "./dist",
+          ignore: ["node_modules", "nginx"],
+          release: `${name}@${version}`,
+          urlPrefix: "~/vue3-app",
+        })
+      );
+    });
   },
 });
