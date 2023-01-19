@@ -4,7 +4,7 @@
 
   1. VueAppInit 方法整合以及名字修改
   2. VueAppInit 方法从 props 传入
-  3. tag 打标恢复
+  3. tag 打标恢复 ✅
 
      github action 常量：https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
 
