@@ -5,6 +5,8 @@
     <ChangeMicroAppButton />
     <ChangeRoute />
     <button @click="throwError">Error</button>
+    <button @click="throwPromiseError">PromiseError</button>
+    <button @click="throwSetTimeoutError">SetTimeoutError</button>
   </div>
 </template>
 
@@ -23,6 +25,14 @@ export default {
   methods: {
     throwError() {
       throw new Error("vue-app error1");
+    },
+    throwPromiseError() {
+      return Promise.reject("vue-app promise error1");
+    },
+    throwSetTimeoutError() {
+      setTimeout(() => {
+        throw new Error("vue-app settimeout error1");
+      });
     },
   },
 };

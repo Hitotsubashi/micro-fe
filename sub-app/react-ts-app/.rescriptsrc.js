@@ -22,7 +22,7 @@ module.exports = (isProd ? [] : [['use-stylelint-config', '.stylelintrc.js']]).c
           {
             loader: 'url-loader',
             options: {
-              publicPath: 'http://localhost:3001',
+              publicPath: `http://localhost:${process.env.PORT}`,
             },
           },
         ],

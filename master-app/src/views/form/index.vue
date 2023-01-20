@@ -43,6 +43,8 @@
         <el-button type="primary" @click="onSubmit">Create</el-button>
         <el-button @click="onCancel">Cancel</el-button>
         <el-button type="danger" @click="throwError">Error</el-button>
+        <el-button type="danger" @click="throwPromiseError">PromiseError</el-button>
+        <el-button type="danger" @click="throwSetTimeoutError">SetTimeoutError</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -77,6 +79,14 @@ export default {
     },
     throwError() {
       throw new Error('master-app error1')
+    },
+    throwPromiseError() {
+      return Promise.reject("master-app promise error1");
+    },
+    throwSetTimeoutError(){
+      setTimeout(()=>{
+        throw new Error('master-app settimeout error1')
+      })
     }
   }
 }

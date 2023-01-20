@@ -117,9 +117,9 @@ const sentryOptions = {
       event.release = event.extra.release
     } else {
       const { originalException } = hint
-      const stacks = originalException.stack.split('\n')
+      const stacks = originalException.stack?.split('\n')
       let app
-      if (stacks[1]) {
+      if (stacks?.[1]) {
         if (isProd) {
           if (stacks[1].includes('react-app')) {
             app = 'react-ts-app'
@@ -177,19 +177,7 @@ const sentryOptions = {
   // transport: CustomeTransport
 }
 
-export function vueAppInit(options) {
-  Sentry.init({
-    options, ...sentryOptions,
-    integrations: [
-      new BrowserTracing({
-        routingInstrumentation: options.router ? Sentry.vueRouterInstrumentation(options.router) : undefined,
-        tracePropagationTargets: ['localhost', 'my-site-url.com', /^\//]
-      })
-    ]
-  })
-}
-
-export function vueAppInit1(app, options) {
+export function sentryInitForVueSubApp(app, options) {
   attachErrorHandler(app, options)
   if ('tracesSampleRate' in options || 'tracesSampler' in options) {
     app.mixin(
@@ -204,6 +192,8 @@ export function vueAppInit1(app, options) {
 export function initSentry(router) {
   Sentry.init({
     Vue,
+    logErrors: true,
+    attachProps: true,
     ...sentryOptions,
     integrations: [
       new BrowserTracing({
