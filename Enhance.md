@@ -17,14 +17,15 @@
 
   6. 测试多个类型的错误：计时器，Promise ✅
      -> **发现 PromiseError 没有错误栈，因此无法判断错误所在的应用和所在的代码行**
-  7. 每个子应用的 version 以全局变量的形式注入
+  7. 每个子应用的 version 以全局变量的形式注入 ✅
   8. 是否需要 ReactAppInit 方法 ✅
      -> 结论：不需要
 
 - 中
 
   1. 尝试把错误上报到不同应用里
-  2. 把 transaction 上报到不同 release 或应用里
+     -> 尝试使用 transport
+  2. 把 transaction 上报到不同 release 或应用里 ✅
   3. 探索 BrowserClient+Hub ✅
 
      来源：https://github.com/umijs/qiankun/issues/1088
@@ -32,6 +33,8 @@
      教程：https://docs.sentry.io/platforms/javascript/guides/vue/troubleshooting/#using-a-client-directly
 
      -> 作为另一种方式
+
+  4. 尝试记录 transaction ✅
 
 - 大
   1. 探索优化记录用户行为记录的面包屑

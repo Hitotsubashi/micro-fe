@@ -1,7 +1,7 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
-const {name,version} = require('./package.json')
+const info = require('./package.json')
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 
 function resolve(dir) {
@@ -9,7 +9,7 @@ function resolve(dir) {
 }
 
 const name = defaultSettings.title || 'vue Admin Template' // page title
-process.env.VUE_APP_RELEASE = `${name}@${version}`
+process.env.VUE_APP_RELEASE = `${info.name}@${info.version}`
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run

@@ -5,7 +5,6 @@ import store from "./store";
 import getRouter from "./router";
 import devtoolEnhanceMixin from "@/mixin/micro-app/devtool-enhance-mixin";
 import uploadRoutesMixin from "@/mixin/micro-app/upload-routes-mixin";
-const { name, version } = require("../package.json");
 
 Vue.config.productionTip = false;
 

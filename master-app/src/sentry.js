@@ -105,13 +105,12 @@ const isProd = process.env.NODE_ENV === 'production'
 // }
 
 const sentryOptions = {
-  dsn: 'https://00be4200d6324e4b9ac81b465b120d81@o4504474273841152.ingest.sentry.io/4504478936006656',
-  // https://o4504474273841152.ingest.sentry.io/api/4504478936006656/envelope/?sentry_key=00be4200d6324e4b9ac81b465b120d81&sentry_version=7&sentry_client=sentry.javascript.vue%2F7.29.0
+  dsn: 'http://1722442e922e4d61a59fb4897ea6b50f@139.9.68.82:9000/2',
   release: process.env.VUE_APP_RELEASE,
   environment: process.env.NODE_ENV,
   attachStacktrace: true,
   beforeSend(event, hint) {
-    console.log('hint', hint)
+    // console.log('hint', hint)
     if (event.extra?.release) {
       event.release = event.extra.release
     } else {
@@ -169,7 +168,22 @@ const sentryOptions = {
         event.release = window[`$${app}`]
       }
     }
+    // console.log(event)
+    return event
+  },
+  beforeSendTransaction(event){
     console.log(event)
+    const releaseMap = {
+      AppReact: 'react-ts-app',
+      AppVue: 'vue-app',
+      AppVue3: 'vue3-ts-app',
+    }
+    const {transaction} = event
+    const app = releaseMap[transaction]
+    if(window[`$${app}`]){
+      event.release = window[`$${app}`]
+    }
+    console.log('after',event)
     return event
   },
   tracesSampleRate: 1.0
