@@ -36,7 +36,7 @@ export async function bootstrap() {
         type: "SET_MICRO_APP_RELEASE",
         payload: {
           app_name: "vue-app",
-          version: `${name}@${version}`,
+          version: process.env.VUE_APP_RELEASE,
         },
       },
     })

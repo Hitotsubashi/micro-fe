@@ -3,7 +3,6 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import pinia from "./pinia";
 import { useAppStore } from "./pinia/modules/app";
-import { name, version } from "../package.json";
 
 let instance: ReturnType<typeof createApp> | null = null;
 
@@ -31,7 +30,7 @@ export async function bootstrap() {
         type: "SET_MICRO_APP_RELEASE",
         payload: {
           app_name: "vue3-ts-app",
-          version: `${name}@${version}`,
+          version: process.env.VUE_APP_RELEASE,
         },
       },
     })

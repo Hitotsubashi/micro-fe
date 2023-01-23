@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import * as Sentry from '@sentry/vue'
 import { BrowserTracing } from '@sentry/tracing'
-import info from '../package.json'
 import { attachErrorHandler, createTracingMixins } from '@sentry/vue'
 
 // import { makeFetchTransport } from '@sentry/browser'
@@ -108,7 +107,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const sentryOptions = {
   dsn: 'https://00be4200d6324e4b9ac81b465b120d81@o4504474273841152.ingest.sentry.io/4504478936006656',
   // https://o4504474273841152.ingest.sentry.io/api/4504478936006656/envelope/?sentry_key=00be4200d6324e4b9ac81b465b120d81&sentry_version=7&sentry_client=sentry.javascript.vue%2F7.29.0
-  release: `${info.name}@${info.version}`,
+  release: process.env.VUE_APP_RELEASE,
   environment: process.env.NODE_ENV,
   attachStacktrace: true,
   beforeSend(event, hint) {
