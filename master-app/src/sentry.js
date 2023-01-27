@@ -2,52 +2,26 @@ import Vue from 'vue'
 import * as Sentry from '@sentry/vue'
 import { BrowserTracing } from '@sentry/tracing'
 import { attachErrorHandler, createTracingMixins } from '@sentry/vue'
-
-// import { makeFetchTransport } from '@sentry/browser'
+import { makeFetchTransport } from '@sentry/browser'
 
 const isProd = process.env.NODE_ENV === 'production'
 
 // const dnsMap = {
-//   'master-app': { client: 'vue', dns: 'https://00be4200d6324e4b9ac81b465b120d81@o4504474273841152.ingest.sentry.io/4504478936006656' },
-//   'vue-app': { client: 'vue', dns: 'https://a3540506352d4f339a844c2d7b8280d7@o4504474273841152.ingest.sentry.io/4504474276986882' },
+//   'master-app': { client: 'vue', dns: 'http://714b194760cb4fb18d73dd1515fc533c@139.9.68.82:9000/3' },
+//   'vue-app': { client: 'vue', dns: 'http://efe551031a524c3db8b9a147b9754a22@139.9.68.82:9000/4' },
 //   'react-ts-app': { client: 'react', dns: 'https://84316ff2c0984ecfb1c20f93a4bb488d@o4504474273841152.ingest.sentry.io/4504474276986880' },
 //   'vue3-ts-app': { client: 'vue', dns: 'https://58e800f3bb5e49a3bf99515b8d51c5e3@o4504474273841152.ingest.sentry.io/4504478931877888' }
 // }
 
 // function sentryFilter(url, options) {
-//   console.log(url, options)
 //   let app
-//   console.log(options.body.includes('"type":"Error"'))
 //   if (options.body.includes('"type":"Error"')) {
-//     const [, filename] = options.body.match(/"filename":"([^"]*)"/)
-//     if (filename) {
-//       if (isProd) {
-//         if (filename.includes('app-react')) {
-//           app = 'react-ts-app'
-//         } else if (filename.includes('app-vue')) {
-//           app = 'vue-app'
-//         } else if (filename.includes('app-vue3')) {
-//           app = 'vue3-ts-app'
-//         } else {
-//           app = 'master-app'
-//         }
-//       } else {
-//         if (filename.includes('localhost:3001')) {
-//           app = 'react-ts-app'
-//         } else if (filename.includes('localhost:3002')) {
-//           app = 'vue-app'
-//         } else if (filename.includes('localhost:3004')) {
-//           app = 'vue3-ts-app'
-//         } else {
-//           app = 'master-app'
-//         }
-//       }
-//     }
-//     console.log('app', app)
+//     const [, releaseName] = options.body.match(/"release":"([^"]*)"/)
+//     const app = releaseName?.split('@')[0]
 //     if (dnsMap[app]) {
 //       const { dns, client } = dnsMap[app]
 //       const { username, host, pathname } = new URL(dns)
-//       const newUrl = `https://${host}/api/${pathname.slice(1)}/store/?sentry_key=${username}&sentry_version=7&sentry_client=sentry.javascript.${client}/7.29.0`
+//       const newUrl = `http://${host}/api/${pathname.slice(1)}/store/?sentry_key=${username}&sentry_version=7&sentry_client=sentry.javascript.${client}%2F7.29.0`
 //       return [newUrl, options]
 //     } else {
 //       return [url, options]
@@ -59,49 +33,12 @@ const isProd = process.env.NODE_ENV === 'production'
 
 // const CustomeTransport = (options) => {
 //   const fetchImpl = (url, options) => {
+//     // console.log('CustomeTransport',options)
 //     const [newUrl, newOptions] = sentryFilter(url, options)
 //     return window.fetch(newUrl, newOptions)
+//     // return window.fetch(url, options)
 //   }
 //   return makeFetchTransport(options, fetchImpl)
-// }
-
-// function sentryFilter(url, options) {
-//   let app
-//   if (options.body.includes('"type":"Error"')) {
-//     const [, filename] = options.body.match(/"filename":"([^"]*)"/)
-//     if (filename) {
-//       if (isProd) {
-//         if (filename.includes('react-app')) {
-//           app = 'react-ts-app'
-//         } else if (filename.includes('vue-app')) {
-//           app = 'vue-app'
-//         } else if (filename.includes('vue3-app')) {
-//           app = 'vue3-ts-app'
-//         } else {
-//           app = 'master-app'
-//         }
-//       } else {
-//         if (filename.includes('localhost:3001')) {
-//           app = 'react-ts-app'
-//         } else if (filename.includes('localhost:3002')) {
-//           app = 'vue-app'
-//         } else if (filename.includes('localhost:3004')) {
-//           app = 'vue3-ts-app'
-//         } else {
-//           app = 'master-app'
-//         }
-//       }
-//     }
-//     if (window[`$${app}`]) {
-//       const release = window[`$${app}`]
-//       options.body = options.body.replace(/"release":"([^"]*)"/, `"release":"${release}"`)
-//       return [url, options]
-//     } else {
-//       return [url, options]
-//     }
-//   } else {
-//     return [url, options]
-//   }
 // }
 
 const sentryOptions = {
@@ -111,6 +48,7 @@ const sentryOptions = {
   attachStacktrace: true,
   beforeSend(event, hint) {
     // console.log('hint', hint)
+    console.log('beforeSend')
     if (event.extra?.release) {
       event.release = event.extra.release
     } else {
@@ -172,7 +110,7 @@ const sentryOptions = {
     return event
   },
   beforeSendTransaction(event){
-    console.log(event)
+    console.log('beforeSendTransaction')
     const releaseMap = {
       AppReact: 'react-ts-app',
       AppVue: 'vue-app',
@@ -183,10 +121,9 @@ const sentryOptions = {
     if(window[`$${app}`]){
       event.release = window[`$${app}`]
     }
-    console.log('after',event)
     return event
   },
-  tracesSampleRate: 1.0
+  tracesSampleRate: 1.0,
   // transport: CustomeTransport
 }
 

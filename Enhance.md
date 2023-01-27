@@ -23,8 +23,8 @@
 
 - 中
 
-  1. 尝试把错误上报到不同应用里
-     -> 尝试使用 transport
+  1. 尝试把错误上报到不同应用里 ✅
+     -> 尝试使用 transport(结论：暂时还是走不通，报 json 解析错误)
   2. 把 transaction 上报到不同 release 或应用里 ✅
   3. 探索 BrowserClient+Hub ✅
 
