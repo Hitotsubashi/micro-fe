@@ -16,7 +16,7 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 import microAppMixin from '@/mixin/micro-app'
-import { initSentry } from './sentry'
+// import { initSentry } from './sentry'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -37,7 +37,7 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
-initSentry(router)
+// initSentry(router)
 
 new Vue({
   el: '#app',

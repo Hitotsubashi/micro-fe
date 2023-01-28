@@ -3,9 +3,10 @@ import { initGlobalState } from 'qiankun'
 import store from '@/store'
 import router from '@/router'
 import { logout } from '@/utils/auth'
+import { usingSentryHub } from '@/sentry'
 
 const actions = initGlobalState({
-  ...store.getters.microAppState,
+  ...store.getters.microAppState
 })
 
 const handleMicroAppDispatchEvent = (e) => {
@@ -15,6 +16,11 @@ const handleMicroAppDispatchEvent = (e) => {
       // eslint-disable-next-line no-case-declarations
       const { app_name, version } = action.payload
       window[`$${app_name}`] = version
+      break
+    case 'SET_MICRO_APP_HUB':
+      // eslint-disable-next-line no-case-declarations
+      const { type, settings } = action.payload
+      usingSentryHub(type, settings)
       break
     case 'CHANGE_ROUTE':
       router.push(action.payload)
@@ -49,7 +55,7 @@ export default {
     'microAppState': {
       handler(val) {
         actions.setGlobalState({
-          ...val,
+          ...val
         })
       },
       deep: true

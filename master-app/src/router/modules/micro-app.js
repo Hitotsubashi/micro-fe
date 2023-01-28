@@ -49,7 +49,7 @@ const microAppRoutes = [
             activeRule: '/app-vue/index',
             props: {
               basepath: '/app-vue/index',
-              sentryInit: sentryInitForVueSubApp
+              // sentryInit: sentryInitForVueSubApp
             }
           },
           noCache: true,
@@ -77,7 +77,7 @@ const microAppRoutes = [
             activeRule: '/app-vue3/index',
             props: {
               basepath: '/app-vue3/index',
-              sentryInit: sentryInitForVueSubApp
+              // sentryInit: sentryInitForVueSubApp
             }
           },
           noCache: true,

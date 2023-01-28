@@ -5,6 +5,8 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import { usingSentryHub } from './sentry'
+import Vue from 'vue'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -70,7 +72,18 @@ router.beforeEach(async(to, from, next) => {
   }
 })
 
-router.afterEach(() => {
+router.afterEach((to, from) => {
   // finish progress bar
   NProgress.done()
+  const matched = (from.path === '/' && !to.meta.microApp) || (from.meta.microApp && !to.meta.microApp)
+  if (matched) {
+    usingSentryHub('vue', {
+      Vue,
+      router,
+      options: {
+        dsn: 'http://1722442e922e4d61a59fb4897ea6b50f@139.9.68.82:9000/2',
+        release: process.env.VUE_APP_RELEASE
+      }
+    })
+  }
 })

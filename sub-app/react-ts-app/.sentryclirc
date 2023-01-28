@@ -1,5 +1,5 @@
 [defaults]
-project=master-app
+project=react-ts-app
 org=sentry
 url=http://139.9.68.82:9000/
 

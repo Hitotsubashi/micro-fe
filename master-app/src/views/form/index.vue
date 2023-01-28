@@ -81,10 +81,10 @@ export default {
       throw new Error('master-app error1')
     },
     throwPromiseError() {
-      return Promise.reject("master-app promise error1");
+      return Promise.reject('master-app promise error1')
     },
-    throwSetTimeoutError(){
-      setTimeout(()=>{
+    throwSetTimeoutError() {
+      setTimeout(() => {
         throw new Error('master-app settimeout error1')
       })
     }

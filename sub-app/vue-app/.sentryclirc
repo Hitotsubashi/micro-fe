@@ -1,5 +1,5 @@
 [defaults]
-project=master-app
+project=vue-app
 org=sentry
 url=http://139.9.68.82:9000/
 

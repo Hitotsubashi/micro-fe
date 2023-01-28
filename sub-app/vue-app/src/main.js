@@ -15,6 +15,44 @@ function render(props = {}) {
 
   const router = getRouter(basepath);
 
+  window.dispatchEvent(
+    new CustomEvent("micro-app-dispatch", {
+      detail: {
+        type: "SET_MICRO_APP_HUB",
+        payload: {
+          type: "vue",
+          settings: {
+            Vue,
+            router,
+            options: {
+              dsn: "http://efe551031a524c3db8b9a147b9754a22@139.9.68.82:9000/4",
+              release: process.env.VUE_APP_RELEASE,
+            },
+            beforeSend(event) {
+              event.exception.values = event.exception.values.map((item) => {
+                const {
+                  stacktrace: { frames },
+                  ...rest
+                } = item;
+                // FIXME: 主应用加载时，qiankun 加载当前js资源会在首行添加 window.__TEMP_EVAL_FUNC__ = function(){;(function(window, self, globalThis){with(window){;
+                // https://github.com/kuitos/import-html-entry/blob/master/src/index.js#L62
+                frames[frames.length - 1].colno -=
+                  "window.__TEMP_EVAL_FUNC__ = function(){;(function(window, self, globalThis){with(window){;".length;
+                return {
+                  ...rest,
+                  stacktrace: {
+                    frames,
+                  },
+                };
+              });
+              return event;
+            },
+          },
+        },
+      },
+    })
+  );
+
   instance = new Vue({
     name: "VueApp",
     router: router,
@@ -29,17 +67,18 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 export async function bootstrap() {
-  window.dispatchEvent(
-    new CustomEvent("micro-app-dispatch", {
-      detail: {
-        type: "SET_MICRO_APP_RELEASE",
-        payload: {
-          app_name: "vue-app",
-          version: process.env.VUE_APP_RELEASE,
-        },
-      },
-    })
-  );
+  // window.dispatchEvent(
+  //   new CustomEvent("micro-app-dispatch", {
+  //     detail: {
+  //       type: "SET_MICRO_APP_RELEASE",
+  //       payload: {
+  //         app_name: "vue-app",
+  //         version: process.env.VUE_APP_RELEASE,
+  //       },
+  //     },
+  //   })
+  // );
+
   console.log("[vue] vue app bootstraped");
 }
 
@@ -48,11 +87,11 @@ export async function mount(props) {
   props.onGlobalStateChange((state) => {
     store.dispatch("app/changeTheme", state.theme);
   }, true);
-  props.sentryInit?.(Vue, {
-    tracesSampleRate: 1.0,
-    logErrors: true,
-    attachProps: true,
-  });
+  // props.sentryInit?.(Vue, {
+  //   tracesSampleRate: 1.0,
+  //   logErrors: true,
+  //   attachProps: true,
+  // });
   render(props);
 }
 
