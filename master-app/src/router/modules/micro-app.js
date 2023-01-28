@@ -1,7 +1,6 @@
 import Layout from '@/layout'
 import MicroAppLayout from '@/layout/MicroAppLayout'
 import Vue from 'vue'
-import { sentryInitForVueSubApp } from '@/sentry'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -48,7 +47,7 @@ const microAppRoutes = [
             container: '#app-vue',
             activeRule: '/app-vue/index',
             props: {
-              basepath: '/app-vue/index',
+              basepath: '/app-vue/index'
               // sentryInit: sentryInitForVueSubApp
             }
           },
@@ -76,7 +75,7 @@ const microAppRoutes = [
             container: '#app-vue3',
             activeRule: '/app-vue3/index',
             props: {
-              basepath: '/app-vue3/index',
+              basepath: '/app-vue3/index'
               // sentryInit: sentryInitForVueSubApp
             }
           },
