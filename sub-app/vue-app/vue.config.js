@@ -19,7 +19,7 @@ module.exports = defineConfig({
     open: false,
   },
   configureWebpack: {
-    devtool: "source-map",
+    devtool: isProd ? "hidden-source-map" : "source-map",
     output: {
       library: `${name}`,
       libraryTarget: "umd", // 把微应用打包成 umd 库格式
