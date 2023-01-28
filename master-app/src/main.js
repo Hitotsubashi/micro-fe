@@ -12,11 +12,10 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-// import actions from '@/qiankun'
 import '@/icons' // icon
 import '@/permission' // permission control
 import microAppMixin from '@/mixin/micro-app'
-// import { initSentry } from './sentry'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

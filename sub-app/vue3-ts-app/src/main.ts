@@ -23,6 +23,7 @@ function render(props: any) {
         type: "SET_MICRO_APP_HUB",
         payload: {
           type: "vue",
+          name: process.env.VUE_APP_NAME,
           settings: {
             Vue: instance,
             options: {
@@ -66,17 +67,17 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 export async function bootstrap() {
-  window.dispatchEvent(
-    new CustomEvent("micro-app-dispatch", {
-      detail: {
-        type: "SET_MICRO_APP_RELEASE",
-        payload: {
-          app_name: "vue3-ts-app",
-          version: process.env.VUE_APP_RELEASE,
-        },
-      },
-    })
-  );
+  // window.dispatchEvent(
+  //   new CustomEvent("micro-app-dispatch", {
+  //     detail: {
+  //       type: "SET_MICRO_APP_RELEASE",
+  //       payload: {
+  //         app_name: "vue3-ts-app",
+  //         version: process.env.VUE_APP_RELEASE,
+  //       },
+  //     },
+  //   })
+  // );
   console.log("vue3 app bootstraped");
 }
 

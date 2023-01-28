@@ -10,6 +10,7 @@ function resolve(dir) {
 
 const name = defaultSettings.title || 'vue Admin Template' // page title
 process.env.VUE_APP_RELEASE = `${info.name}@${info.version}`
+process.env.VUE_APP_NAME = info.name
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run

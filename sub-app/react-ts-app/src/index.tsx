@@ -51,6 +51,7 @@ export async function bootstrap() {
         type: 'SET_MICRO_APP_HUB',
         payload: {
           type: 'react',
+          name: process.env.REACT_APP_NAME,
           settings: {
             options: {
               dsn: 'http://714b194760cb4fb18d73dd1515fc533c@139.9.68.82:9000/3',

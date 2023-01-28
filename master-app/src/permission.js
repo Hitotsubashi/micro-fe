@@ -13,7 +13,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 const whiteList = ['/login'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
-  changeSentryHubWithRouter(to, from)
+  changeSentryHubWithRouter(to)
   // start progress bar
   NProgress.start()
 
@@ -78,10 +78,11 @@ router.afterEach(() => {
   NProgress.done()
 })
 
-function changeSentryHubWithRouter(to, from) {
-  const matched = (from.path === '/' && !to.meta.microApp) || (from.meta.microApp && !to.meta.microApp)
-  if (matched) {
-    usingSentryHub('vue', {
+function changeSentryHubWithRouter(to) {
+  if (to.meta?.microApp?.name) {
+    usingSentryHub(undefined, to.meta.microApp.name)
+  } else {
+    usingSentryHub('vue', process.env.VUE_APP_NAME, {
       Vue,
       router,
       options: {

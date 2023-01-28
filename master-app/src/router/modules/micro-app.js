@@ -17,7 +17,7 @@ const microAppRoutes = [
         meta: {
           title: 'ReactTSApp',
           microApp: {
-            name: 'react app',
+            name: 'react-ts-app',
             entry: isProd ? `//${location.host}/react-app/` : '//localhost:3001',
             container: '#app-react',
             activeRule: '/app-react/index',
@@ -42,13 +42,12 @@ const microAppRoutes = [
         meta: {
           title: 'VueApp',
           microApp: {
-            name: 'vue app',
+            name: 'vue-app',
             entry: isProd ? `//${location.host}/vue-app/` : '//localhost:3002',
             container: '#app-vue',
             activeRule: '/app-vue/index',
             props: {
               basepath: '/app-vue/index'
-              // sentryInit: sentryInitForVueSubApp
             }
           },
           noCache: true,
@@ -70,13 +69,12 @@ const microAppRoutes = [
         meta: {
           title: 'Vue3App',
           microApp: {
-            name: 'vue3 app',
+            name: 'vue3-ts-app',
             entry: isProd ? `//${location.host}/vue3-app/` : '//localhost:3004',
             container: '#app-vue3',
             activeRule: '/app-vue3/index',
             props: {
               basepath: '/app-vue3/index'
-              // sentryInit: sentryInitForVueSubApp
             }
           },
           noCache: true,
@@ -98,7 +96,7 @@ const microAppRoutes = [
         meta: {
           title: 'PureHTMLApp',
           microApp: {
-            name: 'purehtml app',
+            name: 'purehtml-app',
             entry: isProd ? `//${location.host}/html-app/` : '//localhost:3003',
             container: '#app-purehtml',
             activeRule: '/app-purehtml/index'

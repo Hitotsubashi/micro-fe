@@ -5,22 +5,28 @@ import { makeFetchTransport, makeMain, defaultStackParser, defaultIntegrations, 
 
 const hubMap = {}
 
-export function usingSentryHub(type, settings) {
-  console.log('usingSentryHub', type, settings)
-  const { release } = settings.options
-  if (!hubMap[release]) {
+let currentHubName
+
+export function usingSentryHub(type, name, settings) {
+  if (name === currentHubName) return
+  console.log('initHub', type, name, settings)
+  if (hubMap[name]) {
+    makeMain(hubMap[name])
+    currentHubName = name
+  } else if (settings) {
     switch (type) {
       case 'vue':
-        hubMap[release] = initVueSentryHub(settings)
+        hubMap[name] = initVueSentryHub(settings)
         break
       case 'react':
-        hubMap[release] = initReactSentryHub(settings)
+        hubMap[name] = initReactSentryHub(settings)
         break
       default:
         break
     }
+    makeMain(hubMap[name])
+    currentHubName = name
   }
-  makeMain(hubMap[release])
 }
 
 function initVueSentryHub({ Vue, router, options, VueOptions }) {
