@@ -28,21 +28,25 @@ function render(props = {}) {
               dsn: "http://efe551031a524c3db8b9a147b9754a22@139.9.68.82:9000/4",
               release: process.env.VUE_APP_RELEASE,
               beforeSend(event) {
+                console.log(event);
                 event.exception.values = event.exception.values.map((item) => {
-                  const {
-                    stacktrace: { frames },
-                    ...rest
-                  } = item;
-                  // FIXME: 主应用加载时，qiankun 加载当前js资源会在首行添加 window.__TEMP_EVAL_FUNC__ = function(){;(function(window, self, globalThis){with(window){;
-                  // https://github.com/kuitos/import-html-entry/blob/master/src/index.js#L62
-                  frames[frames.length - 1].colno -=
-                    "window.__TEMP_EVAL_FUNC__ = function(){;(function(window, self, globalThis){with(window){;".length;
-                  return {
-                    ...rest,
-                    stacktrace: {
-                      frames,
-                    },
-                  };
+                  if (item.stacktrace) {
+                    const {
+                      stacktrace: { frames },
+                      ...rest
+                    } = item;
+                    // FIXME: 主应用加载时，qiankun 加载当前js资源会在首行添加 window.__TEMP_EVAL_FUNC__ = function(){;(function(window, self, globalThis){with(window){;
+                    // https://github.com/kuitos/import-html-entry/blob/master/src/index.js#L62
+                    frames[frames.length - 1].colno -=
+                      "window.__TEMP_EVAL_FUNC__ = function(){;(function(window, self, globalThis){with(window){;".length;
+                    return {
+                      ...rest,
+                      stacktrace: {
+                        frames,
+                      },
+                    };
+                  }
+                  return item;
                 });
                 return event;
               },
