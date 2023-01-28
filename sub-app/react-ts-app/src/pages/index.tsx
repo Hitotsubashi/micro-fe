@@ -6,11 +6,11 @@ import './index.css';
 
 function App() {
   function throwPromiseError() {
-    return Promise.reject('vue-app promise error1');
+    return Promise.reject('react-ts-app promise error1');
   }
   function throwSetTimeoutError() {
     setTimeout(() => {
-      throw new Error('vue-app settimeout error1');
+      throw new Error('react-ts-app settimeout error1');
     });
   }
 
@@ -23,7 +23,7 @@ function App() {
         <ChangeRoute />
         <button
           onClick={() => {
-            throw new Error('1');
+            throw new Error('react-ts-app error1');
           }}
         >
           error
