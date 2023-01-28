@@ -7,6 +7,8 @@
     <input v-model="value" />
     <br />
     <button @click="throwError">error</button>
+    <button @click="throwPromiseError">PromiseError</button>
+    <button @click="throwSetTimeoutError">SetTimeoutError</button>
   </div>
 </template>
 
@@ -28,7 +30,15 @@ export default defineComponent({
     function throwError() {
       throw new Error("vue3 error 1");
     }
-    return { value, throwError };
+    function throwPromiseError() {
+      return Promise.reject("vue-app promise error1");
+    }
+    function throwSetTimeoutError() {
+      setTimeout(() => {
+        throw new Error("vue-app settimeout error1");
+      });
+    }
+    return { value, throwError, throwPromiseError, throwSetTimeoutError };
   },
 });
 </script>
