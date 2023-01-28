@@ -3,16 +3,19 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import pinia from "./pinia";
 import { useAppStore } from "./pinia/modules/app";
-import { name, version } from "../package.json";
 
 let instance: ReturnType<typeof createApp> | null = null;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function render(props: any, sentryInit?: any) {
-  const { container } = props;
+function render(props: any) {
+  const { container, sentryInit } = props;
   instance = createApp(App).use(pinia);
-  // initSentry(instance);
-  sentryInit?.({ app: instance });
+  console.log("sentryInit", sentryInit);
+  sentryInit?.(instance, {
+    tracesSampleRate: 1.0,
+    logErrors: true,
+    attachProps: true,
+  });
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 
@@ -27,7 +30,7 @@ export async function bootstrap() {
         type: "SET_MICRO_APP_RELEASE",
         payload: {
           app_name: "vue3-ts-app",
-          version: `${name}@${version}`,
+          version: process.env.VUE_APP_RELEASE,
         },
       },
     })
@@ -37,11 +40,9 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   console.log("vue] vue3 app mount", props);
-  // let sentryInit;
   props.onGlobalStateChange((state: any) => {
     const app = useAppStore();
     app.changeTheme(state.theme);
-    // ({ sentryInit } = state);
   });
   render(props);
 }

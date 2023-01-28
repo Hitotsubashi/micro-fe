@@ -5,8 +5,6 @@ import store from "./store";
 import getRouter from "./router";
 import devtoolEnhanceMixin from "@/mixin/micro-app/devtool-enhance-mixin";
 import uploadRoutesMixin from "@/mixin/micro-app/upload-routes-mixin";
-const { name, version } = require("../package.json");
-// import { initSentry } from "./sentry";
 
 Vue.config.productionTip = false;
 
@@ -37,7 +35,7 @@ export async function bootstrap() {
         type: "SET_MICRO_APP_RELEASE",
         payload: {
           app_name: "vue-app",
-          version: `${name}@${version}`,
+          version: process.env.VUE_APP_RELEASE,
         },
       },
     })
@@ -47,18 +45,14 @@ export async function bootstrap() {
 
 export async function mount(props) {
   console.log("[vue] vue app mount", props);
-  let sentry;
   props.onGlobalStateChange((state) => {
-    ({ sentry } = state);
     store.dispatch("app/changeTheme", state.theme);
   }, true);
-  Vue.config.errorHandler = (err) => {
-    sentry.captureException(err, (scope) => {
-      scope.setExtra("release", `${name}@${version}`);
-    });
-    console.error(err);
-    return true;
-  };
+  props.sentryInit?.(Vue, {
+    tracesSampleRate: 1.0,
+    logErrors: true,
+    attachProps: true,
+  });
   render(props);
 }
 

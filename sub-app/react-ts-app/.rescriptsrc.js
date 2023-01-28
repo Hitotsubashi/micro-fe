@@ -22,19 +22,19 @@ module.exports = (isProd ? [] : [['use-stylelint-config', '.stylelintrc.js']]).c
           {
             loader: 'url-loader',
             options: {
-              publicPath: 'http://localhost:3001',
+              publicPath: `http://localhost:${process.env.PORT}`,
             },
           },
         ],
       });
     }
+    console.log(`version: ${process.env.REACT_APP_RELEASE}`);
     if (isProd) {
-      console.log(`version: ${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`);
       config = appendWebpackPlugin(
         new SentryCliPlugin({
           include: './build',
           ignore: ['node_modules', 'nginx'],
-          release: `${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`,
+          release: process.env.REACT_APP_RELEASE,
           urlPrefix: '~/react-app',
         }),
         config,

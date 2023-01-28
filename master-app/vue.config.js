@@ -9,7 +9,7 @@ function resolve(dir) {
 }
 
 const name = defaultSettings.title || 'vue Admin Template' // page title
-
+process.env.VUE_APP_RELEASE = `${info.name}@${info.version}`
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
@@ -30,7 +30,6 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
-  productionSourceMap: false,
   devServer: {
     port: port,
     open: true,
@@ -52,6 +51,7 @@ module.exports = {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
+    devtool: 'source-map',
     resolve: {
       alias: {
         '@': resolve('src')
@@ -132,7 +132,7 @@ module.exports = {
             new SentryWebpackPlugin({
               include: './dist',
               ignore: ['node_modules', 'nginx'],
-              release: `${info.name}@${info.version}`
+              release: process.env.VUE_APP_RELEASE
             })
           )
         }

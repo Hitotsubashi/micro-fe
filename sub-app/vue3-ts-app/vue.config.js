@@ -5,6 +5,8 @@ const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 
 const isProd = process.env.NODE_ENV === "production";
 
+process.env.VUE_APP_RELEASE = `${name}@${version}`;
+
 module.exports = defineConfig({
   parallel: false,
   transpileDependencies: true,
@@ -29,13 +31,17 @@ module.exports = defineConfig({
       libraryTarget: "umd", // 把微应用打包成 umd 库格式
       chunkLoadingGlobal: `webpackJsonp_${name}`,
     },
-    plugins: [
-      new SentryWebpackPlugin({
-        include: "./dist",
-        ignore: ["node_modules", "nginx"],
-        release: `${name}@${version}`,
-        urlPrefix: "~/vue3-app",
-      }),
-    ],
+  },
+  chainWebpack(config) {
+    config.when(isProd, (config) => {
+      config.plugin("sentry-webpack-plugin").use(
+        new SentryWebpackPlugin({
+          include: "./dist",
+          ignore: ["node_modules", "nginx"],
+          release: process.env.VUE_APP_RELEASE,
+          urlPrefix: "~/vue3-app",
+        })
+      );
+    });
   },
 });

@@ -40,7 +40,7 @@ export async function bootstrap() {
         type: 'SET_MICRO_APP_RELEASE',
         payload: {
           app_name: 'react-ts-app',
-          version: `${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`,
+          version: process.env.REACT_APP_RELEASE,
         },
       },
     }),

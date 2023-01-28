@@ -1,7 +1,7 @@
 [defaults]
 project=master-app
-org=ocean-29
-url=https://sentry.io
+org=sentry
+url=http://139.9.68.82:9000/
 
 [auth]
-token=2c5033b33c0e4cb4872af0bf422fc7a9502ce61a08e04a58bf98a0029923877c
+token=fe270fb7cfc74ac79e935f5e5d4c99eaa63bc37219704217a1b45739efca561d
