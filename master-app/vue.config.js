@@ -16,6 +16,7 @@ process.env.VUE_APP_RELEASE = `${info.name}@${info.version}`
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
 const port = process.env.port || process.env.npm_config_port || 3000 // dev port
+const isProd = process.env.NODE_ENV === "production";
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -29,7 +30,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: !isProd,
   devServer: {
     port: port,
     open: true,
@@ -51,7 +52,7 @@ module.exports = {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
-    devtool: 'source-map',
+    devtool: isProd ? "hidden-source-map" : "source-map",
     resolve: {
       alias: {
         '@': resolve('src')
@@ -91,7 +92,7 @@ module.exports = {
       .end()
 
     config
-      .when(process.env.NODE_ENV !== 'development',
+      .when(isProd,
         config => {
           config
             .plugin('ScriptExtHtmlWebpackPlugin')
