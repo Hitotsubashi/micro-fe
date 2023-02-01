@@ -41,6 +41,10 @@ const isProd = process.env.NODE_ENV === 'production'
 //   return makeFetchTransport(options, fetchImpl)
 // }
 
+const MICRO_APP_RELEASE_KEYS = '$micro_app_release'
+
+window[MICRO_APP_RELEASE_KEYS] = {}
+
 const sentryOptions = {
   dsn: 'http://1722442e922e4d61a59fb4897ea6b50f@139.9.68.82:9000/2',
   release: process.env.VUE_APP_RELEASE,
@@ -102,8 +106,8 @@ const sentryOptions = {
           }
         }
       }
-      if (window[`$${app}`]) {
-        event.release = window[`$${app}`]
+      if (window[MICRO_APP_RELEASE_KEYS][app]) {
+        event.release = window[MICRO_APP_RELEASE_KEYS][app]
       }
     }
     // console.log(event)

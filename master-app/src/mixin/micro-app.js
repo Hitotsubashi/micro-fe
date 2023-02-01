@@ -11,11 +11,11 @@ const actions = initGlobalState({
 const handleMicroAppDispatchEvent = (e) => {
   const { detail: action } = e
   switch (action.type) {
-    case 'SET_MICRO_APP_RELEASE':
-      // eslint-disable-next-line no-case-declarations
-      const { app_name, version } = action.payload
-      window[`$${app_name}`] = version
-      break
+    // case 'SET_MICRO_APP_RELEASE':
+    //   // eslint-disable-next-line no-case-declarations
+    //   const { app_name, version } = action.payload
+    //   window[`$${app_name}`] = version
+    //   break
     case 'CHANGE_ROUTE':
       router.push(action.payload)
       break
