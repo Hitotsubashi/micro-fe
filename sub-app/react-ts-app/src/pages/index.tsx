@@ -14,10 +14,26 @@ function App() {
         <ChangeRoute />
         <button
           onClick={() => {
-            throw new Error('1');
+            throw new Error('error');
           }}
         >
           error
+        </button>
+        <button
+          onClick={() => {
+            Promise.reject(new Error('promise error'));
+          }}
+        >
+          promise error
+        </button>
+        <button
+          onClick={() => {
+            setTimeout(() => {
+              throw new Error('timeout error');
+            });
+          }}
+        >
+          timeout error
         </button>
       </header>
     </div>

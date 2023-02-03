@@ -51,8 +51,8 @@ const sentryOptions = {
   environment: process.env.NODE_ENV,
   attachStacktrace: true,
   beforeSend(event, hint) {
-    // console.log('hint', hint)
     console.log('beforeSend')
+    console.log('hint', hint)
     if (event.extra?.release) {
       event.release = event.extra.release
     } else {
@@ -122,8 +122,8 @@ const sentryOptions = {
     }
     const {transaction} = event
     const app = releaseMap[transaction]
-    if(window[`$${app}`]){
-      event.release = window[`$${app}`]
+    if(window[MICRO_APP_RELEASE_KEYS][app]){
+      event.release = window[MICRO_APP_RELEASE_KEYS][app]
     }
     return event
   },
