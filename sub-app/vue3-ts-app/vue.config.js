@@ -21,7 +21,7 @@ module.exports = defineConfig({
     open: false,
   },
   configureWebpack: {
-    devtool: isProd ? "hidden-source-map" : "source-map",
+    devtool: isProd ? "hidden-source-map" : "eval-cheap-source-map",
     resolve: {
       alias: {
         "@": path.join(__dirname, "src"),

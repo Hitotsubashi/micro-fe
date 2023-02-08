@@ -5,7 +5,8 @@
     <ChangeMicroAppButton />
     <ChangeRoute />
     <button @click="throwError">Error</button>
-    <button @click="throwPromiseError">PromiseError</button>
+    <button @click="throwPromiseError">PromiseError(return)</button>
+    <button @click="throwPromiseErrorNotReturn">PromiseError</button>
     <button @click="throwSetTimeoutError">SetTimeoutError</button>
   </div>
 </template>
@@ -25,6 +26,9 @@ export default {
   methods: {
     throwError() {
       throw new Error("vue-app error1");
+    },
+    throwPromiseErrorNotReturn(){
+      Promise.reject("vue-app promise error1 not return");
     },
     throwPromiseError() {
       return Promise.reject("vue-app promise error1");

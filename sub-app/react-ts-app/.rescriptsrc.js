@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = (isProd ? [] : [['use-stylelint-config', '.stylelintrc.js']]).concat({
   webpack: (config) => {
-    config.devtool = isProd ? 'hidden-source-map' : 'source-map';
+    config.devtool = isProd ? 'hidden-source-map' : 'eval-cheap-source-map';
     config.output.publicPath = isProd ? '/react-app/' : undefined;
     config.output.library = `${process.env.REACT_APP_NAME}-[name]`;
     config.output.libraryTarget = 'umd';
